@@ -72,21 +72,3 @@ function h_add_column(string $post_type, $column) {
   $pc = new H_PostColumn();
   $pc->add_column($post_type, $column);
 }
-
-
-/// POST ACTIONS - TODO: still not working
-
-// function h_add_actions($post_type, $actions) {
-//   if (!is_admin()) { return; }
-
-//   $pa = new H_PostAction($post_type, $actions);
-//   $pa->add();
-// }
-
-
-// function h_replace_actions($post_type, $actions) {
-//   if (!is_admin()) { return; }
-
-//   $pa = new H_PostAction($post_type, $actions);
-//   $pa->replace();
-// }

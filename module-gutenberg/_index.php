@@ -1,8 +1,5 @@
 <?php
 
-// add_action('plugins_loaded' , function() {
-// });
-
 require_once __DIR__ . '/core-text.php';
 require_once __DIR__ . '/core-media.php';
 require_once __DIR__ . '/core-design.php';
@@ -11,7 +8,8 @@ if (is_admin()) {
   add_filter('safe_style_css', '_h_gutenberg_safe_style');
 
   add_action('enqueue_block_editor_assets', '_h_enqueue_editor', 20);
-  add_action('admin_init', '_h_enqueue_classic_editor');
+  add_action('admin_init', '_h_enqueue_classic_editor');  
+  add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
 } else {
   // remove group container class
   remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
@@ -48,10 +46,31 @@ function _h_enqueue_editor() {
 
   wp_enqueue_style('h-gutenberg', H_DIST . '/h-gutenberg.css', [], H_VERSION);
   wp_enqueue_script('h-gutenberg', H_DIST . '/h-gutenberg.js', [], H_VERSION, true);
-
   wp_localize_script('h-gutenberg', 'localizeH', [
     'disallowedBlocks' => $disallowed_blocks
   ]);
+}
+
+/**
+ * Disable Inspector Tabs
+ * 
+ * @filter block_editor_settings_all
+ */
+function _px_disable_inspector_tabs($settings) {
+  $current_tab_settings = _wp_array_get($settings, ['blockInspectorTabs'], []);
+  $settings['blockInspectorTabs'] = array_merge(
+    $current_tab_settings,
+    [
+      'core/spacer' => false,
+      'core/column' => false,
+      'core/buttons' => false,
+      'core/button' => false,
+      'core/table' => false,
+      'core/group' => false,
+    ]
+  );
+
+  return $settings;
 }
 
 /**
