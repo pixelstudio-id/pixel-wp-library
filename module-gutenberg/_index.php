@@ -17,6 +17,7 @@ if (is_admin()) {
 
   // remove the SVG gradient
   remove_action('wp_body_open', 'wp_global_styles_render_svg_filters', 10);
+  add_action('wp_footer', '_px_disable_gutenberg_support_css');
 }
 
 /**
@@ -67,6 +68,7 @@ function _px_disable_inspector_tabs($settings) {
       'core/button' => false,
       'core/table' => false,
       'core/group' => false,
+      'core/image' => false,
     ]
   );
 
@@ -81,4 +83,13 @@ function _px_disable_inspector_tabs($settings) {
 function _h_enqueue_classic_editor() {
   $assets = plugin_dir_url(__FILE__) . 'css';
   add_editor_style(H_DIST . '/h-classic-editor.css');
+}
+
+/**
+ * Disable Support CSS
+ * 
+ * @action wp_footer
+ */
+function _px_disable_gutenberg_support_css() {
+  wp_dequeue_style('core-block-supports');
 }

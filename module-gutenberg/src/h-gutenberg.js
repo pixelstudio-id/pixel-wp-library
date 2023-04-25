@@ -5,7 +5,6 @@ const { wp } = window;
 
 wp.domReady(() => {
   wp.blocks.unregisterBlockStyle('core/quote', 'plain');
-  wp.blocks.unregisterBlockStyle('core/image', 'rounded');
 
   window.localizeH.disallowedBlocks.forEach((name) => {
     wp.blocks.unregisterBlockType(name);
@@ -133,6 +132,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     // Has both padding and margin
     case 'core/group':
     case 'core/columns':
+    case 'core/cover':
       settings.supports.spacing = {
         ...settings.supports.spacing,
         margin: ['top', 'bottom'],
@@ -166,6 +166,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
     case 'core/quote':
     case 'core/buttons':
     case 'core/separator':
+    case 'core/image':
       settings.supports.spacing = {
         ...settings.supports.spacing,
         padding: false,
