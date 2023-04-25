@@ -36,7 +36,6 @@ function _h_render_negative_spacer($content, $block) {
  * @filter render_block_core/group
  */
 function _h_render_group($content, $block) {
-  // var_dump($block);
   $extra_classes = '';
 
   // Add Row Variation class

@@ -91,6 +91,34 @@ div.editor-styles-wrapper
     a
       color: inherit
 
+// GALLERY Slider
+.wp-block-gallery.is-style-h-slider
+  position: relative
+
+  figure.wp-block-image
+    flex-grow: initial
+
+  &.has-child-selected figure.wp-block-image,
+  &.is-selected figure.wp-block-image,
+  figure.wp-block-image.is-selected
+    display: flex
+
+  figure:nth-child(n+4)
+    display: none
+
+  &::before
+    content: ""
+    position: absolute
+    top: 50%
+    left: -2rem
+    right: -1rem
+    transform: translateY(-50%)
+
+    display: inline-block
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBkPSJNMzQuNTIgMjM5LjAzTDIyOC44NyA0NC42OWM5LjM3LTkuMzcgMjQuNTctOS4zNyAzMy45NCAwbDIyLjY3IDIyLjY3YzkuMzYgOS4zNiA5LjM3IDI0LjUyLjA0IDMzLjlMMTMxLjQ5IDI1NmwxNTQuMDIgMTU0Ljc1YzkuMzQgOS4zOCA5LjMyIDI0LjU0LS4wNCAzMy45bC0yMi42NyAyMi42N2MtOS4zNyA5LjM3LTI0LjU3IDkuMzctMzMuOTQgMEwzNC41MiAyNzIuOTdjLTkuMzctOS4zNy05LjM3LTI0LjU3IDAtMzMuOTR6Ii8+PC9zdmc+) left center no-repeat, url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMjAgNTEyIj48cGF0aCBkPSJNMjg1LjQ3NiAyNzIuOTcxTDkxLjEzMiA0NjcuMzE0Yy05LjM3MyA5LjM3My0yNC41NjkgOS4zNzMtMzMuOTQxIDBsLTIyLjY2Ny0yMi42NjdjLTkuMzU3LTkuMzU3LTkuMzc1LTI0LjUyMi0uMDQtMzMuOTAxTDE4OC41MDUgMjU2IDM0LjQ4NCAxMDEuMjU1Yy05LjMzNS05LjM3OS05LjMxNy0yNC41NDQuMDQtMzMuOTAxbDIyLjY2Ny0yMi42NjdjOS4zNzMtOS4zNzMgMjQuNTY5LTkuMzczIDMzLjk0MSAwTDI4NS40NzUgMjM5LjAzYzkuMzczIDkuMzcyIDkuMzczIDI0LjU2OC4wMDEgMzMuOTQxeiIvPjwvc3ZnPg==) right center no-repeat
+    pointer-events: none
+    height: 2rem
+
 // GALLERY Thumbnails
 figure.wp-block-gallery.is-style-h-thumbnails
   display: grid
@@ -129,6 +157,23 @@ figure.wp-block-gallery.is-style-h-thumbnails
   
   .blocks-gallery-caption
     grid-column: span var(--columns, 3)
+
+  &.columns-1
+    --columns: 1
+  &.columns-2
+    --columns: 2
+  &.columns-3
+    --columns: 3
+  &.columns-4
+    --columns: 4
+  &.columns-5
+    --columns: 5
+  &.columns-6
+    --columns: 6
+  &.columns-7
+    --columns: 7
+  &.columns-8
+    --columns: 8
 
 ///// COVER
 

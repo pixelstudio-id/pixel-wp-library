@@ -1,21 +1,9 @@
 <?php
 
-add_action('plugins_loaded' , '_h_load_post_type');
-
-
-/**
- * @action plugins_loaded
- */
-function _h_load_post_type() {
-  // if( is_admin() ) {
-  //   require_once __DIR__ . '/post-action.php';
-  // }
-}
-
-/////
-
 /**
  * Register Custom Post Type (CPT)
+ * 
+ * @deprecated 6.2.0 - Use ACF instead
  */
 function h_register_post_type(string $post_type, array $args = []) {
   require_once __DIR__ . '/post-type.php';
@@ -26,6 +14,8 @@ function h_register_post_type(string $post_type, array $args = []) {
 
 /**
  * Register Custom Taxonomy
+ * 
+ * @deprecated 6.2.0 - Use ACF instead
  */
 function h_register_taxonomy(string $taxonomy, string $post_type, array $args) {
   require_once __DIR__ . '/taxonomy.php';
