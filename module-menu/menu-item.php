@@ -14,10 +14,11 @@ function _h_mega_menu_classes($items) {
   foreach ($items as &$i) {
     // If parent item, check for mega menu ACF field
     if ($i->menu_item_parent === '0') {
+      $style = get_field('dropdown_style', $i);
       $columns = get_field('mega_menu', $i);
       $alignment = get_field('mega_menu_alignment', $i);
 
-      if ($columns) {
+      if ($style === 'mega-menu') {
         $i->classes[] = "menu-item-has-mega-menu";
         $i->classes[] = "has-{$columns}-columns";
         $i->classes[] = "is-align-{$alignment}";
@@ -26,9 +27,10 @@ function _h_mega_menu_classes($items) {
 
       continue;
     }
-    // Add special class if it's under mega menu
+    // If it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
       $i->classes[] = 'mega-menu__column';
+      $i->url = '';
 
       // remove unnecessary class
       $key = array_search('menu-item', $i->classes);
@@ -65,10 +67,16 @@ function _h_menu_item_classes($items) {
       continue;
     }
 
-    // If title is "-", add empty class so it can be hidden
-    if ($i->title === '-') {
-      $i->title = '&nbsp;';
-      $i->classes[] = 'menu-item-empty-title';
+    // If title is "#" or "-", replace with empty one
+    switch ($i->title) {
+      case '-':
+        $i->title = '';
+        break;
+
+      case '#':
+        $i->title = '&nbsp;';
+        $i->classes[] = 'menu-item-empty-title';
+        break;
     }
 
     // If a child item, change the "menu-item" class into "submenu-item"
@@ -80,10 +88,10 @@ function _h_menu_item_classes($items) {
         $i->classes[$key] = 'submenu-item';
       }
     }
-
+    
     // Add style as extra class
     $styles = get_field('style', $i);
-    
+
     if (is_array($styles)) {
       foreach ($styles as $s) {
         $i->classes[] = "menu-item-$s";

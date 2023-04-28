@@ -15,11 +15,13 @@ const myMenu = {
    * When megamenu columns is selected, add/remove class from it's children accordingly
    */
   megaMenuListener() {
-    const $toggles = document.querySelectorAll('.acf-field[data-name="mega_menu"] input[type="radio"]');
+    const $toggles = document.querySelectorAll('.acf-field[data-name="dropdown_style"] input[type="radio"]');
 
     // add listener
     $toggles.forEach(($t) => {
       $t.addEventListener('click', (e) => {
+        if (e.currentTarget.value !== 'mega-menu') { return; }
+
         const $wrapper = e.currentTarget.closest('.menu-item');
 
         // need timeout to wait for ACF listener
@@ -48,11 +50,11 @@ const myMenu = {
       // wait until the class is changed
       setTimeout(() => {
         const $prevItem = $target.previousElementSibling;
-        const isUnderMegaMenu = $prevItem.classList.contains('menu-item-under-mega-menu') || $prevItem.classList.contains('menu-item-is-mega-menu');
+        const isUnderMegaMenu = $prevItem.classList.contains('h-mega-menu__child') || $prevItem.classList.contains('h-mega-menu');
         if (this.isChildItem($target) && isUnderMegaMenu) {
-          $target.classList.add('menu-item-under-mega-menu');
+          $target.classList.add('h-mega-menu__child');
         } else {
-          $target.classList.remove('menu-item-under-mega-menu');
+          $target.classList.remove('h-mega-menu__child');
         }
       });
     });
@@ -64,7 +66,7 @@ const myMenu = {
    * @param $item - `.menu-item` DOM object in the Appearance > Menu page.
    */
   megaMenuAddClasses($item) {
-    const $checkedOption = $item.querySelector('[data-name="mega_menu"] input[type="radio"]:checked');
+    const $checkedOption = $item.querySelector('[data-name="dropdown_style"] input[type="radio"]:checked');
     const $children = [];
 
     let $currentItem = $item;
@@ -88,17 +90,17 @@ const myMenu = {
     }
 
     // if have checked option, add mega menu classes
-    if ($checkedOption) {
-      $item.classList.add('menu-item-is-mega-menu');
+    if ($checkedOption.value === 'mega-menu') {
+      $item.classList.add('h-mega-menu');
 
       $children.forEach(($c) => {
-        $c.classList.add('menu-item-under-mega-menu');
+        $c.classList.add('h-mega-menu__child');
       });
     } else { // if unchecked, remove mega menu classes
-      $item.classList.remove('menu-item-is-mega-menu');
+      $item.classList.remove('h-mega-menu');
 
       $children.forEach(($c) => {
-        $c.classList.remove('menu-item-under-mega-menu');
+        $c.classList.remove('h-mega-menu__child');
       });
     }
   },
