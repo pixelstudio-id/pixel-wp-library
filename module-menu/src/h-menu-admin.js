@@ -4,7 +4,7 @@ const myMenu = {
   init() {
     if (!window.wpNavMenu) { return; }
 
-    this.megaMenuListener();
+    this.styleListener();
     this.depthChangeListener();
 
     // limit nav menu depth to 3rd level
@@ -14,14 +14,12 @@ const myMenu = {
   /**
    * When megamenu columns is selected, add/remove class from it's children accordingly
    */
-  megaMenuListener() {
+  styleListener() {
     const $toggles = document.querySelectorAll('.acf-field[data-name="dropdown_style"] input[type="radio"]');
 
     // add listener
     $toggles.forEach(($t) => {
       $t.addEventListener('click', (e) => {
-        if (e.currentTarget.value !== 'mega-menu') { return; }
-
         const $wrapper = e.currentTarget.closest('.menu-item');
 
         // need timeout to wait for ACF listener

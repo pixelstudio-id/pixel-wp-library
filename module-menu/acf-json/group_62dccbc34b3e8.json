@@ -37,7 +37,7 @@
             "choices": {
                 "default": "Default",
                 "mega-menu": "Mega Menu",
-                "horizontal": "Horizontal"
+                "horizontal-menu": "Horizontal"
             },
             "default_value": "",
             "return_format": "value",
@@ -45,11 +45,11 @@
             "layout": "horizontal"
         },
         {
-            "key": "field_62dccbd8afe3e",
-            "label": "Mega Menu (number of columns)",
-            "name": "mega_menu",
+            "key": "field_644c996c42c90",
+            "label": "Dropdown Columns",
+            "name": "dropdown_columns",
             "aria-label": "",
-            "type": "button_group",
+            "type": "range",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -59,6 +59,13 @@
                         "operator": "==",
                         "value": "mega-menu"
                     }
+                ],
+                [
+                    {
+                        "field": "field_644b1b1649a9c",
+                        "operator": "==",
+                        "value": "horizontal-menu"
+                    }
                 ]
             ],
             "wrapper": {
@@ -66,20 +73,17 @@
                 "class": "",
                 "id": ""
             },
-            "choices": {
-                "2": "2",
-                "3": "3",
-                "4": "4"
-            },
             "default_value": 2,
-            "return_format": "value",
-            "allow_null": 1,
-            "layout": "horizontal"
+            "min": 2,
+            "max": 6,
+            "step": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_62f5c35a93792",
-            "label": "Mega Menu Alignment",
-            "name": "mega_menu_alignment",
+            "label": "Dropdown Alignment",
+            "name": "dropdown_alignment",
             "aria-label": "",
             "type": "button_group",
             "instructions": "",
@@ -92,8 +96,20 @@
                         "value": "mega-menu"
                     },
                     {
-                        "field": "field_62dccbd8afe3e",
-                        "operator": "!=",
+                        "field": "field_644c996c42c90",
+                        "operator": "<",
+                        "value": "4"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_644b1b1649a9c",
+                        "operator": "==",
+                        "value": "horizontal-menu"
+                    },
+                    {
+                        "field": "field_644c996c42c90",
+                        "operator": "<",
                         "value": "4"
                     }
                 ]
@@ -263,5 +279,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1682644407
+    "modified": 1682742182
 }

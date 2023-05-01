@@ -15,13 +15,17 @@ function _h_mega_menu_classes($items) {
     // If parent item, check for mega menu ACF field
     if ($i->menu_item_parent === '0') {
       $style = get_field('dropdown_style', $i);
-      $columns = get_field('mega_menu', $i);
-      $alignment = get_field('mega_menu_alignment', $i);
+      
+      if ($style === 'mega-menu' || $style === 'horizontal-menu') {  
+        $columns = get_field('dropdown_columns', $i);
+        $alignment = $columns < '4' ? get_field('dropdown_alignment', $i) : '';
+
+        $i->classes[] = "{$style}-wrapper";
+        $i->classes[] = "has-{$columns}-columns";
+        $i->classes[] = $alignment ? "is-align-{$alignment}" : '';
+      }
 
       if ($style === 'mega-menu') {
-        $i->classes[] = "menu-item-has-mega-menu";
-        $i->classes[] = "has-{$columns}-columns";
-        $i->classes[] = "is-align-{$alignment}";
         $mega_menu_ids[] = $i->ID;
       }
 
