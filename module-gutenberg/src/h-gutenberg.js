@@ -1,21 +1,21 @@
+import { unregisterBlockType, unregisterBlockVariation } from '@wordpress/blocks';
+import { addFilter } from '@wordpress/hooks';
+import domReady from '@wordpress/dom-ready';
+
 import './h-gutenberg.sass';
 import './h-cover-mobile.jsx';
 
-const { wp } = window;
-
-wp.domReady(() => {
-  wp.blocks.unregisterBlockStyle('core/quote', 'plain');
-
+domReady(() => {
   window.localizeH.disallowedBlocks.forEach((name) => {
-    wp.blocks.unregisterBlockType(name);
+    unregisterBlockType(name);
   });
 
   // Disable useless Group variation
-  wp.blocks.unregisterBlockVariation('core/group', 'group-stack');
+  unregisterBlockVariation('core/group', 'group-stack');
 });
 
 // Modify settings for Core blocks
-wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name) => {
+addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name) => {
   switch (name) {
     // Paragraph and List is allowed to use wide alignment
     case 'core/paragraph':
@@ -143,7 +143,7 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
       };
       break;
 
-    // Has margin with hidden padding
+    // Has hidden margin and padding
     case 'core/paragraph':
     case 'core/list':
     case 'core/gallery':
@@ -155,9 +155,9 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
         ...settings.supports.spacing,
         padding: true,
         margin: ['top', 'bottom'],
-        __experimentalDefaultControls: {
-          margin: true,
-        },
+        // __experimentalDefaultControls: {
+        //   margin: true,
+        // },
       };
       break;
 
@@ -172,9 +172,9 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
         ...settings.supports.spacing,
         padding: false,
         margin: ['top', 'bottom'],
-        __experimentalDefaultControls: {
-          margin: true,
-        },
+        // __experimentalDefaultControls: {
+        //   margin: true,
+        // },
       };
       break;
 
@@ -184,18 +184,14 @@ wp.hooks.addFilter('blocks.registerBlockType', 'h/set_default_alignment', (setti
         ...settings.supports.spacing,
         padding: true,
         margin: false,
-        __experimentalDefaultControls: {
-          padding: true,
-        },
+        // __experimentalDefaultControls: {
+        //   padding: true,
+        // },
       };
       break;
 
-    // Has nothing
     default:
-      settings.supports = {
-        ...settings.supports,
-        spacing: false,
-      };
+      // do nothing
       break;
   }
 

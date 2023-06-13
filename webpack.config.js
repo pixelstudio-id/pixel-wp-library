@@ -5,8 +5,10 @@ const path = require('path');
 const outputPath = 'dist';
 
 const entryPoints = {
-  'h-icon': './module-block-icon/src/index.jsx',
-  'h-faq': './module-block-faq/v2/index.jsx',
+  'px-icon': './module-block-icon/src/index.jsx',
+  'px-faq': './module-block-faq/src/index.jsx',
+  'px-block-quote': './module-classic-quote/src/index.jsx',
+  'px-block-list': './module-classic-list/src/index.jsx',
 
   'h-gutenberg': './module-gutenberg/src/h-gutenberg.js',
 

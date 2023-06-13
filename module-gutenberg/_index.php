@@ -69,6 +69,9 @@ function _px_disable_inspector_tabs($settings) {
       'core/table' => false,
       'core/group' => false,
       'core/image' => false,
+      'core/list' => false,
+      'px/faq' => false,
+      'px/icon' => false,
     ]
   );
 
