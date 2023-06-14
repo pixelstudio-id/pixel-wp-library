@@ -12,6 +12,11 @@
     'class' => $base_classes,
   ];
 
+  if (isset($atts['iconColor'])) {
+    $icon_color = _px_to_camelcase($atts['iconColor']);
+    $wrapper_args['style'] = "--iconColor: var(--{$icon_color});";
+  }
+
   if ($has_link) {
     $wrapper_args['href'] = $atts['url'];
     $wrapper_args['target'] = $atts['linkTarget'];

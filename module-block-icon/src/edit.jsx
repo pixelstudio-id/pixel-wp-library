@@ -45,6 +45,11 @@ function IconEdit (props) {
   extraClasses += atts.useImage ? 'use-image ' : '';
   blockProps.className += extraClasses;
 
+  if (atts.iconColor) {
+    const iconColor = atts.iconColor.replace(/-./g, (s)=> s[1].toUpperCase());
+    blockProps.style['--iconColor'] = `var(--${iconColor})`;
+  }
+
   let useFontAwesome = !atts.useRawSVG && !atts.useImage;
 
   return (<>
@@ -109,6 +114,7 @@ function IconEdit (props) {
       <ColorDropdown
         name="icon"
         props={props}
+        hasGradient={false}
       />
     }
 
@@ -162,7 +168,7 @@ function IconEdit (props) {
       <dl className='px-block-icon__content'>
         <RichText
           tagName='dt'
-          inline={true}
+          inline="true"
           placeholder='Enter title…'
           value={atts.heading}
           allowedFormats={allowedRichTextFormats}
@@ -227,7 +233,7 @@ function IconEdit (props) {
         { atts.imageID ? 'Change Image' : 'Upload Image' }
       </Button>
       { atts.imageID &&
-        <img class="px-block-icon__image-preview" src={ atts.imageURL } />
+        <img className="px-block-icon__image-preview" src={ atts.imageURL } />
       }
     </>);
   }

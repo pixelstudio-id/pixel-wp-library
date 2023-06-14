@@ -43,3 +43,17 @@ class _H {
     return $full_name;
   }
 }
+
+/**
+ * Change kebab-case to camelCase
+ * 
+ * @param string $text
+ * @return string
+ * 
+ * @since 6.2.3
+ */
+function _px_to_camelcase($text) {
+  $text = str_replace('-', '', ucwords($text, '-'));
+  $text = lcfirst($text);
+  return $text;
+}
