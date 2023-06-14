@@ -73,10 +73,10 @@
     "spacing": {
       "margin": [ "top", "bottom" ],
       "padding": true
-    },
-    "customClassName": false
+    }
   },
   "styles": [
+    { "name": "default", "label": "Default", "isDefault": true },
     { "name": "boxed", "label": "Boxed" }
   ],
   "example": {},

@@ -1,6 +1,6 @@
 <?php
   $atts = $attributes;
-  $has_description = $atts['description'] === '<p></p>' || $atts['description'] === '';
+  $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $has_link = isset($atts['url']) && $atts['isFullyClickable'];
 
   $base_classes = 'px-block-icon ';
