@@ -1,9 +1,13 @@
+
 import {
   useBlockProps,
   RichText,
   BlockControls,
   InspectorControls,
   MediaUpload,
+  __experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
+	__experimentalUseGradient,
+	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
 import {
   ToolbarButton,
@@ -12,15 +16,17 @@ import {
   PanelBody,
   TextControl,
   TextareaControl,
-  Button
+  Button,
 } from '@wordpress/components';
 import SVGInline from './_react-svg-inline.jsx';
 import URLPicker from './_url-picker.jsx';
+import ColorDropdown from './color-dropdown.jsx';
 
 
 function IconEdit (props) {
-  let atts = props.attributes;
   const blockProps = useBlockProps();
+  const atts = props.attributes;
+  const { setAttributes, isSelected } = props;
 
   let allowedRichTextFormats = [
     'core/bold', 'core/italic', 'core/strikethrough', 'core/subscript', 'core/superscript',
@@ -37,6 +43,10 @@ function IconEdit (props) {
   extraClasses += atts.description === '<p></p>' || atts.description === '' ? 'has-no-description ' : 'has-description ';
   extraClasses += atts.useImage ? 'use-image ' : '';
   blockProps.className += extraClasses;
+
+  if (atts.iconColor) {
+    blockProps.style['--iconColor'] = atts.iconColor;
+  }
 
   let useFontAwesome = !atts.useRawSVG && !atts.useImage;
 
@@ -63,7 +73,7 @@ function IconEdit (props) {
             </div>
             <SVGInline
               src={`${pxLocalizeIcon.iconURL}/${atts.iconName}.svg`}
-              onFound={ markup => props.setAttributes({ iconMarkup: markup }) }
+              onFound={ markup => setAttributes({ iconMarkup: markup }) }
             />
           </div>
         }
@@ -71,7 +81,7 @@ function IconEdit (props) {
         <ToggleControl
           label="Use Raw SVG?"
           checked={atts.useRawSVG}
-          onChange={(value) => props.setAttributes({ useRawSVG: value, useImage: false }) }
+          onChange={(value) => setAttributes({ useRawSVG: value, useImage: false }) }
         />
 
         { atts.useRawSVG &&
@@ -79,14 +89,14 @@ function IconEdit (props) {
             label="Raw SVG"
             value={atts.iconMarkup}
             help="Paste in the SVG code here"
-            onChange={(value) => props.setAttributes({ iconMarkup: value })}
+            onChange={(value) => setAttributes({ iconMarkup: value })}
           />
         }
 
         <ToggleControl
           label="Use Image?"
           checked={atts.useImage}
-          onChange={(value) => props.setAttributes({ useImage: value, useRawSVG: false, iconMarkup: '' }) }
+          onChange={(value) => setAttributes({ useImage: value, useRawSVG: false, iconMarkup: '' }) }
         />
 
         { atts.useImage &&
@@ -98,6 +108,13 @@ function IconEdit (props) {
         }
       </PanelBody>
     </InspectorControls>
+    { !atts.useImage &&
+      <ColorDropdown
+        label="Icon Color"
+        name="iconColor"
+        props={props}
+      />
+    }
 
     <BlockControls>
       <ToolbarGroup>
@@ -105,19 +122,19 @@ function IconEdit (props) {
           icon="table-col-before"
           title="Icon on Left"
           className={atts.iconPosition == 'left' ? 'is-pressed' : ''}
-          onClick={() => props.setAttributes({ iconPosition: 'left' })}
+          onClick={() => setAttributes({ iconPosition: 'left' })}
         />
         <ToolbarButton
           icon="table-row-before"
           title="Icon on Top"
           className={atts.iconPosition == 'top' ? 'is-pressed' : ''}
-          onClick={() => props.setAttributes({ iconPosition: 'top' })}
+          onClick={() => setAttributes({ iconPosition: 'top' })}
         />
         <ToolbarButton
           icon="table-col-after"
           title="Icon on Right"
           className={ atts.iconPosition == 'right' ? 'is-pressed' : '' }
-          onClick={() => props.setAttributes({ iconPosition: 'right' })}
+          onClick={() => setAttributes({ iconPosition: 'right' })}
         />
       </ToolbarGroup>
     </BlockControls>
@@ -125,12 +142,12 @@ function IconEdit (props) {
     {atts.isFullyClickable &&
       <URLPicker
         url={atts.url}
-        setAttributes={props.setAttributes}
-        isSelected={props.isSelected}
+        setAttributes={setAttributes}
+        isSelected={isSelected}
         opensInNewTab={atts.linkTarget === '_blank'}
         onToggleOpenInNewTab={(value) => {
           let linkTarget = value ? '_blank' : undefined;
-          props.setAttributes({ linkTarget: linkTarget });
+          setAttributes({ linkTarget: linkTarget });
         }}
       />
     }
@@ -149,11 +166,11 @@ function IconEdit (props) {
       <dl className='px-block-icon__content'>
         <RichText
           tagName='dt'
-          inline={true}
+          inline="true"
           placeholder='Enter title…'
           value={atts.heading}
           allowedFormats={allowedRichTextFormats}
-          onChange={(value) => props.setAttributes({ heading: value })}
+          onChange={(value) => setAttributes({ heading: value })}
         />
 
         <RichText
@@ -162,7 +179,7 @@ function IconEdit (props) {
           placeholder='Enter description…'
           value={atts.description}
           allowedFormats={allowedRichTextFormats}
-          onChange={(value) => props.setAttributes({ description: value })}
+          onChange={(value) => setAttributes({ description: value })}
         />
       </dl>
     </div>
@@ -173,7 +190,7 @@ function IconEdit (props) {
    * Add slight delay before requesting for update 
    */
   function _updateIconMarkup(value) {
-    props.setAttributes({ iconName: value });
+    setAttributes({ iconName: value });
   }
 
   /**
@@ -193,14 +210,14 @@ function IconEdit (props) {
       attsToSet['description'] = newDescription;
     }
 
-    props.setAttributes(attsToSet);
+    setAttributes(attsToSet);
   }
 
   /**
    * Assign the image data into attribute
    */
   function onSelectImage(image) {
-    props.setAttributes({ imageURL: image.url, imageID: image.id });
+    setAttributes({ imageURL: image.url, imageID: image.id });
   }
 
   /**
@@ -214,10 +231,11 @@ function IconEdit (props) {
         { atts.imageID ? 'Change Image' : 'Upload Image' }
       </Button>
       { atts.imageID &&
-        <img class="px-block-icon__image-preview" src={ atts.imageURL } />
+        <img className="px-block-icon__image-preview" src={ atts.imageURL } />
       }
     </>);
   }
 }
 
+// export default withColors(IconEdit, ['iconColor']);
 export default IconEdit;

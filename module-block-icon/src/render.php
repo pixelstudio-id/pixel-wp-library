@@ -1,6 +1,6 @@
 <?php
   $atts = $attributes;
-  $has_description = $atts['description'] === '<p></p>' || $atts['description'] === '';
+  $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $has_link = isset($atts['url']) && $atts['isFullyClickable'];
 
   $base_classes = 'px-block-icon ';
@@ -11,6 +11,10 @@
   $wrapper_args = [
     'class' => $base_classes,
   ];
+
+  if (isset($atts['iconColor'])) {
+    $wrapper_args['style'] = "--iconColor: {$atts['iconColor']};";
+  }
 
   if ($has_link) {
     $wrapper_args['href'] = $atts['url'];
