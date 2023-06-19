@@ -1,28 +1,37 @@
+import { compose } from '@wordpress/compose';
+import { select } from '@wordpress/data';
 import {
+  getColorObjectByColorValue,
   InspectorControls,
+  withColors,
   __experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
 	__experimentalUseGradient,
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
 
-export default function ColorDropdown({ name, hasGradient, props }) {
+export default function ColorDropdown({ attribute, label, hasGradient, props }) {
   const { clientId } = props;
   const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
-  const color = props[`${name}Color`];
-  const nameTitlecase = name.charAt(0).toUpperCase() + name.slice(1);
-  const setColor = props[`set${nameTitlecase}Color`];
+  const color = props[`${attribute}`];
+  const attributeTitlecase = attribute.charAt(0).toUpperCase() + attribute.slice(1);
+  const setColor = props[`set${attributeTitlecase}`];
 
   const settings = {
+    label,
     colorValue: color.color,
-    label: `${nameTitlecase} Color`,
     onColorChange: (val) => {
       setColor(val);
+      props.setAttributes({ iconColorValue: val });
+      // console.log(val);
+      // const editorSettings = select('core/editor').getEditorSettings();
+      // const colorValue = getColorObjectByColorValue(editorSettings.colors, val);
+      // setColor(colorValue);
     },
     isShownByDefault: true,
     resetAllFilter: () => ({
-      [`${name}Color`]: undefined,
-      [`custom${nameTitlecase}Color`]: undefined,
+      [`${attribute}`]: undefined,
+      [`custom${nameTitlecase}`]: undefined,
       gradient: undefined,
       customGradient: undefined,
     }),
@@ -45,3 +54,18 @@ export default function ColorDropdown({ name, hasGradient, props }) {
     </InspectorControls>
   );
 };
+
+/**
+ * Shorthand function to enable color selection in Edit callback
+ * 
+ * @param function editCallback
+ * @param array[string] colorAtts - the attribute name of custom colors
+ */
+export function withColors(editCallback, colorAtts) {
+  const args = {};
+  colorAtts.forEach((colorAtt) => {
+    args[colorAtt] = 'background-color';
+  });
+
+  return compose([ withColors(args) ])(editCallback);
+}

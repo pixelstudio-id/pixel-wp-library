@@ -8,6 +8,8 @@
   $base_classes .= $has_description ? 'has-description ' : 'has-no-description ';
   $base_classes .= $atts['useImage'] ? 'use-image ' : '';
 
+  var_dump($atts);
+
   $wrapper_args = [
     'class' => $base_classes,
   ];

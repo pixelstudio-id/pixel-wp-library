@@ -1,11 +1,10 @@
-import { compose } from '@wordpress/compose';
+
 import {
   useBlockProps,
   RichText,
   BlockControls,
   InspectorControls,
   MediaUpload,
-  withColors,
   __experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
 	__experimentalUseGradient,
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
@@ -21,7 +20,7 @@ import {
 } from '@wordpress/components';
 import SVGInline from './_react-svg-inline.jsx';
 import URLPicker from './_url-picker.jsx';
-import ColorDropdown from './color-dropdown.jsx';
+import { ColorDropdown, withColors } from './color-dropdown.jsx';
 
 
 function IconEdit (props) {
@@ -112,7 +111,8 @@ function IconEdit (props) {
     </InspectorControls>
     { !atts.useImage &&
       <ColorDropdown
-        name="icon"
+        label="Icon Color"
+        attribute="iconColor"
         props={props}
         hasGradient={false}
       />
@@ -239,6 +239,4 @@ function IconEdit (props) {
   }
 }
 
-export default compose([
-	withColors({ iconColor: 'background-color' }),
-])(IconEdit);
+export default withColors(IconEdit, ['iconColor']);
