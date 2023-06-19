@@ -8,15 +8,12 @@
   $base_classes .= $has_description ? 'has-description ' : 'has-no-description ';
   $base_classes .= $atts['useImage'] ? 'use-image ' : '';
 
-  var_dump($atts);
-
   $wrapper_args = [
     'class' => $base_classes,
   ];
 
   if (isset($atts['iconColor'])) {
-    $icon_color = _px_to_camelcase($atts['iconColor']);
-    $wrapper_args['style'] = "--iconColor: var(--{$icon_color});";
+    $wrapper_args['style'] = "--iconColor: {$atts['iconColor']};";
   }
 
   if ($has_link) {

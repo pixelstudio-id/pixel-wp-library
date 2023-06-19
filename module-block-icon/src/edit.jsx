@@ -20,7 +20,7 @@ import {
 } from '@wordpress/components';
 import SVGInline from './_react-svg-inline.jsx';
 import URLPicker from './_url-picker.jsx';
-import { ColorDropdown, withColors } from './color-dropdown.jsx';
+import ColorDropdown from './color-dropdown.jsx';
 
 
 function IconEdit (props) {
@@ -45,8 +45,7 @@ function IconEdit (props) {
   blockProps.className += extraClasses;
 
   if (atts.iconColor) {
-    const iconColor = atts.iconColor.replace(/-./g, (s)=> s[1].toUpperCase());
-    blockProps.style['--iconColor'] = `var(--${iconColor})`;
+    blockProps.style['--iconColor'] = atts.iconColor;
   }
 
   let useFontAwesome = !atts.useRawSVG && !atts.useImage;
@@ -112,9 +111,8 @@ function IconEdit (props) {
     { !atts.useImage &&
       <ColorDropdown
         label="Icon Color"
-        attribute="iconColor"
+        name="iconColor"
         props={props}
-        hasGradient={false}
       />
     }
 
@@ -239,4 +237,5 @@ function IconEdit (props) {
   }
 }
 
-export default withColors(IconEdit, ['iconColor']);
+// export default withColors(IconEdit, ['iconColor']);
+export default IconEdit;
