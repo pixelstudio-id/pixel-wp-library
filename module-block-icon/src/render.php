@@ -21,6 +21,12 @@
     $wrapper_args['target'] = $atts['linkTarget'];
   }
 
+  // Add "width" attribute to SVG if doesn't have one. This is to fix older iOS device
+  preg_match('/<svg.+width.+>/Uis', $atts['iconMarkup'], $has_width);
+  if (!$has_width) {
+    $atts['iconMarkup'] = preg_replace('/viewBox/', 'width="100" height="100" $0', $atts['iconMarkup']);
+  }
+
   $html_atts = get_block_wrapper_attributes($wrapper_args);
 ?>
 
