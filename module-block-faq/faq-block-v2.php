@@ -7,8 +7,8 @@ add_action('wp_footer', '_h_add_faq_schema_v2', 100);
  * Register a custom FAQ block v2
  */
 function _h_register_faq_block_v2() {
-  wp_register_script('h-faq', H_DIST . '/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true);
-  wp_register_style('h-faq', H_DIST . '/h-faq.css', [ 'wp-edit-blocks' ], H_VERSION);
+  wp_register_script('h-faq', PX_DIST . '/h-faq.js', [ 'wp-blocks', 'wp-dom' ] , PX_VERSION, true);
+  wp_register_style('h-faq', PX_DIST . '/h-faq.css', [ 'wp-edit-blocks' ], PX_VERSION);
 
   register_block_type(__DIR__ . '/v2');
 }

@@ -135,7 +135,7 @@ function _h_render_menu_item($i, $styles) {
 
       if ($icon) {
         $src = $icon['sizes']['thumbnail'];
-        $image_tag = "<img src='{$src}'>";
+        $image_tag = "<img src='{$src}' loading='lazy'>";
       }
     }
 
@@ -145,7 +145,7 @@ function _h_render_menu_item($i, $styles) {
       if ($image) {
         $src = $image['sizes']['medium'];
         $alt = $image['alt'];
-        $image_tag = "<img src='{$src}' alt='{$alt}'>";
+        $image_tag = "<img src='{$src}' alt='{$alt}' loading='lazy'>";
       }
     }
   }

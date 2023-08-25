@@ -2,7 +2,7 @@
  * Note that these styles are loaded *before* editor styles, so that
  * editor-specific styles using the same selectors will take precedence.
  */
-div.px-block-icon
+div.wp-block-px-icon
   --iconSize: 60px
   --iconPadding: 1rem
 
@@ -41,7 +41,7 @@ div.px-block-icon
     dl
       flex: auto
 
-.editor-styles-wrapper div.px-block-icon
+.editor-styles-wrapper div.wp-block-px-icon
   &.alignright,
   &.alignleft
     float: none
@@ -64,7 +64,7 @@ div.px-block-icon
 
 
 // Figure
-.px-block-icon__figure
+.wp-block-px-icon__figure
   display: flex
   align-items: center
   justify-content: center
@@ -96,7 +96,7 @@ div.px-block-icon
 
 
 // Content
-.px-block-icon__content
+.wp-block-px-icon__content
   flex: 1
   width: 100%
   margin: 0
@@ -144,7 +144,16 @@ div.px-block-icon
     svg
       width: 75%
 
+.wp-block-px-icon__image-field
+  display: flex
 
-.px-block-icon__image-preview
-  max-height: 200px
-  max-width: 100%
+  button
+    margin-right: 1rem
+
+.wp-block-px-icon__image-preview
+  height: 80px
+  width: 80px
+  margin-left: auto
+  padding: 0.5rem
+  border: 1px solid rgba(black, .2)
+  border-radius: var(--gRadius)

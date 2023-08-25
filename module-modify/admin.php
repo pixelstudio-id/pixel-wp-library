@@ -23,7 +23,7 @@ add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
  * @action admin_enqueu_scripts
  */
 function _h_admin_enqueue_scripts() {
-  wp_enqueue_style('h-admin', H_DIST . '/h-admin.css');
+  wp_enqueue_style('h-admin', PX_DIST . '/h-admin.css');
 }
 
 /**

@@ -32,10 +32,12 @@
     },
     "spacing": {
       "margin": [ "top", "bottom" ]
-    },
-    "customClassName": false
+    }
   },
-  "styles": [],
+  "styles": [
+    { "name": "default", "label": "Default", "isDefault": true },
+    { "name": "boxed", "label": "Boxed" }
+  ],
   "example": {},
   "variations": [],
   "editorScript": "px-faq",

@@ -3,7 +3,7 @@
   $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $has_link = isset($atts['url']) && $atts['isFullyClickable'];
 
-  $base_classes = 'px-block-icon ';
+  $base_classes = '';
   $base_classes .= "has-icon-position-{$atts['iconPosition']} ";
   $base_classes .= $has_description ? 'has-description ' : 'has-no-description ';
   $base_classes .= $atts['useImage'] ? 'use-image ' : '';
@@ -36,7 +36,7 @@
   <div <?= $html_atts ?>>
 <?php endif; ?>
 
-  <figure class='px-block-icon__figure'>
+  <figure class='wp-block-px-icon__figure'>
     <?php if ($atts['useImage']): ?>
       <img src='<?= $atts['imageURL'] ?>'>
     <?php else: ?>
@@ -44,7 +44,7 @@
     <?php endif; ?>
   </figure>
 
-  <dl class='px-block-icon__content'>
+  <dl class='wp-block-px-icon__content'>
     <dt>
       <?= $atts['heading'] ?>
     </dt>

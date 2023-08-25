@@ -8,18 +8,17 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.2.5
+ * Version: 6.2.6
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('H_VERSION', '6.2.5');
-define('H_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
+define('PX_VERSION', '6.2.6');
+define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
-define('H_DIR', __DIR__); // for require
-define('H_URL', plugin_dir_url(__FILE__)); // for linking assets
-define('H_DIST', plugin_dir_url(__FILE__) . 'dist');
+// define('PX_DIR', __DIR__); // for require
+define('PX_DIST', plugin_dir_url(__FILE__) . 'dist');
 
 
 if (!class_exists('Pixel_WP_Library')):
@@ -46,7 +45,7 @@ require_once 'module-classic-list/index.php';
 class Pixel_WP_Library {
   function __construct() {
     require_once 'activation-hook.php';
-    register_activation_hook(H_BASE, [$this, 'register_activation_hook']);
+    register_activation_hook(PX_BASE, [$this, 'register_activation_hook']);
 
     add_filter('plugin_row_meta', [$this, 'add_doc_links'], 10, 2);
   }
@@ -55,7 +54,7 @@ class Pixel_WP_Library {
    * Register activation and deactivation hook
    */
   function register_activation_hook() {
-    $hook = new H_ActivationHook();
+    $hook = new Px_ActivationHook();
     $hook->on_activation();
   }
 

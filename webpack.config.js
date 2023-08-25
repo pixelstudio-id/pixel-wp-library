@@ -1,5 +1,6 @@
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
 
 const outputPath = 'dist';
@@ -29,10 +30,14 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
-
     new DependencyExtractionWebpackPlugin({
       injectPolyfill: true,
     }),
+    new BrowserSyncPlugin({
+      proxy: 'http://lab.test/',
+      files: [`${outputPath}/*.css`],
+      injectCss: true,
+    }, { reload: false }),
   ],
   module: {
     rules: [

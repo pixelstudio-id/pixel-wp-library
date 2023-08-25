@@ -2,8 +2,8 @@ import {
   useBlockProps,
   InspectorControls,
   __experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
-	__experimentalUseGradient,
-	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
+  __experimentalUseGradient,
+  __experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
 
 export default function ColorDropdown({ name, label, hasGradient, props }) {
@@ -23,7 +23,7 @@ export default function ColorDropdown({ name, label, hasGradient, props }) {
     },
     isShownByDefault: true,
     resetAllFilter: () => ({
-      [`${attribute}`]: undefined,
+      [`${attributes}`]: undefined,
       gradient: undefined,
     }),
   };
@@ -38,9 +38,9 @@ export default function ColorDropdown({ name, label, hasGradient, props }) {
     <InspectorControls group="color">
       <ColorGradientSettingsDropdown
         __experimentalIsRenderedInSidebar
-        settings={[ settings ]}
-        panelId={ clientId }
-        { ...colorGradientSettings }
+        settings={[settings]}
+        panelId={clientId}
+        {...colorGradientSettings}
       />
     </InspectorControls>
   );

@@ -3,8 +3,8 @@
 _h_register_icon_block_v1();
 
 function _h_register_icon_block_v1() {
-  wp_register_script('h-icon', H_DIST . '/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true);
-  wp_register_style('h-icon', H_DIST . '/h-icon.css', [ 'wp-edit-blocks' ], H_VERSION);
+  wp_register_script('h-icon', PX_DIST . '/h-icon.js', [ 'wp-blocks', 'wp-dom' ] , PX_VERSION, true);
+  wp_register_style('h-icon', PX_DIST . '/h-icon.css', [ 'wp-edit-blocks' ], PX_VERSION);
 
   $default_atts = apply_filters('h_block_icon_defaults', [
     // toolbar

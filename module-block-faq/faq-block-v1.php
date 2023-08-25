@@ -8,8 +8,8 @@ add_action('wp_footer', '_h_add_faq_schema_v1', 100);
 function _h_register_faq_block_v1() {
  $dir = plugin_dir_url(__FILE__);
 
- wp_register_script('h-faq', $dir . 'v1/h-faq-v1.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true);
- wp_register_style('h-faq', $dir . 'v1/h-faq-v1.css', [ 'wp-edit-blocks' ], H_VERSION);
+ wp_register_script('h-faq', $dir . 'v1/h-faq-v1.js', [ 'wp-blocks', 'wp-dom' ] , PX_VERSION, true);
+ wp_register_style('h-faq', $dir . 'v1/h-faq-v1.css', [ 'wp-edit-blocks' ], PX_VERSION);
 
  register_block_type('h/faq', [
    'editor_style' => 'h-faq',

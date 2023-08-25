@@ -46,7 +46,7 @@ function _h_comment_toolbar_enqueue_assets() {
 
   // If supported, add the editor
   if (get_theme_support('h-comment-editor') && $is_comment_open) {
-    wp_enqueue_style('h-comment', H_DIST . '/h-comment.css', [], '1.1.3');
-    wp_enqueue_script('h-comment', H_DIST . '/h-comment.js', [], '1.1.3', true);
+    wp_enqueue_style('h-comment', PX_DIST . '/h-comment.css', [], '1.1.3');
+    wp_enqueue_script('h-comment', PX_DIST . '/h-comment.js', [], '1.1.3', true);
   }
 }
