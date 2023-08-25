@@ -1,6 +1,6 @@
 <?php
 
-class H_ActivationHook {
+class Px_ActivationHook {
   /**
    * Run when the plugin is activated
    */

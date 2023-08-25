@@ -5,9 +5,6 @@ import {
   BlockControls,
   InspectorControls,
   MediaUpload,
-  __experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
-	__experimentalUseGradient,
-	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
 import {
   ToolbarButton,
@@ -22,15 +19,14 @@ import SVGInline from './_react-svg-inline.jsx';
 import URLPicker from './_url-picker.jsx';
 import ColorDropdown from './color-dropdown.jsx';
 
-
-function IconEdit (props) {
+function IconEdit(props) {
   const blockProps = useBlockProps();
-  const atts = props.attributes;
-  const { setAttributes, isSelected } = props;
+  const { attributes, setAttributes, isSelected } = props;
+  const atts = attributes;
 
-  let allowedRichTextFormats = [
+  const allowedRichTextFormats = [
     'core/bold', 'core/italic', 'core/strikethrough', 'core/subscript', 'core/superscript',
-    'core/image', 'core/text-color', 'core/code'
+    'core/image', 'core/text-color', 'core/code',
   ];
 
   // allow link if not fully clickable
@@ -39,7 +35,7 @@ function IconEdit (props) {
   }
 
   // format className for the div
-  let extraClasses = ` px-block-icon has-icon-position-${atts.iconPosition} `;
+  let extraClasses = ` has-icon-position-${atts.iconPosition} `;
   extraClasses += atts.description === '<p></p>' || atts.description === '' ? 'has-no-description ' : 'has-description ';
   extraClasses += atts.useImage ? 'use-image ' : '';
   blockProps.className += extraClasses;
@@ -48,166 +44,169 @@ function IconEdit (props) {
     blockProps.style['--iconColor'] = atts.iconColor;
   }
 
-  let useFontAwesome = !atts.useRawSVG && !atts.useImage;
+  const useFontAwesome = !atts.useRawSVG && !atts.useImage;
 
-  return (<>
-    <InspectorControls>
-      <PanelBody title="Settings" initialOpen="true">
-        <ToggleControl
-          label="Is Fully Clickable?"
-          checked={atts.isFullyClickable}
-          onChange={_onToggleFullyClickable}
-        />
+  return (
+    <>
+      <InspectorControls>
+        <PanelBody title="Settings" initialOpen="true">
+          <ToggleControl
+            label="Is Fully Clickable?"
+            checked={atts.isFullyClickable}
+            onChange={onToggleFullyClickable}
+          />
 
-        { useFontAwesome &&
-          <div className="px-icon-control">
-            <div>
-              <TextControl
-                label="Icon Name"
-                value={atts.iconName}
-                onChange={_updateIconMarkup}
+          { useFontAwesome && (
+            <div className="px-icon-control">
+              <div>
+                <TextControl
+                  label="Icon Name"
+                  value={atts.iconName}
+                  onChange={updateIconMarkup}
+                />
+                <small style={{ display: 'block', marginTop: '-1.5rem' }}>
+                  Visit here to see list of icons:
+                  <a href="https://fontawesome.com/v5/search?m=free&s=solid" target="_blank" rel="noreferrer">
+                    FontAwesome.com
+                  </a>
+                </small>
+              </div>
+              <SVGInline
+                src={`${window.pxLocalizeIcon.iconURL}/${atts.iconName}.svg`}
+                onFound={(markup) => setAttributes({ iconMarkup: markup }) }
               />
-              <small style={{ display: 'block', marginTop: '-1.5rem' }}>
-                Visit here to see list of icons: <a href="https://fontawesome.com/v5/search?m=free&s=solid" target="_blank">FontAwesome.com</a>
-              </small>
             </div>
-            <SVGInline
-              src={`${pxLocalizeIcon.iconURL}/${atts.iconName}.svg`}
-              onFound={ markup => setAttributes({ iconMarkup: markup }) }
+          )}
+
+          <ToggleControl
+            label="Use Raw SVG?"
+            checked={atts.useRawSVG}
+            onChange={(value) => setAttributes({ useRawSVG: value, useImage: false }) }
+          />
+
+          { atts.useRawSVG && (
+            <TextareaControl
+              label="Raw SVG"
+              value={atts.iconMarkup}
+              help="Paste in the SVG code here"
+              onChange={(value) => setAttributes({ iconMarkup: value })}
             />
-          </div>
-        }
+          )}
 
-        <ToggleControl
-          label="Use Raw SVG?"
-          checked={atts.useRawSVG}
-          onChange={(value) => setAttributes({ useRawSVG: value, useImage: false }) }
-        />
-
-        { atts.useRawSVG &&
-          <TextareaControl
-            label="Raw SVG"
-            value={atts.iconMarkup}
-            help="Paste in the SVG code here"
-            onChange={(value) => setAttributes({ iconMarkup: value })}
+          <ToggleControl
+            label="Use Image?"
+            checked={atts.useImage}
+            onChange={(value) => setAttributes({ useImage: value, useRawSVG: false, iconMarkup: '' }) }
           />
-        }
 
-        <ToggleControl
-          label="Use Image?"
-          checked={atts.useImage}
-          onChange={(value) => setAttributes({ useImage: value, useRawSVG: false, iconMarkup: '' }) }
+          { atts.useImage && (
+            <MediaUpload
+              allowedTypes="image"
+              value={atts.mediaID}
+              onSelect={onSelectImage}
+              render={renderImage}
+            />
+          )}
+        </PanelBody>
+      </InspectorControls>
+      { !atts.useImage && (
+        <ColorDropdown
+          label="Icon Color"
+          name="iconColor"
+          props={props}
         />
+      )}
 
-        { atts.useImage &&
-          <MediaUpload allowedTypes="image"
-            value={atts.mediaID}
-            onSelect={onSelectImage}
-            render={renderImage}
+      <BlockControls>
+        <ToolbarGroup>
+          <ToolbarButton
+            icon="table-col-before"
+            title="Icon on Left"
+            className={atts.iconPosition === 'left' ? 'is-pressed' : ''}
+            onClick={() => setAttributes({ iconPosition: 'left' })}
           />
-        }
-      </PanelBody>
-    </InspectorControls>
-    { !atts.useImage &&
-      <ColorDropdown
-        label="Icon Color"
-        name="iconColor"
-        props={props}
-      />
-    }
+          <ToolbarButton
+            icon="table-row-before"
+            title="Icon on Top"
+            className={atts.iconPosition === 'top' ? 'is-pressed' : ''}
+            onClick={() => setAttributes({ iconPosition: 'top' })}
+          />
+          <ToolbarButton
+            icon="table-col-after"
+            title="Icon on Right"
+            className={atts.iconPosition === 'right' ? 'is-pressed' : ''}
+            onClick={() => setAttributes({ iconPosition: 'right' })}
+          />
+        </ToolbarGroup>
+      </BlockControls>
 
-    <BlockControls>
-      <ToolbarGroup>
-        <ToolbarButton
-          icon="table-col-before"
-          title="Icon on Left"
-          className={atts.iconPosition == 'left' ? 'is-pressed' : ''}
-          onClick={() => setAttributes({ iconPosition: 'left' })}
+      {atts.isFullyClickable && (
+        <URLPicker
+          url={atts.url}
+          setAttributes={setAttributes}
+          isSelected={isSelected}
+          opensInNewTab={atts.linkTarget === '_blank'}
+          onToggleOpenInNewTab={(value) => {
+            const linkTarget = value ? '_blank' : undefined;
+            setAttributes({ linkTarget });
+          }}
         />
-        <ToolbarButton
-          icon="table-row-before"
-          title="Icon on Top"
-          className={atts.iconPosition == 'top' ? 'is-pressed' : ''}
-          onClick={() => setAttributes({ iconPosition: 'top' })}
-        />
-        <ToolbarButton
-          icon="table-col-after"
-          title="Icon on Right"
-          className={ atts.iconPosition == 'right' ? 'is-pressed' : '' }
-          onClick={() => setAttributes({ iconPosition: 'right' })}
-        />
-      </ToolbarGroup>
-    </BlockControls>
+      )}
 
-    {atts.isFullyClickable &&
-      <URLPicker
-        url={atts.url}
-        setAttributes={setAttributes}
-        isSelected={isSelected}
-        opensInNewTab={atts.linkTarget === '_blank'}
-        onToggleOpenInNewTab={(value) => {
-          let linkTarget = value ? '_blank' : undefined;
-          setAttributes({ linkTarget: linkTarget });
-        }}
-      />
-    }
+      <div {...blockProps}>
+        {(atts.useImage) ? (
+          <figure className="wp-block-px-icon__figure">
+            <img src={atts.imageURL} alt="" />
+          </figure>
+        ) : (
+          <figure
+            className="wp-block-px-icon__figure"
+            dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}
+          />
+        )}
 
-    <div {...blockProps}>
-      {(atts.useImage) ?
-        <figure className='px-block-icon__figure'>
-          <img src={atts.imageURL} />
-        </figure>
-      :
-        <figure className='px-block-icon__figure'
-          dangerouslySetInnerHTML={{ __html: atts.iconMarkup }}>
-        </figure>
-      }
+        <dl className="wp-block-px-icon__content">
+          <RichText
+            tagName="dt"
+            inline="true"
+            placeholder="Enter title…"
+            value={atts.heading}
+            allowedFormats={allowedRichTextFormats}
+            onChange={(value) => setAttributes({ heading: value })}
+          />
 
-      <dl className='px-block-icon__content'>
-        <RichText
-          tagName='dt'
-          inline="true"
-          placeholder='Enter title…'
-          value={atts.heading}
-          allowedFormats={allowedRichTextFormats}
-          onChange={(value) => setAttributes({ heading: value })}
-        />
-
-        <RichText
-          tagName='dd'
-          multiline='p'
-          placeholder='Enter description…'
-          value={atts.description}
-          allowedFormats={allowedRichTextFormats}
-          onChange={(value) => setAttributes({ description: value })}
-        />
-      </dl>
-    </div>
-  </>);
-
+          <RichText
+            tagName="dd"
+            multiline="p"
+            placeholder="Enter description…"
+            value={atts.description}
+            allowedFormats={allowedRichTextFormats}
+            onChange={(value) => setAttributes({ description: value })}
+          />
+        </dl>
+      </div>
+    </>
+  );
 
   /**
-   * Add slight delay before requesting for update 
+   * Add slight delay before requesting for update
    */
-  function _updateIconMarkup(value) {
+  function updateIconMarkup(value) {
     setAttributes({ iconName: value });
   }
 
   /**
-   * Clean the anchor inside heading and description 
+   * Clean the anchor inside heading and description
    */
-  function _onToggleFullyClickable(value) {
-    let attsToSet = {
-      isFullyClickable: value
+  function onToggleFullyClickable(value) {
+    const attsToSet = {
+      isFullyClickable: value,
     };
 
     // remove all anchor inside heading and description
-    if (value) { 
-      let newHeading = atts.heading.replace(/<\/?a[^>]*>/g, '');
-      let newDescription = atts.description.replace(/<\/?a[^>]*>/g, '');
-
-      attsToSet['heading'] = newHeading;
-      attsToSet['description'] = newDescription;
+    if (value) {
+      attsToSet.heading = atts.heading.replace(/<\/?a[^>]*>/g, '');
+      attsToSet.description = atts.description.replace(/<\/?a[^>]*>/g, '');
     }
 
     setAttributes(attsToSet);
@@ -224,16 +223,22 @@ function IconEdit (props) {
    * Render image (if uploaded) and upload button
    */
   function renderImage(obj) {
-    let className = atts.imageID	? 'button button--transparent' : 'button';
-    
-    return (<>
-      <Button className={className} onClick={obj.open}>
-        { atts.imageID ? 'Change Image' : 'Upload Image' }
-      </Button>
-      { atts.imageID &&
-        <img className="px-block-icon__image-preview" src={ atts.imageURL } />
-      }
-    </>);
+    const className = atts.imageID ? 'button button--transparent' : 'button';
+
+    return (
+      <div className="wp-block-px-icon__image-field">
+        <Button className={className} onClick={obj.open}>
+          { atts.imageID ? 'Change Image' : 'Upload Image' }
+        </Button>
+        { atts.imageID && (
+          <img
+            className="wp-block-px-icon__image-preview"
+            src={atts.imageURL}
+            alt=""
+          />
+        )}
+      </div>
+    );
   }
 }
 

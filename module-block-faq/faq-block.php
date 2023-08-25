@@ -7,8 +7,8 @@ add_action('wp_footer', '_px_add_faq_schema', 100);
  * Register a custom FAQ block
  */
 function _px_register_faq_block() {
-  wp_register_script('px-faq', H_DIST . '/px-faq.js', [ 'wp-blocks', 'wp-dom' ] , H_VERSION, true);
-  wp_register_style('px-faq', H_DIST . '/px-faq.css', [ 'wp-edit-blocks' ], H_VERSION);
+  wp_register_script('px-faq', PX_DIST . '/px-faq.js', [ 'wp-blocks', 'wp-dom' ] , PX_VERSION, true);
+  wp_register_style('px-faq', PX_DIST . '/px-faq.css', [ 'wp-edit-blocks' ], PX_VERSION);
 
   register_block_type(__DIR__ . '/src');
 }

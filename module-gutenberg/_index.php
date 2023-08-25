@@ -45,8 +45,8 @@ function _h_enqueue_editor() {
     'core/pullquote',
   ]);
 
-  wp_enqueue_style('h-gutenberg', H_DIST . '/h-gutenberg.css', [], H_VERSION);
-  wp_enqueue_script('h-gutenberg', H_DIST . '/h-gutenberg.js', [], H_VERSION, true);
+  wp_enqueue_style('h-gutenberg', PX_DIST . '/h-gutenberg.css', [], PX_VERSION);
+  wp_enqueue_script('h-gutenberg', PX_DIST . '/h-gutenberg.js', [], PX_VERSION, true);
   wp_localize_script('h-gutenberg', 'localizeH', [
     'disallowedBlocks' => $disallowed_blocks
   ]);
@@ -85,7 +85,7 @@ function _px_disable_inspector_tabs($settings) {
  */
 function _h_enqueue_classic_editor() {
   $assets = plugin_dir_url(__FILE__) . 'css';
-  add_editor_style(H_DIST . '/h-classic-editor.css');
+  add_editor_style(PX_DIST . '/h-classic-editor.css');
 }
 
 /**

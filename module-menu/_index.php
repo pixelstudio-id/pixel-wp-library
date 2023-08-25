@@ -15,8 +15,8 @@ add_action('after_setup_theme', function() {
  * @action admin_enqueue_scripts
  */
 function _h_enqueue_menu_assets() {
-  wp_enqueue_script('h-menu', H_DIST . '/h-menu-admin.js', [], H_VERSION, true);
-  wp_enqueue_style('h-menu', H_DIST . '/h-menu-admin.css', [], H_VERSION);
+  wp_enqueue_script('h-menu', PX_DIST . '/h-menu-admin.js', [], PX_VERSION, true);
+  wp_enqueue_style('h-menu', PX_DIST . '/h-menu-admin.css', [], PX_VERSION);
 }
 
 /**

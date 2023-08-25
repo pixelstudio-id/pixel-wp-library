@@ -158,7 +158,7 @@ function _h_load_acf_json_widgets($paths) {
  * @action admin_enqueue_scripts
  */
 function _h_enqueue_widget_assets() {
-  wp_enqueue_style('h-widgets', H_DIST . '/h-widgets.css', [], H_VERSION);
+  wp_enqueue_style('h-widgets', PX_DIST . '/h-widgets.css', [], PX_VERSION);
 }
 
 /////
