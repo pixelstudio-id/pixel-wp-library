@@ -84,7 +84,7 @@
             {
                 "param": "widget",
                 "operator": "==",
-                "value": "h_dark_toggle"
+                "value": "px_dark_toggle"
             }
         ]
     ],

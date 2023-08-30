@@ -112,11 +112,6 @@ function _h_register_widgets() {
   register_widget('H_WidgetSeparator');
   register_widget('H_WidgetRecentPosts');
   register_widget('H_WidgetButtons');
-  
-  if (current_theme_supports('h-dark-mode')) {
-    require_once __DIR__ . '/widget-dark-toggle.php';
-    register_widget('H_WidgetDarkToggle');
-  }
 }
 
 

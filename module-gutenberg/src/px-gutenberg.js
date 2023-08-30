@@ -2,8 +2,8 @@ import { unregisterBlockType, unregisterBlockVariation } from '@wordpress/blocks
 import { addFilter } from '@wordpress/hooks';
 import domReady from '@wordpress/dom-ready';
 
-import './h-gutenberg.sass';
-import './h-cover-mobile.jsx';
+import './px-gutenberg.sass';
+import './px-cover-mobile.jsx';
 
 domReady(() => {
   window.localizeH.disallowedBlocks.forEach((name) => {

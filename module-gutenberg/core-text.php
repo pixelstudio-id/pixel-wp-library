@@ -1,11 +1,11 @@
 <?php
 
-register_block_style('core/list', [ 'name' => 'h-inline', 'label' => 'Inline' ]);
+register_block_style('core/list', [ 'name' => 'px-inline', 'label' => 'Inline' ]);
 
-register_block_style('core/table', [ 'name' => 'h-full-color', 'label' => 'Full Color' ]);
+register_block_style('core/table', [ 'name' => 'px-full-color', 'label' => 'Full Color' ]);
 
-register_block_style('core/quote', [ 'name' => 'h-timeline', 'label' => 'Timeline' ]);
-register_block_style('core/quote', [ 'name' => 'h-testimony', 'label' => 'Testimony' ]);
+register_block_style('core/quote', [ 'name' => 'px-timeline', 'label' => 'Timeline' ]);
+register_block_style('core/quote', [ 'name' => 'px-testimony', 'label' => 'Testimony' ]);
 
 add_filter('render_block_core/table', '_px_render_rowspan_colspan', 10, 2);
 

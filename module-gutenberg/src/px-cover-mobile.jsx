@@ -30,50 +30,50 @@ addFilter('blocks.registerBlockType', 'extend-cover/attributes', (settings, name
   return settings;
 });
 
-
 /**
  * Add a new setting in Inspector to upload mobile image
  */
 const addControl = createHigherOrderComponent((BlockEdit) => {
-  return (props) => {
+  return function (props) {
     // Do nothing if it's another block than our defined ones.
     if (!['core/cover'].includes(props.name)) {
       return (
-        <BlockEdit { ...props } />
+        <BlockEdit {...props} />
       );
     }
 
-    let atts = props.attributes;
+    const atts = props.attributes;
 
     return (
       <Fragment>
-        <BlockEdit { ...props } />
+        <BlockEdit {...props} />
         <InspectorControls>
           <PanelBody title="Mobile Cover" initialOpen="true">
             <UnitControl
               id={`block-cover-mobile-height-input-${useInstanceId(UnitControl)}`}
               label="Mobile Height"
               value={atts.hMobileHeight}
-              onChange={ (newValue) => {
+              onChange={(newValue) => {
                 props.setAttributes({ hMobileHeight: newValue });
-              } }
+              }}
               isResetValueOnUnitChange
-              __unstableInputWidth={ '80px' }
+              __unstableInputWidth="80px"
             />
             <p>&nbsp;</p>
             <p>Leave empty to use the primary image in mobile.</p>
             <div>
               { atts.hMobileMediaURL && <img src={atts.hMobileMediaURL} /> }
 
-              <MediaUpload allowedTypes="image"
+              <MediaUpload
+                allowedTypes="image"
                 value={atts.hMobileMediaID}
-                onSelect={ (media) => {
+                onSelect={(media) => {
                   props.setAttributes({
                     hMobileMediaID: media.id,
                     hMobileMediaURL: media.url,
                   });
-                } }
-                render={_renderImageButton}
+                }}
+                render={renderImageButton}
               />
             </div>
           </PanelBody>
@@ -84,19 +84,17 @@ const addControl = createHigherOrderComponent((BlockEdit) => {
     /**
      * Render image upload button in sidebar
      */
-    function _renderImageButton(obj) {
+    function renderImageButton(obj) {
       return (
         <>
           <Button className="button" onClick={obj.open}>
             { atts.hMobileMediaID ? 'Change image' : 'Upload image' }
           </Button>
-          { atts.hMobileMediaID &&
-            <Button onClick={() => {
-              props.setAttributes({ hMobileMediaURL: null, hMobileMediaID: null })
-            }}>
+          { atts.hMobileMediaID && (
+            <Button onClick={() => props.setAttributes({ hMobileMediaURL: null, hMobileMediaID: null })}>
               Remove
             </Button>
-          }
+          )}
         </>
       );
     }

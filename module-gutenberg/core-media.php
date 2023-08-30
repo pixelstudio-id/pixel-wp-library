@@ -1,17 +1,17 @@
 <?php
 
-register_block_style('core/gallery', [ 'name' => 'h-slider', 'label' => 'Slider' ]);
-register_block_style('core/gallery', [ 'name' => 'h-thumbnails', 'label' => 'Thumbnails' ]);
+register_block_style('core/gallery', [ 'name' => 'px-slider', 'label' => 'Slider' ]);
+register_block_style('core/gallery', [ 'name' => 'px-thumbnails', 'label' => 'Thumbnails' ]);
 
-register_block_style('core/media-text', [ 'name' => 'h-larger-image', 'label' => 'Larger Image' ]);
-register_block_style('core/media-text', [ 'name' => 'h-smaller-image', 'label' => 'Smaller Image' ]);
+register_block_style('core/media-text', [ 'name' => 'px-larger-image', 'label' => 'Larger Image' ]);
+register_block_style('core/media-text', [ 'name' => 'px-smaller-image', 'label' => 'Smaller Image' ]);
 
-register_block_style('core/cover', [ 'name' => 'h-below-header', 'label' => 'Below Header' ]);
+register_block_style('core/cover', [ 'name' => 'px-below-header', 'label' => 'Below Header' ]);
 
 if (!is_admin()) {
-  add_filter('render_block_core/cover', '_h_render_responsive_cover', 10, 2);
+  add_filter('render_block_core/cover', '_px_render_responsive_cover', 10, 2);
   
-  add_filter('body_class', '_h_body_class_cover_below_header');
+  add_filter('body_class', '_px_body_class_cover_below_header');
 }
 
 
@@ -21,7 +21,7 @@ if (!is_admin()) {
  * 
  * @filter render_block_core/cover
  */
-function _h_render_responsive_cover($content, $block) {
+function _px_render_responsive_cover($content, $block) {
   // If has mobile image
   if (isset($block['attrs']['hMobileMediaURL'])) {
     $image = $block['attrs']['hMobileMediaURL'];
@@ -30,7 +30,7 @@ function _h_render_responsive_cover($content, $block) {
 
     $content = preg_replace(
       '/(wp-block-cover[^_].+)(">)/Ui',
-      '$1 h-has-mobile-image">',
+      '$1 px-has-mobile-image">',
       $content
     );
 
@@ -82,14 +82,14 @@ function _h_render_responsive_cover($content, $block) {
  * 
  * @filter body_class
  */
-function _h_body_class_cover_below_header($classes) {
+function _px_body_class_cover_below_header($classes) {
   global $post;
   if (!$post) { return $classes; }
 
-  preg_match('/wp-block-cover.+is-style-h-below-header/', $post->post_content, $matches);
+  preg_match('/wp-block-cover.+is-style-px-below-header/', $post->post_content, $matches);
 
   if ($matches) {
-    $classes[] = 'h-has-transparent-header';
+    $classes[] = 'px-has-transparent-header';
   }
   return $classes;
 }

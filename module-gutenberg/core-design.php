@@ -1,17 +1,17 @@
 <?php
 
-register_block_style('core/button', [ 'name' => 'h-transparent', 'label' => 'Transparent' ]);
+register_block_style('core/button', [ 'name' => 'px-transparent', 'label' => 'Transparent' ]);
 
-register_block_style('core/columns', [ 'name' => 'h-wide-gap', 'label' => 'Wide Gap' ]);
-register_block_style('core/columns', [ 'name' => 'h-no-gap', 'label' => 'No Gap' ]);
+register_block_style('core/columns', [ 'name' => 'px-wide-gap', 'label' => 'Wide Gap' ]);
+register_block_style('core/columns', [ 'name' => 'px-no-gap', 'label' => 'No Gap' ]);
 
-register_block_style('core/spacer', [ 'name' => 'h-negative', 'label' => 'Negative' ]);
+register_block_style('core/spacer', [ 'name' => 'px-negative', 'label' => 'Negative' ]);
 
 if (!is_admin()) {
-  add_filter('render_block_core/spacer', '_h_render_negative_spacer', 10, 2);
+  add_filter('render_block_core/spacer', '_px_render_negative_spacer', 10, 2);
 
-  add_filter('render_block_core/group', '_h_render_group', 5, 2);
-  add_filter('render_block_core/buttons', '_h_render_buttons_alignment', 5, 2);
+  add_filter('render_block_core/group', '_px_render_group', 5, 2);
+  add_filter('render_block_core/buttons', '_px_render_buttons_alignment', 5, 2);
 }
 
 /**
@@ -19,9 +19,9 @@ if (!is_admin()) {
  * 
  * @filter render_block_core/spacer
  */
-function _h_render_negative_spacer($content, $block) {
+function _px_render_negative_spacer($content, $block) {
   $is_negative = isset($block['attrs']['className'])
-    && str_contains($block['attrs']['className'], 'is-style-h-negative');
+    && str_contains($block['attrs']['className'], 'is-style-px-negative');
 
   if ($is_negative) {
     $content = preg_replace('/height:(\d+)/', 'margin-bottom:-$1', $content);
@@ -35,7 +35,7 @@ function _h_render_negative_spacer($content, $block) {
  * 
  * @filter render_block_core/group
  */
-function _h_render_group($content, $block) {
+function _px_render_group($content, $block) {
   $extra_classes = '';
 
   // Add Row Variation class
@@ -83,7 +83,7 @@ function _h_render_group($content, $block) {
  * 
  * @filter render_block_core/buttons
  */
-function _h_render_buttons_alignment($content, $block) {
+function _px_render_buttons_alignment($content, $block) {
   // Abort if still the old buttons
   if (strpos($content, 'is-content-justification-')) { return $content; }
 

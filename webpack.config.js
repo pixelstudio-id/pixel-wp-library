@@ -11,13 +11,16 @@ const entryPoints = {
   'px-block-quote': './module-classic-quote/src/index.jsx',
   'px-block-list': './module-classic-list/src/index.jsx',
 
-  'h-gutenberg': './module-gutenberg/src/h-gutenberg.js',
+  'px-gutenberg': './module-gutenberg/src/px-gutenberg.js',
+  'px-classic-editor': './module-gutenberg/src/px-classic-editor.scss',
 
-  'h-classic-editor': './module-gutenberg/src/h-classic-editor.scss',
   'h-comment': './module-comment/src/h-comment.js',
   'h-admin': './module-modify/src/h-admin.sass',
   'h-widgets': './module-widgets/src/h-widgets.sass',
   'h-menu-admin': './module-menu/src/h-menu-admin.js',
+
+  'px-dark-mode': './module-widgets-dark-mode/src/script.js',
+  'px-dark-mode-head': './module-widgets-dark-mode/src/script-head.js',
 };
 
 module.exports = {

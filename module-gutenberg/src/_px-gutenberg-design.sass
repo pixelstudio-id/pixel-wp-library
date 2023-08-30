@@ -63,7 +63,7 @@
   padding: var(--space0)
   border-radius: var(--gRadius, 4px)
 
-div.wp-block-columns.is-style-h-no-gap
+div.wp-block-columns.is-style-px-no-gap
   column-gap: 0
   
   .block-editor-block-list__block.wp-block-column:not(:first-child)
@@ -72,7 +72,7 @@ div.wp-block-columns.is-style-h-no-gap
   .wp-block-column
     border-radius: 0
 
-div.wp-block-columns.is-style-h-wide-gap
+div.wp-block-columns.is-style-px-wide-gap
   column-gap: var(--blockWideGap)
 
 
@@ -84,6 +84,15 @@ div.wp-block-columns.is-style-h-wide-gap
 [data-align="center"] .wp-block-button__inline-link
   margin-right: auto
   margin-left: auto
+
+div.wp-block-button.is-style-px-transparent .wp-block-button__link
+  border: none
+  color: var(--textColor, var(--text))
+
+  &:not(:hover)
+    background-color: transparent !important
+  &:hover
+    background-color: var(--bgColor, rgba(0,0,0,.1))
 
 
  
@@ -115,7 +124,7 @@ div.wp-block-columns.is-style-h-wide-gap
 .wp-block-spacer
   border: 1px dashed var(--gray)
 
-.wp-block-spacer.is-style-h-negative
+.wp-block-spacer.is-style-px-negative
   &::before
     content: ""
     background: url('./minus.svg') no-repeat center center

@@ -5,10 +5,10 @@ require_once __DIR__ . '/core-media.php';
 require_once __DIR__ . '/core-design.php';
 
 if (is_admin()) {
-  add_filter('safe_style_css', '_h_gutenberg_safe_style');
+  add_filter('safe_style_css', '_px_gutenberg_safe_style');
 
-  add_action('enqueue_block_editor_assets', '_h_enqueue_editor', 20);
-  add_action('admin_init', '_h_enqueue_classic_editor');  
+  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 20);
+  add_action('admin_init', '_px_enqueue_classic_editor');  
   add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
 } else {
   // remove group container class
@@ -25,7 +25,7 @@ if (is_admin()) {
  * 
  * @filter safe_style_css
  */
-function _h_gutenberg_safe_style($attr) {
+function _px_gutenberg_safe_style($attr) {
   $attr[] = '--textColor';
   $attr[] = '--bgColor';
   $attr[] = '--iconColor';
@@ -38,16 +38,16 @@ function _h_gutenberg_safe_style($attr) {
 /**
  * @action enqueue_block_editor_assets
  */
-function _h_enqueue_editor() {
-  $disallowed_blocks = apply_filters('h_disallowed_blocks', [
+function _px_enqueue_editor() {
+  $disallowed_blocks = apply_filters('px_disallowed_blocks', [
     'core/nextpage',
     'core/more',
     'core/pullquote',
   ]);
 
-  wp_enqueue_style('h-gutenberg', PX_DIST . '/h-gutenberg.css', [], PX_VERSION);
-  wp_enqueue_script('h-gutenberg', PX_DIST . '/h-gutenberg.js', [], PX_VERSION, true);
-  wp_localize_script('h-gutenberg', 'localizeH', [
+  wp_enqueue_style('px-gutenberg', PX_DIST . '/px-gutenberg.css', [], PX_VERSION);
+  wp_enqueue_script('px-gutenberg', PX_DIST . '/px-gutenberg.js', [], PX_VERSION, true);
+  wp_localize_script('px-gutenberg', 'localizeH', [
     'disallowedBlocks' => $disallowed_blocks
   ]);
 }
@@ -64,11 +64,14 @@ function _px_disable_inspector_tabs($settings) {
     [
       'core/spacer' => false,
       'core/column' => false,
+      'core/columns' => false,
       'core/buttons' => false,
       'core/button' => false,
       'core/table' => false,
       'core/group' => false,
+      'core/gallery' => false,
       'core/image' => false,
+      'core/media-text' => false,
       'core/list' => false,
       'px/faq' => false,
       'px/icon' => false,
@@ -83,9 +86,9 @@ function _px_disable_inspector_tabs($settings) {
  * 
  * @action admin_init
  */
-function _h_enqueue_classic_editor() {
+function _px_enqueue_classic_editor() {
   $assets = plugin_dir_url(__FILE__) . 'css';
-  add_editor_style(PX_DIST . '/h-classic-editor.css');
+  add_editor_style(PX_DIST . '/px-classic-editor.css');
 }
 
 /**
