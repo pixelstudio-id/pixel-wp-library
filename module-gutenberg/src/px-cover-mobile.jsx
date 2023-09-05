@@ -22,9 +22,9 @@ addFilter('blocks.registerBlockType', 'extend-cover/attributes', (settings, name
 
   settings.attributes = {
     ...settings.attributes,
-    hMobileMediaID: { type: 'number' },
-    hMobileMediaURL: { type: 'string' },
-    hMobileHeight: { type: 'string', default: '400px' },
+    pxMobileMediaID: { type: 'number' },
+    pxMobileMediaURL: { type: 'string' },
+    pxMobileHeight: { type: 'string', default: '400px' },
   };
 
   return settings;
@@ -52,9 +52,9 @@ const addControl = createHigherOrderComponent((BlockEdit) => {
             <UnitControl
               id={`block-cover-mobile-height-input-${useInstanceId(UnitControl)}`}
               label="Mobile Height"
-              value={atts.hMobileHeight}
+              value={atts.pxMobileHeight}
               onChange={(newValue) => {
-                props.setAttributes({ hMobileHeight: newValue });
+                props.setAttributes({ pxMobileHeight: newValue });
               }}
               isResetValueOnUnitChange
               __unstableInputWidth="80px"
@@ -62,15 +62,15 @@ const addControl = createHigherOrderComponent((BlockEdit) => {
             <p>&nbsp;</p>
             <p>Leave empty to use the primary image in mobile.</p>
             <div>
-              { atts.hMobileMediaURL && <img src={atts.hMobileMediaURL} /> }
+              { atts.pxMobileMediaURL && <img src={atts.pxMobileMediaURL} /> }
 
               <MediaUpload
                 allowedTypes="image"
-                value={atts.hMobileMediaID}
+                value={atts.pxMobileMediaID}
                 onSelect={(media) => {
                   props.setAttributes({
-                    hMobileMediaID: media.id,
-                    hMobileMediaURL: media.url,
+                    pxMobileMediaID: media.id,
+                    pxMobileMediaURL: media.url,
                   });
                 }}
                 render={renderImageButton}
@@ -88,10 +88,10 @@ const addControl = createHigherOrderComponent((BlockEdit) => {
       return (
         <>
           <Button className="button" onClick={obj.open}>
-            { atts.hMobileMediaID ? 'Change image' : 'Upload image' }
+            { atts.pxMobileMediaID ? 'Change image' : 'Upload image' }
           </Button>
-          { atts.hMobileMediaID && (
-            <Button onClick={() => props.setAttributes({ hMobileMediaURL: null, hMobileMediaID: null })}>
+          { atts.pxMobileMediaID && (
+            <Button onClick={() => props.setAttributes({ pxMobileMediaURL: null, pxMobileMediaID: null })}>
               Remove
             </Button>
           )}

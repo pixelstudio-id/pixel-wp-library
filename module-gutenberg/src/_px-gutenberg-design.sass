@@ -50,6 +50,15 @@
   margin-right: auto
   margin-left: auto
 
+.wp-block-group.is-layout-flex[class*="px-has-columns-"]
+  display: grid
+  grid-template-columns: repeat(var(--columns, 2), 1fr)
+
+.wp-block-group.px-has-columns-3
+  --columns: 3
+.wp-block-group.px-has-columns-4
+  --columns: 4
+
 
 ///// COLUMNS
 

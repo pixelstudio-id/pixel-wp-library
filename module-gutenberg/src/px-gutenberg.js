@@ -4,6 +4,7 @@ import domReady from '@wordpress/dom-ready';
 
 import './px-gutenberg.sass';
 import './px-cover-mobile.jsx';
+import './px-group-row.jsx';
 
 domReady(() => {
   window.localizeH.disallowedBlocks.forEach((name) => {

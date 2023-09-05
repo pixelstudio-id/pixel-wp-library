@@ -202,6 +202,8 @@ pre.wp-block-code
   cite
     font-style: normal
     color: var(--text)
+    opacity: 1
+    line-height: 1.5
 
     strong
       display: block
@@ -214,6 +216,25 @@ pre.wp-block-code
       max-height: 2.5rem
       margin-right: 0.5rem
       border-radius: 50%
+
+  &.has-text-align-right
+    padding: var(--blockGap)
+    padding-left: var(--blockWideGap)
+
+    &::before
+      right: auto
+      left: var(--blockGap)
+
+    cite img
+      float: right
+      margin-right: 0
+      margin-left: var(--space-2)
+  
+  &.has-text-align-center
+    cite img
+      float: none
+      margin: 0
+      margin-bottom: var(--space-2)
 
 // QUOTE Timeline
 .wp-block-quote.is-style-px-timeline

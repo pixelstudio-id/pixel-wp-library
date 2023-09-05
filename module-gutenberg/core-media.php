@@ -23,8 +23,8 @@ if (!is_admin()) {
  */
 function _px_render_responsive_cover($content, $block) {
   // If has mobile image
-  if (isset($block['attrs']['hMobileMediaURL'])) {
-    $image = $block['attrs']['hMobileMediaURL'];
+  if (isset($block['attrs']['pxMobileMediaURL'])) {
+    $image = $block['attrs']['pxMobileMediaURL'];
 
     preg_match('/<div role="img"/', $content, $is_fixed);
 
@@ -38,7 +38,7 @@ function _px_render_responsive_cover($content, $block) {
     if ($is_fixed) {
       $content = preg_replace(
         '/(<div role="img".+style=".+)(">)/Ui',
-        "$1;--hMobileMediaURL:url({$image});$2",
+        "$1;--pxMobileMediaURL:url({$image});$2",
         $content
       );
     }
@@ -52,8 +52,8 @@ function _px_render_responsive_cover($content, $block) {
   }
 
   // If has mobile height
-  if (isset($block['attrs']['hMobileHeight']) && $block['attrs']['hMobileHeight'] !== '') {
-    $height = $block['attrs']['hMobileHeight'];
+  if (isset($block['attrs']['pxMobileHeight']) && $block['attrs']['pxMobileHeight'] !== '') {
+    $height = $block['attrs']['pxMobileHeight'];
 
     preg_match('/wp-block-cover\s.+(style=).+>/Ui', $content, $has_style);
 
@@ -61,13 +61,13 @@ function _px_render_responsive_cover($content, $block) {
     if($has_style) {
       $content = preg_replace(
         '/(wp-block-cover\s.+)(style=".+)(".+>)/Ui',
-        "$1$2;--hMobileHeight:{$height};$3",
+        "$1$2;--pxMobileHeight:{$height};$3",
         $content
       );
     } else {
       $content = preg_replace(
         '/(wp-block-cover\s.+")(.*>)/Ui',
-        "$1 style='--hMobileHeight:{$height}' $2",
+        "$1 style='--pxMobileHeight:{$height}' $2",
         $content
       );
     }
