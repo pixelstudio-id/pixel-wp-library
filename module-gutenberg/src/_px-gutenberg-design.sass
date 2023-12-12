@@ -54,6 +54,9 @@
   display: grid
   grid-template-columns: repeat(var(--columns, 2), 1fr)
 
+  > span
+    display: none
+
 .wp-block-group.px-has-columns-3
   --columns: 3
 .wp-block-group.px-has-columns-4
@@ -115,6 +118,7 @@ div.wp-block-button.is-style-px-transparent .wp-block-button__link
   border: none
   border-top: 2px solid var(--gray)
   width: 120px
+  clear: both
 
   &.is-style-wide,
   &.is-style-dots

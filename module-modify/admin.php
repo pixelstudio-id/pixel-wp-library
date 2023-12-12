@@ -14,7 +14,9 @@ add_filter('update_footer', '__return_empty_string', 11);
 // other
 add_action('admin_enqueue_scripts', '_h_admin_enqueue_scripts');
 add_filter('wp_terms_checklist_args', '_h_fixed_position_on_term_checkboxes', 1, 2);
-add_filter('intermediate_image_sizes_advanced', '_h_remove_mediumlarge_size');
+add_filter('intermediate_image_sizes_advanced', '_h_remove_image_sizes');
+add_action('init', '_h_remove_image_sizes');
+
 add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
 
 
@@ -42,6 +44,16 @@ function _h_fixed_position_on_term_checkboxes($args, $post_id) {
 function _h_remove_mediumlarge_size($sizes) {
   unset($sizes['medium_large']);
   return $sizes;
+}
+
+/**
+ * Remove other image sizes
+ * 
+ * @action init
+ */
+function _h_remove_image_sizes() {
+  remove_image_size('1536x1536');
+  remove_image_size('2048x2048');
 }
 
 /**
