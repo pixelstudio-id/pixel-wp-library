@@ -16,7 +16,7 @@ domReady(() => {
 });
 
 // Modify settings for Core blocks
-addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name) => {
+addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, name) => {
   switch (name) {
     // Paragraph and List is allowed to use wide alignment
     case 'core/paragraph':

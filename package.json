@@ -8,6 +8,7 @@
   "dependencies": {
     "@wordpress/components": "^11.1.1",
     "@wordpress/scripts": "^12.5.0",
+    "@wordpress/rich-text": "~6.8.0",
     "classnames": "^2.3.2",
     "lodash": "^4.17.21"
   },

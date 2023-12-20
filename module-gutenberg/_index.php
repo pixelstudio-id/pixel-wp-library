@@ -7,9 +7,11 @@ require_once __DIR__ . '/core-design.php';
 if (is_admin()) {
   add_filter('safe_style_css', '_px_gutenberg_safe_style');
 
-  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 20);
-  add_action('admin_init', '_px_enqueue_classic_editor');  
+  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 999);
   add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
+  
+  add_action('admin_init', '_px_remove_gutenberg_menu', 100);  
+  add_action('init', '_px_unregister_template_cpt');
 } else {
   // remove group container class
   remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
@@ -18,6 +20,23 @@ if (is_admin()) {
   // remove the SVG gradient
   remove_action('wp_body_open', 'wp_global_styles_render_svg_filters', 10);
   add_action('wp_footer', '_px_disable_gutenberg_support_css');
+}
+
+/**
+ * @action admin_init
+ */
+function _px_remove_gutenberg_menu() {
+  remove_menu_page('gutenberg');
+}
+
+/**
+ * Disable the 6.4 Template post type
+ * 
+ * @action init
+ */
+function _px_unregister_template_cpt() {
+  unregister_post_type('wp_template');
+  unregister_post_type('wp_template_part');
 }
 
 /**

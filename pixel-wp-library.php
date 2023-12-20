@@ -4,17 +4,17 @@
  * Description: Collection of WordPress modules to be used together with pixel-wp-theme
  * Plugin URI: http://github.com/pixelstudio-id/pixel-wp-library
  * Requires at least: 6.2
- * Requires PHP: 7.3
+ * Requires PHP: 7.4
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.2.10
+ * Version: 6.4.0
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('PX_VERSION', '6.2.10');
+define('PX_VERSION', '6.4.0');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 // define('PX_DIR', __DIR__); // for require
