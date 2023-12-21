@@ -30,35 +30,38 @@ function h_register_taxonomy(string $taxonomy, string $post_type, array $args) {
 
 /**
  * Override all columns in the Post Type table with this one.
+ * 
+ * H::edit_post_columns()
  */
-function h_override_columns(string $post_type, array $columns) {
+function h_edit_post_columns(string $post_type, array $columns) {
   if (!is_admin()) { return; }
 
   require_once __DIR__ . '/post-column.php';
 
-  $pc = new H_PostColumn();
-  $pc->override_columns($post_type, $columns);
+  $pc = new H_PostColumn($post_type, $columns);
+  $pc->edit_columns();
 }
 
 /**
  * Alias for h_override_columns
  */
+function h_override_columns(string $post_type, array $args) {
+  h_edit_post_columns();
+}
 function h_register_columns(string $post_type, array $args) {
-  h_override_columns($post_type, $args);
+  h_edit_post_columns($post_type, $args);
 }
 
-
 /**
- * Append a column to the Post Type table
+ * Edit the columns in taxonomy table
  * 
- * @param string $post_type
- * @param $args - Column keywords or arguments with callable
+ * H::edit_taxonomy_columns
  */
-function h_add_column(string $post_type, $column) {
+function h_edit_taxonomy_columns(string $name, array $columns) {
   if (!is_admin()) { return; }
 
-  require_once __DIR__ . '/post-column.php';
+  require_once __DIR__ . '/taxonomy-column.php';
 
-  $pc = new H_PostColumn();
-  $pc->add_column($post_type, $column);
+  $tc = new H_TaxonomyColumn($name, $columns);
+  $tc->edit_columns();
 }

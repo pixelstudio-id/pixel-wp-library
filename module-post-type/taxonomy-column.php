@@ -1,13 +1,13 @@
 <?php
 /**
- * Create custom column in the post table
+ * Create custom column in the taxonomy table
  */
-class H_PostColumn {
-  private $post_type;
+class H_TaxonomyColumn {
+  private $tax_name;
   private $columns = [];
 
-  public function __construct(string $post_type, array $columns) {
-    $this->post_type = $post_type;
+  public function __construct($name, $columns) {
+    $this->tax_name = $name;
 
     foreach ($columns as $slug => $raw_args) {
       $args = wp_parse_args($raw_args, [
@@ -17,11 +17,6 @@ class H_PostColumn {
         'icon' => false,
         'sortable' => false,
       ]);
-  
-      // Comments always goes with icon
-      if ($slug === 'comments') { 
-        $args['icon'] = 'dashicons-admin-comments';
-      }
   
       // If has icon, replace its name
       if ($args['icon']) {
@@ -37,21 +32,20 @@ class H_PostColumn {
   }
 
   /**
-   * Override all columns of a post type table
+   * Override all columns of a taxonomy table
    */
   function edit_columns() {
-    $pt = $this->post_type;
-
-    add_filter("manage_{$pt}_posts_columns", [$this, '_override_columns'], 100);
-    add_action("manage_{$pt}_posts_custom_column", [$this, '_fill_columns'], 10, 2);
-    add_filter("manage_edit-{$pt}_sortable_columns", [$this, '_enable_sort_columns']);
+    $name = $this->tax_name;
+    add_filter("manage_edit-{$name}_columns", [$this, '_override_columns'], 10);
+    add_action("manage_{$name}_custom_column", [$this, '_fill_columns'], 10, 3);
+    add_filter("manage_edit-{$name}_sortable_columns", [$this, '_enable_sort_columns']);
     add_filter('request', [$this, '_allow_sort_by_metakey']);
   }
 
   /////
 
   /**
-   * @filter manage_CPT_posts_columns
+   * @filter manage_TAX_columns
    * 
    * @param array $defaults - The current column list
    * @return array - The new list
@@ -70,35 +64,23 @@ class H_PostColumn {
   /**
    * Fill the column, row by row
    * 
-   * @action manage_CPT_posts_custom_column
+   * @action manage_TAX_custom_column
    * 
    * @param $slug (string) - The column slug registered at filter_create()
-   * @param $post_id (int) - The post ID of current row
+   * @param $term_id (int) - The Term ID of current row
    * @return string - The content of the column
    */
-  function _fill_columns($slug, $post_id) {
-    global $post;
+  function _fill_columns($value, $slug, $term_id) {
     $columns = $this->columns;
-    if (!isset($columns[$slug])) { return false; }
+    if (!isset($columns[$slug])) { return $value; }
 
     switch ($slug) {
       case 'cb':
-      case 'title':
-      case 'author':
-      case 'date':
-      case 'categories':
-      case 'comments':
-      case 'tags':
-        // do nothing, those are automatically filled
-        break;
-
-      case 'content':
-        echo get_the_excerpt();
-        break;
-
-      case 'thumbnail':
-        $thumb = get_the_post_thumbnail($post_id, [75, 75]);
-        echo $thumb;
+      case 'name':
+      case 'description':
+      case 'slug':
+      case 'posts':
+        return $value;
         break;
 
       // if custom field
@@ -107,15 +89,15 @@ class H_PostColumn {
 
         // if function, run it
         if (isset($content) && is_callable($content)) {
-          $fields = get_post_custom($post_id);
-          echo $content($post, $fields);
+          $fields = get_fields("term_{$term_id}");
+          $term = get_term($term_id, $this->tax_name);
+          return $content($term, $fields);
         }
         // if plain string, look for the custom field
         else {
-          $output = $this->_get_meta_content($slug, $post_id);
-          echo $output;
+          $output = $this->_get_meta_content($slug, $term_id);
+          return $output;
         }
-
         break;
     }
   }
@@ -186,42 +168,8 @@ class H_PostColumn {
    * 
    * @return string - Plain text or HTML to be echoed out.
    */
-  private static function _get_meta_content($name, $post_id) {
-    global $post;
-
-    $meta = function_exists('get_field') ? get_field($name, $post_id) : get_post_meta($post_id, $name, true);
-    $terms = get_the_terms($post_id, $name);
-
-    // is a term if no error and has been ticked
-    $is_terms = !isset($terms->errors) && $terms;
-
-    // if the column is a custom field
-    if ($meta) {
-      return $meta;
-    }
-    // if the column is a term
-    elseif ($is_terms) {
-      $out = [];
-
-      // loop through each term, linking to the 'edit posts' page for the specific term
-      foreach ($terms as $term) {
-        $out[] = sprintf('<a href="%s">%s</a>',
-          esc_url(add_query_arg(
-            [
-              'post_type' => $post->post_type,
-              'type' => $term->slug
-            ],
-            'edit.php'
-          )),
-          esc_html(sanitize_term_field(
-            'name', $term->name, $term->term_id, 'type', 'display'
-          ))
-        );
-      }
-
-      // join the terms, separating with comma
-      return join(', ', $out);
-    }
+  private static function _get_meta_content($field_name, $term_id) {
+    $meta = get_field($field_name, "term_{$term_id}");
+    return $meta;
   }
-
 }
