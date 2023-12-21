@@ -7,6 +7,7 @@ const outputPath = 'dist';
 
 const entryPoints = {
   'px-icon': './module-block-icon/src/index.jsx',
+  'h-icon': './module-block-icon/v1/index.jsx',
   'px-faq': './module-block-faq/src/index.jsx',
   'px-block-quote': './module-classic-quote/src/index.jsx',
   'px-block-list': './module-classic-list/src/index.jsx',
