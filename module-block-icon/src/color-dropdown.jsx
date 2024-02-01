@@ -2,16 +2,15 @@ import {
   useBlockProps,
   InspectorControls,
   __experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
-  __experimentalUseGradient,
   __experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
 
-export default function ColorDropdown({ name, label, hasGradient, props }) {
+export default function ColorDropdown({ name, label, props }) {
   const { attributes, setAttributes, clientId } = props;
   const blockProps = useBlockProps();
   const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
-  if (blockProps && attributes.iconColor) {
+  if (blockProps && attributes[name]) {
     blockProps.style[`--${name}`] = attributes.iconColor;
   }
 
@@ -21,27 +20,28 @@ export default function ColorDropdown({ name, label, hasGradient, props }) {
     onColorChange: (val) => {
       setAttributes({ [name]: val });
     },
-    isShownByDefault: true,
-    resetAllFilter: () => ({
-      [`${attributes}`]: undefined,
-      gradient: undefined,
-    }),
+    // isShownByDefault: true,
+    // resetAllFilter: () => ({
+    //   [`${attributes}`]: undefined,
+    //   gradient: undefined,
+    // }),
   };
 
-  if (hasGradient) {
-    const { gradientValue, setGradient } = __experimentalUseGradient();
-    settings.gradientValue = gradientValue;
-    settings.onGradientChange = setGradient;
-  }
+  // if (hasGradient) {
+  //   const { gradientValue, setGradient } = __experimentalUseGradient();
+  //   settings.gradientValue = gradientValue;
+  //   settings.onGradientChange = setGradient;
+  // }
 
   return (
     <InspectorControls group="color">
       <ColorGradientSettingsDropdown
         __experimentalIsRenderedInSidebar
+        disableCustomColors={false}
         settings={[settings]}
         panelId={clientId}
         {...colorGradientSettings}
       />
     </InspectorControls>
   );
-};
+}

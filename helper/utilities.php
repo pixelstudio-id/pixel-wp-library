@@ -21,76 +21,35 @@ function px_var_dump($value) {
 }
 
 /**
- * Do a GET request.
+ * Upgraded wp_remote_get() so it's easier to use
  * 
- * Usage:  
- * `H::GET( 'https://yoursite.com/wp-json/my/v1/get-endpoint' );`
- * 
- * Shorthand: (need to define base url in `API_URL` constant)
- * `H::GET( '/get-endpoint' );`
+ * @param string $endpoint
+ * @param array $params - URL param in array format
  */
-function h_GET(string $url, $data = []) {
-  // if URL doesn't start with "http", prepend API_URL
-  if (!preg_match('/^http/', $url, $matches)) {
-    $url = API_URL . $url;
+function px_remote_get($endpoint, $params = []) {
+  $full_endpoint = add_query_arg($params, $endpoint);
+  $response = wp_remote_get($full_endpoint);
+
+  if (is_wp_error($response)) {
+    return $response;
   }
 
-  if ($data) {
-    $url = sprintf("%s?%s", $url, http_build_query($data));
-  }
-  
-  $curl = curl_init();
-  curl_setopt($curl, CURLOPT_URL, $url);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-
-  $result = curl_exec($curl);
-  curl_close($curl);
-
-  return json_decode($result, true);
+  $data = json_decode(wp_remote_retrieve_body($response), true);
+  return $data;
 }
-
 
 /**
- * Do a POST request.
- * 
- * Usage:  
- * `H::POST( 'https://yoursite.com/wp-json/my/v1/post-endpoint', [ 'param1' => 'value1' ] );`
- * 
- * Shorthand: (need to define base url in `API_URL` constant)  
- * `H::POST( '/post-endpoint', [ 'param1' => 'value1' ] );`
+ * Upgraded wp_remote_post() so it's easier to use
  */
-function h_POST(string $url, $data = []) {
-  // if URL doesn't start with "http", prepend API_URL
-  if (!preg_match('/^http/', $url, $matches)) {
-    $url = API_URL . $url;
-  }
+function px_remote_post($endpoint, $body = [], $headers = []) {
+  $result = wp_remote_post($endpoint, [
+    'body' => $body,
+    'headers'=> $headers,
+    'timeout' => 30,
+  ]);
 
-  $payload = json_encode($data);
-
-  // Prepare new cURL resource
-  $ch = curl_init($url);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLINFO_HEADER_OUT, true);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-  
-  // Set HTTP Header for POST request 
-  curl_setopt(
-    $ch,
-    CURLOPT_HTTPHEADER,
-    [
-      'Content-Type: application/json',
-      'Content-Length: ' . strlen($payload)
-    ]
-  );
-  
-  // Submit the POST request
-  $response = curl_exec($ch);
-  curl_close($ch);
-
-  return $response;
+  return $result;
 }
-
 
 /**
  * Get social media SVG icon and color

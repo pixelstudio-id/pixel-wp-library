@@ -21,7 +21,6 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
     // Paragraph and List is allowed to use wide alignment
     case 'core/paragraph':
     case 'core/list':
-    case 'core/gallery':
     case 'core/code':
     case 'core/verse':
     case 'core/preformatted':
@@ -31,6 +30,13 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
       settings.supports = {
         ...settings.supports,
         align: ['wide'],
+      };
+      break;
+
+    case 'core/gallery':
+      settings.supports = {
+        ...settings.supports,
+        align: ['wide', 'full'],
       };
       break;
 

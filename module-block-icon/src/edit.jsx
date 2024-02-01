@@ -65,7 +65,7 @@ function IconEdit(props) {
                   onChange={updateIconMarkup}
                 />
                 <small style={{ display: 'block', marginTop: '-1.5rem' }}>
-                  Visit here to see list of icons:
+                  Visit here to see list of icons: 
                   <a href="https://fontawesome.com/v5/search?m=free&s=solid" target="_blank" rel="noreferrer">
                     FontAwesome.com
                   </a>
@@ -109,6 +109,7 @@ function IconEdit(props) {
           )}
         </PanelBody>
       </InspectorControls>
+
       { !atts.useImage && (
         <ColorDropdown
           label="Icon Color"
@@ -242,5 +243,4 @@ function IconEdit(props) {
   }
 }
 
-// export default withColors(IconEdit, ['iconColor']);
 export default IconEdit;
