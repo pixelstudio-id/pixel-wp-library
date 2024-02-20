@@ -10,29 +10,20 @@ class PX_WidgetName extends PX_Widget {
   }
 
   function widget($args, $instance) {
-    $widget_id = 'widget_' . $args['widget_id'];
-    $data = [
-      'widget_id' => $widget_id,
-      'acf_field' => get_field('acf_field', $widget_id),
-    ];
+    $fields = get_fields('widget_' . $args['widget_id']);
 
-    $custom_render = apply_filters('px_widget_name', '', $data);
+    $custom_render = apply_filters('px_render_widget_name', '', $fields);
+    if ($custom_render) {
+      echo $args['before_widget'] . $custom_render . $args['after_widget'];
+    }
 
-    echo $args['before_widget'];
-    echo $custom_render ? $custom_render : $this->render_widget($data);
-    echo $args['after_widget'];
-  }
+    $acf_field = $fields['acf_field'] ?: 'Default value';
 
-  function render_widget($data) {
-    [
-      'acf_field' => $acf_field,
-    ] = $data;
-    ob_start(); ?>
-
+    // render
+    echo $args['before_widget']; ?>
     <div>
       <?= $acf_field ?>
     </div>
-
-    <?php return ob_get_clean();
+    <?php echo $args['after_widget'];
   }
 }

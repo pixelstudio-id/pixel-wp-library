@@ -46,7 +46,7 @@ function h_edit_post_columns(string $post_type, array $columns) {
  * Alias for h_override_columns
  */
 function h_override_columns(string $post_type, array $args) {
-  h_edit_post_columns();
+  h_edit_post_columns($post_type, $args);
 }
 function h_register_columns(string $post_type, array $args) {
   h_edit_post_columns($post_type, $args);

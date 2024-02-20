@@ -8,6 +8,8 @@ add_action('wp_enqueue_scripts', '_px_enqueue_dark_mode_assets');
  * @action widgets_init
  */
 function _px_register_widgets_dark_toggle() {
+  if (!current_theme_supports('h-widgets')) { return; }
+
   register_widget('PX_WidgetDarkToggle');
 }
 
@@ -15,6 +17,8 @@ function _px_register_widgets_dark_toggle() {
  * @filter acf/settings/load_json 20
  */
 function _px_fields_for_widgets_dark_toggle($paths) {
+  if (!current_theme_supports('h-widgets')) { return $paths; }
+
   $paths[] = plugin_dir_path(__FILE__) . '/acf-json';
   return $paths;
 }
@@ -23,6 +27,7 @@ function _px_fields_for_widgets_dark_toggle($paths) {
  * @action wp_enqueue_scripts
  */
 function _px_enqueue_dark_mode_assets() {
+  if (!current_theme_supports('h-widgets')) { return; }
   if (!is_active_widget(false, false, 'px_dark_toggle')) { return; }
 
   wp_enqueue_script('px-dark-mode-head', PX_DIST . '/px-dark-mode-head.js', [], PX_VERSION);
@@ -42,37 +47,22 @@ class PX_WidgetDarkToggle extends WP_Widget {
   }
 
   function widget($args, $instance) {
-    $widget_id = 'widget_' . $args['widget_id'];
-    $data = [
-      'widget_id' => $widget_id,
-      'style' => get_field('style', $widget_id),
-      'label_light' => '',
-      'label_dark' => '',
-    ];
+    $fields = get_fields('widget_' . $args['widget_id']);
 
-    if ($data['style'] === 'has-label') {
-      $label_light = get_field('label_light', $widget_id);
-      $label_dark = get_field('label_dark', $widget_id);
-
-      $data['label_light'] = $label_light ? $label_light : 'Light';
-      $data['label_dark'] = $label_dark ? $label_dark : 'Dark';
+    $custom_render = apply_filters('px_render_widget_dark_toggle', '', $fields);
+    if ($custom_render) {
+      echo $args['before_widget'] . $custom_render . $args['after_widget'];
     }
 
-    $custom_render = apply_filters('px_widget_dark_toggle', '', $data);
+    $style = $fields['style'] ?: '';
 
-    echo $args['before_widget'];
-    echo $custom_render ? $custom_render : $this->render_widget($data);
-    echo $args['after_widget'];
-  }
+    if ($style === 'has-label') {
+      $label_light = $fields['label_light'] ?: 'Light';
+      $label_dark = $fields['label_dark'] ?: 'Dark';
+    }
 
-  function render_widget($data) {
-    [
-      'style' => $style,
-      'label_light' => $label_light,
-      'label_dark' => $label_dark,
-    ] = $data;
-    ob_start(); ?>
-
+    // render
+    echo $args['before_widget']; ?>
     <label class="px-dark-toggle is-style-<?= $style ?>">
       <?php if ($label_light): ?>
         <span>
@@ -89,8 +79,7 @@ class PX_WidgetDarkToggle extends WP_Widget {
         </span>
       <?php endif; ?>
     </label>
-
-    <?php return ob_get_clean();
+    <?php echo $args['after_widget'];
   }
 
   function form($instance) {

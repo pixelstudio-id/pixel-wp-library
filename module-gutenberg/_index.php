@@ -3,6 +3,7 @@
 require_once __DIR__ . '/core-text.php';
 require_once __DIR__ . '/core-media.php';
 require_once __DIR__ . '/core-design.php';
+require_once __DIR__ . '/core-widget.php';
 
 if (is_admin()) {
   add_filter('safe_style_css', '_px_gutenberg_safe_style');

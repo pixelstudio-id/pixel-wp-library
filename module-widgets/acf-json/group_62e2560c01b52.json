@@ -76,7 +76,7 @@
                     "choices": {
                         "default": "Default",
                         "outline": "Outline",
-                        "h-transparent": "Transparent"
+                        "px-transparent": "Transparent"
                     },
                     "default_value": false,
                     "allow_null": 0,

@@ -136,7 +136,7 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
   }
 
   switch (name) {
-    // Has both padding and margin
+    // Has visible padding and margin
     case 'core/group':
     case 'core/columns':
     case 'core/cover':
@@ -151,7 +151,9 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
       break;
 
     // Has hidden margin and padding
+    case 'core/heading':
     case 'core/paragraph':
+    case 'core/quote':
     case 'core/list':
     case 'core/gallery':
     case 'core/code':
@@ -169,11 +171,10 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
       break;
 
     // Only margin
-    case 'core/heading':
-    case 'core/quote':
     case 'core/buttons':
     case 'core/separator':
     case 'core/image':
+    case 'core/media-text':
     case 'core/latest-posts':
       settings.supports.spacing = {
         ...settings.supports.spacing,

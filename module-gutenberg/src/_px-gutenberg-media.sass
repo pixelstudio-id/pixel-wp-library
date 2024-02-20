@@ -49,24 +49,14 @@ div.editor-styles-wrapper
 ///// MEDIA TEXT
 
 .wp-block-media-text
-  --columnMedia: minmax(0, 1fr)
-  --columnContent: minmax(0, 1fr)
-  grid-template-columns: var(--columnMedia) var(--columnContent) !important
+  gap: var(--blockGap)
 
-  &.has-media-on-the-right
-    grid-template-columns: var(--columnContent) var(--columnMedia) !important
-
+  &.alignwide,
+  &.alignfull
+    gap: var(--blockWideGap)
 
   .components-resizable-box__container.has-show-handle .components-resizable-box__handle
     display: none
-
-  &.is-style-px-larger-image
-    --columnMedia: 3fr
-    --columnContent: 2fr
-
-  &.is-style-px-smaller-image
-    --columnMedia: 2fr
-    --columnContent: 3fr
 
   .wp-block-media-text__content
     padding: 0

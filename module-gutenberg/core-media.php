@@ -3,14 +3,11 @@
 register_block_style('core/gallery', [ 'name' => 'px-slider', 'label' => 'Slider' ]);
 register_block_style('core/gallery', [ 'name' => 'px-thumbnails', 'label' => 'Thumbnails' ]);
 
-register_block_style('core/media-text', [ 'name' => 'px-larger-image', 'label' => 'Larger Image' ]);
-register_block_style('core/media-text', [ 'name' => 'px-smaller-image', 'label' => 'Smaller Image' ]);
-
 register_block_style('core/cover', [ 'name' => 'px-below-header', 'label' => 'Below Header' ]);
 
 if (!is_admin()) {
   add_filter('render_block_core/cover', '_px_render_responsive_cover', 10, 2);
-  
+
   add_filter('body_class', '_px_body_class_cover_below_header');
 }
 

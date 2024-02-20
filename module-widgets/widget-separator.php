@@ -14,21 +14,16 @@ class H_WidgetSeparator extends H_Widget {
   }
 
   public function widget($args, $instance) {
-    $widget_id = 'widget_' . $args['widget_id'];
-    $data = [
-      'widget_id' => $widget_id,
-      'size' => get_field('footer_size', $widget_id),
-      'style' => '',
-    ];
+    $fields = get_fields('widget_' . $args['widget_id']);
+    $size = $fields['footer_size'] ?: 'auto';
+    $style = '';
   
-    if ($data['size'] !== 'auto') {
-      $data['style'] = "style='--columnSize:{$data['size']}'";
+    if ($size !== 'auto') {
+      $style = "style='--columnSize:{$size}'";
     }
 
-    // render the HTML
-    $content = "</ul><ul class=\"widget-column\" {$data['style']}>";
-    $content = apply_filters('h_widget_separator', $content, $data);
-
-    echo $content;
+    ?>
+      </ul><ul class="widget-column" <?= $style ?>>
+    <?php
   }
 }

@@ -5,6 +5,7 @@ add_action('widgets_init', '_h_register_widgets');
 add_action('widgets_init', '_h_unregister_widgets');
 add_filter('acf/settings/load_json', '_h_load_acf_json_widgets', 20);
 
+
 if (is_admin()) {
   // Reverted the gutenberg widget into classic widget
   add_filter('gutenberg_use_widgets_block_editor', '__return_false');
@@ -46,6 +47,8 @@ function h_dynamic_header($slug) {
  * @action widgets_init
  */
 function _h_register_sidebar() {
+  if (!current_theme_supports('h-widgets')) { return; }
+
   $before_sidebar = "<div class='widget-row'><ul class='widget-column'>";
   $after_sidebar = "</ul></div>";
   $headers = [
@@ -99,6 +102,8 @@ function _h_register_sidebar() {
  * @action widgets_init
  */
 function _h_register_widgets() {
+  if (!current_theme_supports('h-widgets')) { return; }
+
   require_once __DIR__ . '/widget-logo.php';
   require_once __DIR__ . '/widget-separator.php';
   require_once __DIR__ . '/widget-socials.php';
@@ -120,6 +125,8 @@ function _h_register_widgets() {
  * @action widgets_init
  */
 function _h_unregister_widgets() {
+  if (!current_theme_supports('h-widgets')) { return; }
+
   $disabled_widgets = apply_filters('h_disabled_widgets', [
     'WP_Widget_Calendar',
     'WP_Widget_Archives',
@@ -144,7 +151,9 @@ function _h_unregister_widgets() {
  * 
  * @filter acf/settings/load_json 20
  */
-function _h_load_acf_json_widgets($paths) {  
+function _h_load_acf_json_widgets($paths) {
+  if (!current_theme_supports('h-widgets')) { return $paths; }
+
   $paths[] = plugin_dir_path(__FILE__) . '/acf-json';
   return $paths;
 }

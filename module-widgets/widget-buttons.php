@@ -12,30 +12,20 @@ class H_WidgetButtons extends H_Widget {
   }
 
   function widget($args, $instance) {
-    $widget_id = 'widget_' . $args['widget_id'];
-    $data = [
-      'widget_id' => $widget_id,
-      'addon' => get_field('addon', $widget_id),
-      'buttons' => get_field('buttons', $widget_id),
-    ];
+    $fields = get_fields('widget_' . $args['widget_id']);
 
-    $custom_render = apply_filters('h_widget_buttons', '', $data);
+    $custom_render = apply_filters('px_render_widget_buttons', '', $fields);
+    if ($custom_render) {
+      echo $args['before_widget'] . $custom_render . $args['after_widget'];
+    }
 
-    echo $args['before_widget'];
-    echo $custom_render ? $custom_render : $this->render_widget($data);
-    echo $args['after_widget'];
-  }
+    $addon = $fields['addon'] ?: '';
+    $buttons = $fields['buttons'] ?: [];
 
-  function render_widget($data) {
-    [
-      'addon' => $addon,
-      'buttons' => $buttons,
-    ] = $data;
-
-    ob_start(); ?>
-
+    // render
+    echo $args['before_widget']; ?>
     <div class="wp-block-buttons">
-    <?php foreach ($buttons as $b): ?>
+      <?php foreach ($buttons as $b): ?>
       <div class="wp-block-button is-style-<?= $b['style'] ?> <?= $addon ?>">
         <a
           class="wp-block-button__link"
@@ -56,9 +46,9 @@ class H_WidgetButtons extends H_Widget {
           <?php endif; ?>
         </a>
       </div>
-    <?php endforeach; ?>
+      <?php endforeach; ?>
     </div>
 
-    <?php return ob_get_clean();
+    <?php echo $args['after_widget'];
   }
 }

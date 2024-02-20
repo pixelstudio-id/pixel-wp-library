@@ -13,8 +13,14 @@
       opacity: .75
 
 
-.widgets-sortables[id*="header"]
+.widgets-sortables[id*="header"],
+.widgets-sortables[id*="offcanvas"]
   .acf-field[data-name="footer_size"]
+    display: none
+
+.widgets-sortables[id*="footer"],
+.widgets-sortables[id*="offcanvas"]
+  .acf-field[data-name="logo_alt"]
     display: none
 
 .h-widget-error

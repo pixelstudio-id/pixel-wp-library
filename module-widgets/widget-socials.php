@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ * Create social links
  */
 class H_WidgetSocials extends H_Widget {
   function __construct() {
@@ -11,25 +11,45 @@ class H_WidgetSocials extends H_Widget {
   }
 
   function widget($args, $instance) {
-    $widget_id = 'widget_' . $args['widget_id'];
-    $data = [
-      'widget_id' => $widget_id,
-      'links' => get_field('links', $widget_id),
-      'style' => get_field('link_style', $widget_id),
-      'color' => get_field('color', $widget_id),
-      'size' => get_field('size', $widget_id),
-      'orientation' => get_field('orientation', $widget_id),
+    $fields = get_fields('widget_' . $args['widget_id']);
 
-      'before_title' => $args['before_title'],
-      'after_title' => $args['after_title'],
-      'heading' => trim(get_field('heading', $widget_id)),
-    ];
-
-    if (empty($data['style'])) {
-      $data['style'] = get_field('style', $widget_id);
+    $custom_render = apply_filters('px_render_widget_socials', '', $fields);
+    if ($custom_render) {
+      echo $args['before_widget'] . $custom_render . $args['after_widget'];
     }
 
-    $data['links'] = array_map(function($item) {
+    $heading = $fields['heading'] ?: '';
+    $links = $this->_parse_links($fields['links']);
+    $extra_classes = $this->_get_extra_classes($fields);
+
+    // render
+    echo $args['before_widget']; ?>
+    <?php if ($heading): ?>
+      <?= $args['before_title'] ?> <?= $heading ?> <?= $args['after_title'] ?>
+    <?php endif; ?>
+
+    <ul class="wp-block-social-links <?= $extra_classes ?>">
+      <?php foreach ($links as $item): ?>
+        <li class="wp-social-link <?= $item['extra_classes'] ?>">
+          <a
+            class="wp-block-social-link-anchor"
+            href="<?= $item['link']['url'] ?>"
+            target='<?= $item['link']['target'] ?>'
+            rel="noopener nofollow"
+          >
+            <figure class="wp-block-social-link__icon">
+              <?= $item['svg'] ?>
+            </figure>
+            <?= $item['label'] ?>
+          </a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+    <?php echo $args['after_widget'];
+  }
+
+  private function _parse_links($links) {
+    $links = array_map(function($item) {
       $name = $item['icon'];
 
       $item['svg'] = $name === 'custom'
@@ -57,59 +77,25 @@ class H_WidgetSocials extends H_Widget {
       }
 
       return $item;
-    }, $data['links']);
+    }, $links);
 
-    $custom_render = apply_filters('h_widget_socials', '', $data);
-
-    echo $args['before_widget'];
-    echo $custom_render ? $custom_render : $this->render_widget($data);
-    echo $args['after_widget'];
+    return $links;
   }
-
-  function render_widget($data) {
-    [
-      'links' => $links,
-      'style' => $style,
-      'color' => $color,
-      'size' => $size,
-      'orientation' => $orientation,
-
-      'before_title' => $before_title,
-      'after_title' => $after_title,
-      'heading' => $heading,
-    ] = $data;
+  
+  private function _get_extra_classes($fields) {
+    $style_class = $fields['link_style'] === 'default'
+      ? ''
+      : "is-style-{$fields['link_style']}";
+    $color_class = $fields['color']
+      ? "has-{$fields['color']}-color"
+      : '';
+    $size_class = $fields['size'] === 'normal'
+      ? ''
+      : "has-{$fields['size']}-icon-size";
+    $orientation_class = $fields['orientation'] === 'horizontal'
+      ? ''
+      : "is-orientation-{$fields['orientation']}";
     
-    $style_class = $style === 'default' ? '' : "";
-    $size_class = $size === 'normal' ? '' : "has-{$size}-icon-size";
-    $orient_class = $orientation === 'horizontal' ? '' : "is-orientation-{$orientation}";
-
-    $extra_classes = "{$style_class} is-style-{$style} has-{$color}-color {$size_class} {$orient_class}";
-    ob_start() ?>
-
-    <?php if ($heading): ?>
-      <?= $before_title ?>
-        <?= $heading ?>
-      <?= $after_title ?>
-    <?php endif; ?>
-
-    <ul class="wp-block-social-links <?= $extra_classes ?>">
-      <?php foreach ($links as $item): ?>
-        <li class="wp-social-link <?= $item['extra_classes'] ?>">
-          <a
-            class="wp-block-social-link-anchor"
-            href="<?= $item['link']['url'] ?>"
-            target='<?= $item['link']['target'] ?>'
-            rel="noopener nofollow"
-          >
-            <figure class="wp-block-social-link__icon">
-              <?= $item['svg'] ?>
-            </figure>
-            <?= $item['label'] ?>
-          </a>
-        </li>
-      <?php endforeach; ?>
-    </ul>
-
-    <?php return ob_get_clean();
+    return "$style_class $color_class $size_class $orientation_class";
   }
 }
