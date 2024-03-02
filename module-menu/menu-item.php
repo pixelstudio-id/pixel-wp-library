@@ -21,7 +21,7 @@ function _h_mega_menu_classes($items) {
         $alignment = $columns < '4' ? get_field('dropdown_alignment', $i) : '';
 
         $i->classes[] = "{$style}-wrapper";
-        $i->classes[] = "has-{$columns}-columns";
+        $i->classes[] = "has-columns-{$columns}";
         $i->classes[] = $alignment ? "is-align-{$alignment}" : '';
       }
 
