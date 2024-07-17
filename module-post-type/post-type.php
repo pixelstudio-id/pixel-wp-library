@@ -17,6 +17,12 @@ class H_PostType {
       $args['supports'] ?? []
     );
     $this->args = $this->_parse_args($this->post_type, $args);
+
+    // add custom columns if filter exist
+    $custom_columns = apply_filters("h_override_{$post_type}_columns", null);
+    if ($custom_columns) {
+      h_edit_post_columns($post_type, $custom_columns);
+    }
   }
 
 
@@ -59,13 +65,13 @@ class H_PostType {
   private function _parse_args(string $post_type, array $args) : array {
     $slug = $args['slug'] ?? $post_type;
 
-    $parsed_args = wp_parse_args( $args, [
+    $parsed_args = wp_parse_args($args, [
       'menu_icon' => 'dashicons-admin-post',
       'menu_position' => 30,
       'public' => true,
       'capability_type' => 'post',
       'rewrite' => [
-        'slug' => $args['slug'] ?? $post_type,
+        'slug' => $slug,
         'with_front' => false
       ],
       
@@ -73,7 +79,7 @@ class H_PostType {
       'show_in_rest' => in_array('no-api', $args['supports']) ? false : true,
       'hierarchical' => in_array('page-attributes', $args['supports']) ? true : false,
       'publicly_queryable' => in_array('no-single', $args['supports']) ? false : true,
-    ] );
+    ]);
 
     return $parsed_args;
   }
@@ -90,6 +96,7 @@ class H_PostType {
       'name' => $plural,
       'singular_name' => $singular,
       'all_items' => 'All ' . $plural,
+      'add_new' => 'Add New ' . $singular,
       'add_new_item' => 'Add New ' . $singular,
       'edit_item' => 'Edit ' . $singular,
       'new_item' => 'New ' . $singular,

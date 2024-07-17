@@ -1,7 +1,19 @@
 <?php
 
+add_filter('nav_menu_item_attributes', '_h_remove_id_in_menu_item', 100, 3);
 add_filter('wp_nav_menu_objects', '_h_mega_menu_classes', 100);
 add_filter('wp_nav_menu_objects', '_h_menu_item_classes', 101);
+
+/**
+ * @filter nav_menu_item_attributes
+ */
+function _h_remove_id_in_menu_item($li_atts, $menu_item, $args) {
+  // var_dump($args);
+
+  // $li_atts['data-columns'] = '3';
+  unset($li_atts['id']);
+  return $li_atts;
+}
 
 /**
  * Add classes to menu-item that's related to mega menu
@@ -15,18 +27,18 @@ function _h_mega_menu_classes($items) {
     // If parent item, check for mega menu ACF field
     if ($i->menu_item_parent === '0') {
       $style = get_field('dropdown_style', $i);
+
+      if ($style === 'mega-menu') {
+        $i->classes[] = 'mega-menu-wrapper';
+        $mega_menu_ids[] = $i->ID;
+      }
       
       if ($style === 'mega-menu' || $style === 'horizontal-menu') {  
         $columns = get_field('dropdown_columns', $i);
         $alignment = $columns < '4' ? get_field('dropdown_alignment', $i) : '';
 
-        $i->classes[] = "{$style}-wrapper";
         $i->classes[] = "has-columns-{$columns}";
         $i->classes[] = $alignment ? "is-align-{$alignment}" : '';
-      }
-
-      if ($style === 'mega-menu') {
-        $mega_menu_ids[] = $i->ID;
       }
 
       continue;

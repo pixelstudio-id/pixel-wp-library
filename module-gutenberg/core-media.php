@@ -12,7 +12,6 @@ if (!is_admin()) {
 }
 
 
-
 /**
  * Wrap the Image with <picture> and add responsive mobile image
  * 

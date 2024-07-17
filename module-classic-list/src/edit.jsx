@@ -33,7 +33,7 @@ import {
 /**
  * Internal dependencies
  */
-import { name } from './block.json';
+import blockJSON from './block.json';
 import OrderedListSettings from './ordered-list-settings.jsx';
 
 export default function ListEdit( {
@@ -44,6 +44,7 @@ export default function ListEdit( {
   style,
 } ) {
   const { ordered, values, type, reversed, start, placeholder } = attributes;
+  const { name } = blockJSON;
   const tagName = ordered ? 'ol' : 'ul';
 
   const controls = ( { value, onChange, onFocus } ) => (

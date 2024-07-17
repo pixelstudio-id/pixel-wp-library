@@ -27,6 +27,7 @@ const entryPoints = {
 module.exports = {
   entry: entryPoints,
   output: {
+    publicPath: '',
     path: path.resolve(__dirname, outputPath),
     filename: '[name].js',
   },
@@ -38,7 +39,7 @@ module.exports = {
       injectPolyfill: true,
     }),
     new BrowserSyncPlugin({
-      proxy: 'http://lab.test/',
+      proxy: 'http://flexiclasses.test/',
       files: [`${outputPath}/*.css`],
       injectCss: true,
     }, { reload: false }),

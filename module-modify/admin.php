@@ -19,6 +19,22 @@ add_action('init', '_h_remove_image_sizes');
 
 add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
 
+add_action('admin_head', '_px_remove_update_nag');
+
+/**
+ * Remove the update nag
+ * 
+ * @action admin_head
+ */
+function _px_remove_update_nag() {
+  remove_action('admin_notices', 'update_nag', 3);
+  remove_action('admin_notices', 'maintenance_nag', 10);
+  remove_action('network_admin_notices', 'maintenance_nag', 10);
+
+  // if (!current_user_can('update_core')) {
+  // }
+}
+
 
 /**
  * Add CSS and JS to admin area

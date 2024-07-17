@@ -34,9 +34,20 @@ $acf-bg: #f3f3f4
 // Fixed reusable block being constrained to narrow size
 div.editor-styles-wrapper .wp-block.is-reusable
   max-width: none
+  border: 1px dashed rgba(black, .5)
 
   .block-library-block__reusable-block-container > .wp-block
     max-width: none
+
+  > *
+    max-width: var(--contentSize)
+    margin-right: auto
+    margin-left: auto
+
+  > .alignwide
+    max-width: var(--wideSize)
+  > .alignfull
+    max-width: 100%
 
 // Fixed bug where Wide column is almost full when on smaller screen
 .wp-block[data-type="core/group"][data-align=full]>div>.wp-block-group>.wp-block-group__inner-container>.block-editor-inner-blocks

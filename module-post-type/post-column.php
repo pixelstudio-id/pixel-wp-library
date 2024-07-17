@@ -4,36 +4,85 @@
  */
 class H_PostColumn {
   private $post_type;
+  private $sortable;
   private $columns = [];
 
-  public function __construct(string $post_type, array $columns) {
+  function __construct(string $post_type, array $columns) {
     $this->post_type = $post_type;
 
-    foreach ($columns as $slug => $raw_args) {
-      $args = wp_parse_args($raw_args, [
+    $this->columns = $this->_parse_columns($columns);
+    $this->sortable = $this->_get_sortable($this->columns);
+  }
+
+  /**
+   * 
+   */
+  private function _parse_columns($raw_columns) {
+    $raw_columns = array_filter($raw_columns, function($rc) {
+      return $rc;
+    });
+
+    $columns = [];
+    foreach ($raw_columns as $slug => $col) {
+      $label = $col['label'] ?? $col['name'] ?? _H::to_title($slug);
+      $col = wp_parse_args($col, [
         'slug' => $slug,
-        'name' => $raw_args['name'] ?? _H::to_title($slug),
+        'label' => $label,
         'content' => false,
         'icon' => false,
-        'sortable' => false,
+        'orderby' => '', // the columns to sort by, if sorting ACF/custom field, add underscore (_) in front like "_price"
+        'order' => 'desc', // the initial sorting order, 'desc' or 'asc'
+
+        'sortable_by' => false, // @deprecated, replaced by 'orderby'
+        'sortable' => false, // @deprecated, replaced by 'orderby'
       ]);
+
+      // if orderby empty, but sortable_by or sortable has value
+      if (!$col['orderby'] && ($col['sortable_by'] || $col['sortable'])) {
+        $col['orderby'] = $col['sortable_by'] ?: $col['sortable'];
+      }
   
       // Comments always goes with icon
       if ($slug === 'comments') { 
-        $args['icon'] = 'dashicons-admin-comments';
-      }
-  
-      // If has icon, replace its name
-      if ($args['icon']) {
-        if (preg_match( '/^dashicons-/', $args['icon'], $has_prefix)) {
-          $args['icon'] =  'dashicons-' . $args['icon'];
-        }
-         
-        $args['name'] = "<span class='dashicons {$args['icon']}'></span> <span class='screen-reader-text'>{$args['name']}</span>";
+        $col['icon'] = 'dashicons-admin-comments';
       }
 
-      $this->columns[$slug] = $args;
+      // If has icon, replace its name
+      if ($col['icon']) {
+        if (preg_match( '/^dashicons-/', $col['icon'], $has_prefix)) {
+          $col['icon'] =  'dashicons-' . $col['icon'];
+        }
+         
+        $col['label'] = "<span class='dashicons {$col['icon']}'></span>
+          <span class='screen-reader-text'>
+            {$col['label']}
+          </span>";
+      }
+
+      $columns[$slug] = $col;
     }
+
+    return $columns;
+  }
+
+  /**
+   * 
+   */
+  private function _get_sortable($columns) {
+    $sortable = array_filter($columns, function ($col) {
+      return $col['orderby'];
+    });
+
+    $sortable = array_map(function ($col) {
+      $is_desc = strcasecmp($col['order'], 'desc') === 0;
+      if ($col['orderby'] === true) {
+        return [$col['slug'], $is_desc];
+      } else {
+        return [$col['orderby'], $is_desc];
+      }
+    }, $sortable);
+
+    return $sortable;
   }
 
   /**
@@ -45,7 +94,7 @@ class H_PostColumn {
     add_filter("manage_{$pt}_posts_columns", [$this, '_override_columns'], 100);
     add_action("manage_{$pt}_posts_custom_column", [$this, '_fill_columns'], 10, 2);
     add_filter("manage_edit-{$pt}_sortable_columns", [$this, '_enable_sort_columns']);
-    add_filter('request', [$this, '_allow_sort_by_metakey']);
+    add_filter('request', [$this, '_request_allow_order_by_meta']);
   }
 
   /////
@@ -59,7 +108,7 @@ class H_PostColumn {
   function _override_columns($defaults) {
     $list = [];
     foreach ($this->columns as $slug => $args) {
-      $list[$slug] = $args['name'];
+      $list[$slug] = $args['label'];
     }
 
     // always start with checkbox
@@ -80,18 +129,19 @@ class H_PostColumn {
     global $post;
     $columns = $this->columns;
     if (!isset($columns[$slug])) { return false; }
+    
+    $default_columns = ['cb', 'title', 'author', 'date', 'categories', 'comments', 'tags'];
+    $content_callback = $columns[$slug]['content'] ?? null;
+
+    $fields = get_fields($post_id);
+    $post = apply_filters("h_post_object_in_{$this->post_type}_table", $post, $fields);
+
+    // if default columns AND has no callback, abort early since it's automatically filled
+    if (in_array($slug, $default_columns) && !$content_callback) {
+      return;
+    }
 
     switch ($slug) {
-      case 'cb':
-      case 'title':
-      case 'author':
-      case 'date':
-      case 'categories':
-      case 'comments':
-      case 'tags':
-        // do nothing, those are automatically filled
-        break;
-
       case 'content':
         echo get_the_excerpt();
         break;
@@ -103,12 +153,9 @@ class H_PostColumn {
 
       // if custom field
       default:
-        $content = $columns[$slug]['content'];
-
         // if function, run it
-        if (isset($content) && is_callable($content)) {
-          $fields = get_post_custom($post_id);
-          echo $content($post, $fields);
+        if (isset($content_callback) && is_callable($content_callback)) {
+          echo $content_callback($post, $fields);
         }
         // if plain string, look for the custom field
         else {
@@ -129,12 +176,7 @@ class H_PostColumn {
    * @return array - The updated sortable column list
    */
   function _enable_sort_columns($defaults) {
-    $sortable_columns = $this->_get_sortable_columns($this->columns);
-
-    foreach ($sortable_columns as $sc) {
-      $defaults[$sc] = $sc;
-    }
-    return $defaults;
+    return $this->sortable;
   }
 
   /**
@@ -145,19 +187,19 @@ class H_PostColumn {
    * @param array $sortable_columns - Sortable column data
    * @return array - The modified $vars to include sorting method
    */
-  function _allow_sort_by_metakey($vars) {
-    $sortable_columns = $this->_get_sortable_columns($this->columns);
+  function _request_allow_order_by_meta($query_vars) {
+    $orderby = $query_vars['orderby'] ?? null;
+    
+    // abort if the format is not "meta_value__xxx" or "meta_value_num__xxx"
+    preg_match('/(meta_value(?:_num)?)__(.+)/', $orderby, $matches);
+    if (!$matches) { return $query_vars; }
 
-    $is_orderby_meta = isset($vars['orderby']) && in_array($vars['orderby'], $sortable_columns);
+    $query_vars = wp_parse_args([
+      'orderby' => $matches[1],
+      'meta_key' => $matches[2],
+    ], $query_vars);
 
-    if ($is_orderby_meta) {
-      $vars = array_merge($vars, [
-        'meta_key' => $vars['orderby'],
-        'orderby' => 'meta_value'
-      ]);
-    }
-
-    return $vars;
+    return $query_vars;
   }
 
   /**

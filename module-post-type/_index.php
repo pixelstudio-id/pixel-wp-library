@@ -35,7 +35,6 @@ function h_register_taxonomy(string $taxonomy, string $post_type, array $args) {
  */
 function h_edit_post_columns(string $post_type, array $columns) {
   if (!is_admin()) { return; }
-
   require_once __DIR__ . '/post-column.php';
 
   $pc = new H_PostColumn($post_type, $columns);
@@ -43,13 +42,26 @@ function h_edit_post_columns(string $post_type, array $columns) {
 }
 
 /**
- * Alias for h_override_columns
+ * Alias for h_edit_post_columns
  */
-function h_override_columns(string $post_type, array $args) {
-  h_edit_post_columns($post_type, $args);
+function h_override_columns(string $post_type, array $columns) {
+  h_edit_post_columns($post_type, $columns);
 }
-function h_register_columns(string $post_type, array $args) {
-  h_edit_post_columns($post_type, $args);
+function h_register_columns(string $post_type, array $columns) {
+  h_override_columns($post_type, $columns);
+}
+
+/**
+ * Create a WP_List_Table object
+ * 
+ * @return WP_List_Table - call display() function to echo it
+ */
+function h_create_list_table($args) {
+  require_once __DIR__ . '/list-table.php';
+
+  $table = new H_List_Table($args);
+  $table->prepare_items();
+  return $table;
 }
 
 /**
