@@ -76,15 +76,23 @@ function _h_render_icon_block_v1($atts, $default_atts) {
   }
 
   // format the content
-  $icon = "<figure class='wp-block-h-icon__figure'>" .
-      ($atts['useImage'] ? "<img src='{$atts['imageURL']}'>" : $atts['iconMarkup']) .
-    "</figure>";
+  $icon = '';
+  if ($atts['useImage']) {
+    $icon = "<img src='{$atts['imageURL']}'>";
+  } else {
+    $icon = $atts['iconMarkup'];
+  }
+
+  $icon = preg_replace('/viewBox/', 'width="100" height="100" $0', $icon);
+  $icon = "<figure class='wp-block-h-icon__figure'>{$icon}</figure>";
 
   // format content
-  $heading = $atts['heading'];
+  $heading = empty($atts['heading']) ? '' : "<dt>{$atts['heading']}";
   $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $description = $has_description ? "<dd>{$atts['description']}</dd>" : '';
-  $content = "<dl class='wp-block-h-icon__content'> <dt>$heading</dt> $description </dl>";
+  $content = $heading || $description
+    ? "<dl class='wp-block-h-icon__content'> {$heading} {$description} </dl>"
+    : '';
 
   // format the style
   $style = '';
