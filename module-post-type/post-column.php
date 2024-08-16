@@ -1,16 +1,20 @@
 <?php
 /**
  * Create custom column in the post table
+ * 
+ * Documentation: https://github.com/pixelstudio-id/pixel-wp-library/wiki/Custom-Post-Columns/
+ * 
+ * @deprecated - replaced by px_override_post_columns()
  */
 class H_PostColumn {
   private $post_type;
-  private $sortable;
   private $columns = [];
+  private $sortable;
 
-  function __construct(string $post_type, array $columns) {
+  function __construct(string $post_type, array $raw_columns) {
     $this->post_type = $post_type;
 
-    $this->columns = $this->_parse_columns($columns);
+    $this->columns = $this->_parse_columns($raw_columns);
     $this->sortable = $this->_get_sortable($this->columns);
   }
 
@@ -30,8 +34,8 @@ class H_PostColumn {
         'label' => $label,
         'content' => false,
         'icon' => false,
-        'orderby' => '', // the columns to sort by, if sorting ACF/custom field, add underscore (_) in front like "_price"
-        'order' => 'desc', // the initial sorting order, 'desc' or 'asc'
+        'orderby' => '',
+        'order' => 'desc',
 
         'sortable_by' => false, // @deprecated, replaced by 'orderby'
         'sortable' => false, // @deprecated, replaced by 'orderby'
@@ -133,7 +137,15 @@ class H_PostColumn {
     $default_columns = ['cb', 'title', 'author', 'date', 'categories', 'comments', 'tags'];
     $content_callback = $columns[$slug]['content'] ?? null;
 
-    $fields = get_fields($post_id);
+    $fields = [];
+    if (class_exists('ACF')) {
+      $fields = get_fields($post_id);
+    } else {
+      $fields = get_post_meta($post_id);
+      $fields = array_combine(array_keys($fields), array_column($fields, '0'));
+    }
+
+    // @deprecated? - turns out this function is run for every column, so not helping with cache
     $post = apply_filters("h_post_object_in_{$this->post_type}_table", $post, $fields);
 
     // if default columns AND has no callback, abort early since it's automatically filled
@@ -200,24 +212,6 @@ class H_PostColumn {
     ], $query_vars);
 
     return $query_vars;
-  }
-
-  /**
-   * Get list of Sortable columns
-   * 
-   * @param array $columns - All column data
-   * @return array - List of sortable column's slug.
-   */
-  private function _get_sortable_columns($columns) {
-    $sortable_columns = array_reduce($columns, function($result, $c) {
-      if ($c['sortable']) {
-        $result[] = $c['slug'];
-      }
-
-      return $result;
-    }, []);
-
-    return $sortable_columns;
   }
 
   /**
