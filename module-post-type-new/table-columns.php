@@ -15,7 +15,7 @@ class PxTableColumns {
   private $columns = [];
   private $sortable;
 
-  function __construct(string $name, string $type = 'post', array $raw_columns) {
+  function __construct(string $name, array $raw_columns, string $type = 'post') {
     $this->columns = $this->_parse_columns($raw_columns);
     $this->sortable = $this->_get_sortable($this->columns);
 
@@ -269,7 +269,7 @@ class PxTableColumns {
  * @return array - The modified $vars to include sorting method
  */
 function px_simplify_orderby_meta_value($query_vars) {
-  $orderby = $query_vars['orderby'] ?? null;
+  $orderby = $query_vars['orderby'] ?? '';
   
   // abort if the format is not "meta_value__xxx" or "meta_value_num__xxx"
   preg_match('/(meta_value(?:_num)?)__(.+)/', $orderby, $matches);
