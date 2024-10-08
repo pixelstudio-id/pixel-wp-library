@@ -24,7 +24,7 @@ function _px_add_faq_schema() {
   if (is_home()) { return; } // abort if blog page
 
   global $post;
-  $content = isset($post) ? $post->post_content : null;
+  $content = isset($post) ? $post->post_content : '';
 
   // Find the FAQ with noIndex attribute
   preg_match_all('/wp:px\/faq.+noIndex":true/Ui', $content, $noindex_faqs);

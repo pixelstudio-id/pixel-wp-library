@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Register Custom Post Type (CPT)
  * 
@@ -31,7 +32,7 @@ function h_register_taxonomy(string $taxonomy, string $post_type, array $args) {
 /**
  * Override all columns in the Post Type table with this one.
  * 
- * H::edit_post_columns()
+ * @deprecated - replaced by px_override_post_columns()
  */
 function h_edit_post_columns(string $post_type, array $columns) {
   if (!is_admin()) { return; }
@@ -67,7 +68,7 @@ function h_create_list_table($args) {
 /**
  * Edit the columns in taxonomy table
  * 
- * H::edit_taxonomy_columns
+ * @deprecated - replaced by px_override_taxonomy_columns()
  */
 function h_edit_taxonomy_columns(string $name, array $columns) {
   if (!is_admin()) { return; }

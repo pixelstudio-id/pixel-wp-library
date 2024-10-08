@@ -1,34 +1,75 @@
 <?php
 /**
  * Create custom column in the taxonomy table
+ * 
+ * @deprecated - replaced by px_override_taxonomy_columns()
  */
 class H_TaxonomyColumn {
   private $tax_name;
   private $columns = [];
+  private $sortable;
 
-  public function __construct($name, $columns) {
-    $this->tax_name = $name;
+  public function __construct($tax_name, $raw_columns) {
+    $this->tax_name = $tax_name;
 
-    foreach ($columns as $slug => $raw_args) {
-      $args = wp_parse_args($raw_args, [
+    $this->columns = $this->_parse_columns($raw_columns);
+    $this->sortable = $this->_get_sortable($this->columns);
+  }
+
+  /**
+   *
+   */
+  function _parse_columns($raw_columns) {
+    $raw_columns = array_filter($raw_columns, function($rc) {
+      return $rc;
+    });
+
+    $columns = [];
+    foreach ($raw_columns as $slug => $args) {
+      $label = $args['label'] ?? $args['name'] ?? _H::to_title($slug);
+      $col = wp_parse_args($args, [
         'slug' => $slug,
-        'name' => $raw_args['name'] ?? _H::to_title($slug),
+        'label' => $label,
         'content' => false,
-        'icon' => false,
-        'sortable' => false,
+        'icon' => '',
+        'orderby' => '',
+        'order' => 'desc',
       ]);
   
       // If has icon, replace its name
-      if ($args['icon']) {
-        if (preg_match( '/^dashicons-/', $args['icon'], $has_prefix)) {
-          $args['icon'] =  'dashicons-' . $args['icon'];
+      if ($col['icon']) {
+        if (preg_match( '/^dashicons-/', $col['icon'], $has_prefix)) {
+          $col['icon'] =  'dashicons-' . $col['icon'];
         }
          
-        $args['name'] = "<span class='dashicons {$args['icon']}'></span> <span class='screen-reader-text'>{$args['name']}</span>";
+        $col['name'] = "<span class='dashicons {$col['icon']}'></span>
+          <span class='screen-reader-text'>{$col['label']}</span>";
       }
 
-      $this->columns[$slug] = $args;
+      $columns[$slug] = $col;
     }
+    
+    return $columns;
+  }
+
+  /**
+   * 
+   */
+  private function _get_sortable($columns) {
+    $sortable = array_filter($columns, function ($col) {
+      return $col['orderby'];
+    });
+
+    $sortable = array_map(function ($col) {
+      $is_desc = strcasecmp($col['order'], 'desc') === 0;
+      if ($col['orderby'] === true) {
+        return [$col['slug'], $is_desc];
+      } else {
+        return [$col['orderby'], $is_desc];
+      }
+    }, $sortable);
+
+    return $sortable;
   }
 
   /**
@@ -149,6 +190,21 @@ class H_TaxonomyColumn {
    * @return array - List of sortable column's slug.
    */
   private function _get_sortable_columns($columns) {
+    $sortable = array_filter($columns, function ($col) {
+      return $col['orderby'];
+    });
+
+    $sortable = array_map(function ($col) {
+      $is_desc = strcasecmp($col['order'], 'desc') === 0;
+      if ($col['orderby'] === true) {
+        return [$col['slug'], $is_desc];
+      } else {
+        return [$col['orderby'], $is_desc];
+      }
+    }, $sortable);
+
+    return $sortable;
+
     $sortable_columns = array_reduce($columns, function($result, $c) {
       if ($c['sortable']) {
         $result[] = $c['slug'];

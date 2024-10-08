@@ -9,42 +9,35 @@
   max-width: 100% !important
 
 // fix floating
-div.editor-styles-wrapper
-  .wp-block-image.alignleft,
-  .wp-block-image.alignright
-    float: none
-    display: block
-    width: var(--contentSize)
+div.editor-styles-wrapper .wp-block-image
+  &.alignleft,
+  &.alignright
+    display: flex
+    flex-direction: column
+    position: relative
+    z-index: 10 !important
+    max-width: calc(var(--contentSize) / 2)
     margin-right: auto
     margin-left: auto
 
-  .wp-block-image.alignleft > *:first-child
-    float: left
-    margin-right: var(--space1)
+    .components-resizable-box__container
+      height: auto !important
+      width: 100%
 
-  .wp-block-image.alignright > *:first-child
-    float: right
-    margin-left: var(--space1)
+  &.alignleft
+    margin-left: calc((100% - var(--contentSize)) / 2)
+    margin-right: 1.5rem
+    figcaption
+      text-align: left
+      margin-left: 0
 
-.wp-block-image.alignleft,
-.wp-block-image.alignright
-  img
-    width: 100%
-
-  .components-resizable-box__container
-    width: 50% !important
-    height: auto !important
-
-  .components-resizable-box__handle
-    display: none
-
-.wp-block-image.alignleft
-  figcaption
-    text-align: left
-
-.wp-block-image.alignright
-  figcaption
-    text-align: right
+  &.alignright
+    align-items: flex-end
+    margin-left: 1.5rem
+    margin-right: calc((100% - var(--contentSize)) / 2)
+    figcaption
+      text-align: right
+      margin-right: 0
 
 ///// MEDIA TEXT
 
