@@ -14,7 +14,7 @@ add_filter('update_footer', '__return_empty_string', 11);
 // other
 add_action('admin_enqueue_scripts', '_h_admin_enqueue_scripts');
 add_filter('wp_terms_checklist_args', '_h_fixed_position_on_term_checkboxes', 1, 2);
-// add_filter('intermediate_image_sizes_advanced', '_h_remove_mediumlarge_size');
+add_filter('intermediate_image_sizes_advanced', '_h_remove_mediumlarge_size');
 add_action('init', '_h_remove_image_sizes');
 
 add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
