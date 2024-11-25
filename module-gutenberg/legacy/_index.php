@@ -6,13 +6,13 @@ require_once __DIR__ . '/core-design.php';
 require_once __DIR__ . '/core-widget.php';
 
 if (is_admin()) {
-  add_filter('safe_style_css', '_px_gutenberg_safe_style');
+  add_filter('safe_style_css', '_h_gutenberg_safe_style');
 
-  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 999);
-  add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
+  add_action('enqueue_block_editor_assets', '_h_enqueue_editor', 999);
+  add_filter('block_editor_settings_all', '_h_disable_inspector_tabs');
   
-  add_action('admin_init', '_px_remove_gutenberg_menu', 100);  
-  add_action('init', '_px_unregister_template_cpt');
+  add_action('admin_init', '_h_remove_gutenberg_menu', 100);  
+  add_action('init', '_h_unregister_template_cpt');
 } else {
   // remove group container class
   remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
@@ -20,13 +20,13 @@ if (is_admin()) {
 
   // remove the SVG gradient
   remove_action('wp_body_open', 'wp_global_styles_render_svg_filters', 10);
-  add_action('wp_footer', '_px_disable_gutenberg_support_css');
+  add_action('wp_footer', '_h_disable_gutenberg_support_css');
 }
 
 /**
  * @action admin_init
  */
-function _px_remove_gutenberg_menu() {
+function _h_remove_gutenberg_menu() {
   remove_menu_page('gutenberg');
 }
 
@@ -35,7 +35,7 @@ function _px_remove_gutenberg_menu() {
  * 
  * @action init
  */
-function _px_unregister_template_cpt() {
+function _h_unregister_template_cpt() {
   unregister_post_type('wp_template');
   unregister_post_type('wp_template_part');
 }
@@ -45,7 +45,7 @@ function _px_unregister_template_cpt() {
  * 
  * @filter safe_style_css
  */
-function _px_gutenberg_safe_style($attr) {
+function _h_gutenberg_safe_style($attr) {
   $attr[] = '--textColor';
   $attr[] = '--bgColor';
   $attr[] = '--iconColor';
@@ -54,20 +54,19 @@ function _px_gutenberg_safe_style($attr) {
   return $attr;
 }
 
-
 /**
  * @action enqueue_block_editor_assets
  */
-function _px_enqueue_editor() {
-  $disallowed_blocks = apply_filters('px_disallowed_blocks', [
+function _h_enqueue_editor() {
+  $disallowed_blocks = apply_filters('h_disallowed_blocks', [
     'core/nextpage',
     'core/more',
     'core/pullquote',
   ]);
 
-  wp_enqueue_style('px-gutenberg', PX_DIST . '/px-gutenberg.css', [], PX_VERSION);
-  wp_enqueue_script('px-gutenberg', PX_DIST . '/px-gutenberg.js', [], PX_VERSION, true);
-  wp_localize_script('px-gutenberg', 'localizeH', [
+  wp_enqueue_style('h-gutenberg', PX_DIST . '/h-gutenberg.css', [], PX_VERSION);
+  wp_enqueue_script('h-gutenberg', PX_DIST . '/h-gutenberg.js', [], PX_VERSION, true);
+  wp_localize_script('h-gutenberg', 'localizeH', [
     'disallowedBlocks' => $disallowed_blocks
   ]);
 }
@@ -77,10 +76,10 @@ function _px_enqueue_editor() {
  * 
  * @filter block_editor_settings_all
  */
-function _px_disable_inspector_tabs($settings) {
+function _h_disable_inspector_tabs($settings) {
   $current_tab_settings = _wp_array_get($settings, ['blockInspectorTabs'], []);
 
-  $tab_settings = apply_filters('px_blocks_disabled_tab', [
+  $tab_settings = apply_filters('h_blocks_disabled_tab', [
       'core/spacer',
       'core/column',
       'core/columns',
@@ -112,20 +111,10 @@ function _px_disable_inspector_tabs($settings) {
 }
 
 /**
- * Add custom CSS to Classic Editor
- * 
- * @action admin_init
- */
-function _px_enqueue_classic_editor() {
-  $assets = plugin_dir_url(__FILE__) . 'css';
-  add_editor_style(PX_DIST . '/px-classic-editor.css');
-}
-
-/**
  * Disable Support CSS
  * 
  * @action wp_footer
  */
-function _px_disable_gutenberg_support_css() {
+function _h_disable_gutenberg_support_css() {
   wp_dequeue_style('core-block-supports');
 }

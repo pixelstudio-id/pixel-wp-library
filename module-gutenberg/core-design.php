@@ -21,7 +21,7 @@ if (!is_admin()) {
  */
 function _px_render_negative_spacer($content, $block) {
   $is_negative = isset($block['attrs']['className'])
-    && str_contains($block['attrs']['className'], 'is-style-px-negative');
+    && preg_match('/is-style-px-negative/', $block['attrs']['className']);
 
   if ($is_negative) {
     $content = preg_replace('/height:(\d+)/', 'margin-bottom:-$1', $content);

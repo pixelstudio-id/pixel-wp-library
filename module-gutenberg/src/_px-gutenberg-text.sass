@@ -79,7 +79,7 @@ div.editor-styles-wrapper [data-type="core/heading"]
     padding-left: 2.5rem
 
   &.is-style-px-inline,
-  &.is-style-px-inline
+  &.is-style-h-inline
     display: flex
     flex-wrap: wrap
     column-gap: 1.25rem
@@ -132,7 +132,8 @@ pre.wp-block-code
     padding: 0.5rem 1rem
     border: 1px solid rgba(black, .5) !important
 
-  &.is-style-px-full-color
+  &.is-style-px-full-color,
+  &.is-style-h-full-color
     tbody
       background-color: var(--bgColor)
       color: var(--textColor)
@@ -152,29 +153,28 @@ pre.wp-block-code
 
 .wp-block-quote
   padding: 0.5rem
-  padding-left: 0.25rem
+  padding-left: 1.25rem
   border-left: 3px solid
 
   &.has-text-align-right
     border-left: none
     border-right: 3px solid
     padding-left: 0.5rem
-    padding-right: 0.25rem
+    padding-right: 1.25rem
 
   &.has-text-align-center
     border: none
     padding-top: 1rem
     padding-left: 0.5rem
-  
+
     &::before
       content: ""
       position: absolute
       top: 0
       width: 100px
       height: 3px
-      background-color: var(--text)
+      background-color: currentColor
       transform: translateX(-50%)
-
 
   cite
     margin-top: 1rem
@@ -182,7 +182,8 @@ pre.wp-block-code
     opacity: .5
 
 // QUOTE Testimony
-.wp-block-quote.is-style-px-testimony
+.wp-block-quote.is-style-px-testimony,
+.wp-block-quote.is-style-h-testimony
   position: relative
   border: none
   padding: var(--blockGap)
@@ -202,16 +203,14 @@ pre.wp-block-code
     width: 2rem
     height: 2rem
 
-
   cite
     font-style: normal
     color: var(--text)
     opacity: 1
     line-height: 1.5
-
+  
     strong
       display: block
-
     img
       float: left
       object-fit: cover
@@ -241,7 +240,8 @@ pre.wp-block-code
       margin-bottom: 0.5rem
 
 // QUOTE Timeline
-.wp-block-quote.is-style-px-timeline
+.wp-block-quote.is-style-px-timeline,
+.wp-block-quote.is-style-h-timeline
   --gap: 2rem
   --x: 50%
   --x2: 100%

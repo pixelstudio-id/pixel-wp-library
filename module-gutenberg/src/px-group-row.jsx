@@ -9,6 +9,7 @@ import {
   ButtonGroup,
   PanelBody,
 } from '@wordpress/components';
+import './px-group-row.sass';
 
 /**
  * Add extra attribute to Cover block for the mobile image

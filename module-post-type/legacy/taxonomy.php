@@ -4,7 +4,7 @@
  * 
  * @deprecated 6.2.0 - use ACF instead
  */
-class PxTaxonomy {
+class H_Taxonomy {
   private $taxonomy;
   private $post_type;
   private $args;
@@ -25,7 +25,7 @@ class PxTaxonomy {
 
     // add taxonomy filter
     if (is_admin()) {
-      $pf = new PxPostFilter($this->post_type, $this->taxonomy);
+      $pf = new H_PostFilter($this->post_type, $this->taxonomy);
       $pf->add();
     }
   }

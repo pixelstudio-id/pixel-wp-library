@@ -1,8 +1,10 @@
 <?php
 /**
  * Create taxonomy filter to a post type
+ * 
+ * @deprecated 6.2.0 - use ACF instead
  */
-class PxPostFilter {
+class H_PostFilter {
   private $post_type;
   private $taxonomy;
   private $post_taxonomies;

@@ -41,12 +41,18 @@ div.editor-styles-wrapper .wp-block-image
 
 ///// MEDIA TEXT
 
-.wp-block-media-text
+div.wp-block-media-text
   gap: var(--blockGap)
 
   &.alignwide,
   &.alignfull
     gap: var(--blockWideGap)
+
+  &.alignwide
+    border-radius: var(--gRadius)
+  
+  .wp-block-media-text__content
+    padding: 1.5rem
 
   .components-resizable-box__container.has-show-handle .components-resizable-box__handle
     display: none
