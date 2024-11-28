@@ -150,6 +150,20 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
       };
       break;
 
+    // Has visible padding, but hidden margin
+    case 'core/column':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        padding: true,
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          padding: true,
+          margin: false,
+        }
+      };
+      break;
+    
+
     // Has hidden margin and padding
     case 'core/heading':
     case 'core/paragraph':
@@ -182,18 +196,6 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
         margin: ['top', 'bottom'],
         // __experimentalDefaultControls: {
         //   margin: true,
-        // },
-      };
-      break;
-
-    // Only padding
-    case 'core/column':
-      settings.supports.spacing = {
-        ...settings.supports.spacing,
-        padding: true,
-        margin: false,
-        // __experimentalDefaultControls: {
-        //   padding: true,
         // },
       };
       break;

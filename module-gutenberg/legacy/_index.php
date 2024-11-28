@@ -8,7 +8,7 @@ require_once __DIR__ . '/core-widget.php';
 if (is_admin()) {
   add_filter('safe_style_css', '_h_gutenberg_safe_style');
 
-  add_action('enqueue_block_editor_assets', '_h_enqueue_editor', 999);
+  add_action('enqueue_block_editor_assets', '_h_enqueue_editor', 15);
   add_filter('block_editor_settings_all', '_h_disable_inspector_tabs');
   
   add_action('admin_init', '_h_remove_gutenberg_menu', 100);  

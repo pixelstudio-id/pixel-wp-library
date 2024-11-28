@@ -61,7 +61,7 @@ function _h_register_icon_block_v1() {
  */
 function _h_render_icon_block_v1($atts, $default_atts) {
   // prevent loading in Editor screen
-  if (function_exists('get_current_screen')) { return; }
+  // if (function_exists('get_current_screen')) { return; }
 
   $default_values = array_map(function($a) {
     return $a['default'] ?? '';

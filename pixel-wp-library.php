@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.5.5
+ * Version: 6.5.8
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('PX_VERSION', '6.5.5');
+define('PX_VERSION', '6.5.8');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 // // define('PX_DIR', __DIR__); // for require
@@ -33,6 +33,7 @@ require_once 'module-comment/_index.php';
 require_once 'module-widgets/_index.php';
 require_once 'module-widgets-dark-mode/_index.php';
 require_once 'module-menu/_index.php';
+require_once 'module-head-footer/_index.php';
 
 require_once 'module-block-faq/_index.php';
 require_once 'module-block-icon/_index.php';

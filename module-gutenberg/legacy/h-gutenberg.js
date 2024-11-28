@@ -186,15 +186,16 @@ addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name
       };
       break;
 
-    // Only padding
+    // Has visible padding, but hidden margin
     case 'core/column':
       settings.supports.spacing = {
         ...settings.supports.spacing,
         padding: true,
-        margin: false,
-        // __experimentalDefaultControls: {
-        //   padding: true,
-        // },
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          padding: true,
+          margin: false,
+        }
       };
       break;
 

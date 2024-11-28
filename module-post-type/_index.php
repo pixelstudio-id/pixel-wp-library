@@ -38,3 +38,25 @@ function px_override_taxonomy_columns($taxonomy_name, $columns) {
   require_once __DIR__ . '/table-columns.php';
   $tc = new PxTableColumns($taxonomy_name, $columns, 'taxonomy');
 }
+
+///// ALIAS
+
+function h_register_post_type(string $post_type, array $args = []) {
+  px_register_post_type($post_type, $args);
+}
+
+function h_register_taxonomy(string $taxonomy, string $post_type, array $args) {
+  px_register_taxonomy($taxonomy, $post_type, $args);
+}
+
+function h_override_post_columns($post_type, $columns) {
+  px_override_post_columns($post_type, $columns);
+}
+
+function h_override_columns($post_type, $columns) {
+  px_override_post_columns($post_type, $columns);
+}
+
+function h_override_taxonomy_columns($taxonomy_name, $columns) {
+  px_override_taxonomy_columns($taxonomy_name, $columns);
+}
