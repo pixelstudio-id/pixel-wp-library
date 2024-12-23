@@ -68,7 +68,7 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
     case 'core/columns':
       settings.supports = {
         ...settings.supports,
-        align: ['wide'],
+        align: ['wide', 'full'],
       };
 
       settings.attributes = {
