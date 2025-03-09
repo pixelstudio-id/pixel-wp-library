@@ -77,7 +77,7 @@ div.wp-block-media-text
     padding-top: 0.5rem
     padding-bottom: 0.5rem
     background-image: none
-    color: var(--text, #222)
+    color: inherit
 
     a
       color: inherit
@@ -91,6 +91,9 @@ div.wp-block-media-text
 
   &.columns-default
     figure:nth-child(n+4)
+      display: none
+  &.columns-1
+    figure:nth-child(n+2)
       display: none
   &.columns-2
     figure:nth-child(n+3)
@@ -110,7 +113,6 @@ div.wp-block-media-text
   figure.wp-block-image.is-selected
     display: flex
   
-
   &::before
     content: ""
     position: absolute

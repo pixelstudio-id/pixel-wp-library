@@ -2,6 +2,7 @@ import { unregisterBlockType, unregisterBlockVariation } from '@wordpress/blocks
 import { addFilter } from '@wordpress/hooks';
 import domReady from '@wordpress/dom-ready';
 
+import './h-gutenberg.sass';
 import '../src/px-gutenberg.sass';
 import './h-cover-mobile.jsx';
 import '../src/px-group-row.jsx';

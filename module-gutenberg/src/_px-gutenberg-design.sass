@@ -26,6 +26,17 @@
   > .alignfull
     max-width: 100%
 
+.wp-block-group.is-layout-flex
+  width: 100%
+
+//// Allow negative margin from block above it to be visible
+div.block-editor-block-list__layout .wp-block-group
+  position: static
+
+  &.is-selected,
+  &.has-child-selected
+    position: relative
+
 // Hide the unused control in Group Inspector
 .block-editor-block-variation-transforms ~ div
   .block-editor-hooks__toggle-control

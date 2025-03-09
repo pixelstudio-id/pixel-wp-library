@@ -1,4 +1,4 @@
-import Helper from './_helpers.js';
+import _fetch from './_fetch.js';
 
 export default class ReactSvgInline extends React.Component {
   constructor() {
@@ -37,9 +37,7 @@ export default class ReactSvgInline extends React.Component {
 
     // if no cache, get the data
     if (!markup) { 
-      markup = await Helper.API.get(src, {
-        signal: this.abortController.signal
-      });
+      markup = await _fetch.get(src);
 
       if (markup) { 
         localStorage.setItem(src, markup);

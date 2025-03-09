@@ -1,7 +1,16 @@
 <?php
 
+add_filter('nav_menu_item_attributes', '_h_remove_id_in_menu_item', 100, 3);
 add_filter('wp_nav_menu_objects', '_h_mega_menu_classes', 100);
 add_filter('wp_nav_menu_objects', '_h_menu_item_classes', 101);
+
+/**
+ * @filter nav_menu_item_attributes
+ */
+function _h_remove_id_in_menu_item($li_atts, $menu_item, $args) {
+  unset($li_atts['id']);
+  return $li_atts;
+}
 
 /**
  * Add classes to menu-item that's related to mega menu
