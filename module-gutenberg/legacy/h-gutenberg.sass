@@ -1,0 +1,21 @@
+///// MEDIA TEXT
+
+.wp-block-media-text
+  --columnMedia: minmax(0, 1fr)
+  --columnContent: minmax(0, 1fr)
+  grid-template-columns: var(--columnMedia) var(--columnContent) !important
+
+  &.has-media-on-the-right
+    grid-template-columns: var(--columnContent) var(--columnMedia) !important
+
+
+  .components-resizable-box__container.has-show-handle .components-resizable-box__handle
+    display: none
+
+  &.is-style-h-larger-image
+    --columnMedia: 3fr
+    --columnContent: 2fr
+
+  &.is-style-h-smaller-image
+    --columnMedia: 2fr
+    --columnContent: 3fr

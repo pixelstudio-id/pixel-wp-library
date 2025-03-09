@@ -13,6 +13,7 @@ const entryPoints = {
   'px-block-list': './module-classic-list/src/index.jsx',
 
   'px-gutenberg': './module-gutenberg/src/px-gutenberg.js',
+  'h-gutenberg': './module-gutenberg/legacy/h-gutenberg.js',
   'px-classic-editor': './module-gutenberg/src/px-classic-editor.scss',
 
   'h-comment': './module-comment/src/h-comment.js',
@@ -76,5 +77,10 @@ module.exports = {
         ],
       },
     ],
+  },
+  resolve: {
+    alias: {
+      '@lib': path.resolve(__dirname, '_lib/'),
+    },
   },
 };

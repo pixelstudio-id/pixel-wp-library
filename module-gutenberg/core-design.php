@@ -11,8 +11,29 @@ if (!is_admin()) {
   add_filter('render_block_core/spacer', '_px_render_negative_spacer', 10, 2);
 
   add_filter('render_block_core/group', '_px_render_group', 5, 2);
+  // add_filter('render_block_core/group', '_px_render_group_inner_container_for_flex', 6, 2);
   add_filter('render_block_core/buttons', '_px_render_buttons_alignment', 5, 2);
 }
+
+/**
+ * Add back the Group's inner container if using layout flex
+ * 
+ * @filter render_block_core/group
+ */
+function _px_render_group_inner_container_for_flex($content, $block) {
+  // Abort if still the old group
+  // preg_match('/^<\w+\sclass="wp-block-group.+><\w+\sclass="wp-block-group__inner-container/Uis', trim($content), $is_old_group);
+  $is_old_group = (strpos($content, '$<\w+ class="wp-block-group.+><\w+ class="wp-block-group__inner-container'));
+  if ($is_old_group) { return $content; }
+
+  $content = preg_replace(
+    '/(wp-block-group\sis-layout-flex.+>)(.+)(<\/\w+>$)/Uis',
+    '$1<div class="wp-block-group__inner-container">$2</div>$3',
+    $content,
+  );
+  return $content;
+}
+
 
 /**
  * Modify the height into margin-bottom
@@ -21,7 +42,7 @@ if (!is_admin()) {
  */
 function _px_render_negative_spacer($content, $block) {
   $is_negative = isset($block['attrs']['className'])
-    && str_contains($block['attrs']['className'], 'is-style-px-negative');
+    && preg_match('/is-style-px-negative/', $block['attrs']['className']);
 
   if ($is_negative) {
     $content = preg_replace('/height:(\d+)/', 'margin-bottom:-$1', $content);

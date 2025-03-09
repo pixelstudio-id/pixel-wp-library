@@ -2,9 +2,10 @@ import { unregisterBlockType, unregisterBlockVariation } from '@wordpress/blocks
 import { addFilter } from '@wordpress/hooks';
 import domReady from '@wordpress/dom-ready';
 
-import './px-gutenberg.sass';
-import './px-cover-mobile.jsx';
-import './px-group-row.jsx';
+import './h-gutenberg.sass';
+import '../src/px-gutenberg.sass';
+import './h-cover-mobile.jsx';
+import '../src/px-group-row.jsx';
 
 domReady(() => {
   window.localizeH.disallowedBlocks.forEach((name) => {
@@ -16,7 +17,7 @@ domReady(() => {
 });
 
 // Modify settings for Core blocks
-addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, name) => {
+addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name) => {
   switch (name) {
     // Paragraph and List is allowed to use wide alignment
     case 'core/paragraph':
@@ -68,7 +69,7 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
     case 'core/columns':
       settings.supports = {
         ...settings.supports,
-        align: ['wide', 'full'],
+        align: ['wide'],
       };
 
       settings.attributes = {
@@ -150,20 +151,6 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
       };
       break;
 
-    // Has visible padding, but hidden margin
-    case 'core/column':
-      settings.supports.spacing = {
-        ...settings.supports.spacing,
-        padding: true,
-        margin: ['top', 'bottom'],
-        __experimentalDefaultControls: {
-          padding: true,
-          margin: false,
-        }
-      };
-      break;
-    
-
     // Has hidden margin and padding
     case 'core/heading':
     case 'core/paragraph':
@@ -197,6 +184,19 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
         // __experimentalDefaultControls: {
         //   margin: true,
         // },
+      };
+      break;
+
+    // Has visible padding, but hidden margin
+    case 'core/column':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        padding: true,
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          padding: true,
+          margin: false,
+        }
       };
       break;
 

@@ -3,12 +3,12 @@
 register_block_style('core/gallery', [ 'name' => 'px-slider', 'label' => 'Slider' ]);
 register_block_style('core/gallery', [ 'name' => 'px-thumbnails', 'label' => 'Thumbnails' ]);
 
-register_block_style('core/cover', [ 'name' => 'px-below-header', 'label' => 'Below Header' ]);
+// register_block_style('core/cover', [ 'name' => 'px-below-header', 'label' => 'Below Header' ]);
 
 if (!is_admin()) {
   add_filter('render_block_core/cover', '_px_render_responsive_cover', 10, 2);
 
-  add_filter('body_class', '_px_body_class_cover_below_header');
+  // add_filter('body_class', '_px_body_class_cover_below_header');
 }
 
 
@@ -19,14 +19,13 @@ if (!is_admin()) {
  */
 function _px_render_responsive_cover($content, $block) {
   // If has mobile image
-  if (isset($block['attrs']['pxMobileMediaURL'])) {
+  if (!empty($block['attrs']['pxMobileMediaURL'])) {
     $image = $block['attrs']['pxMobileMediaURL'];
-
     preg_match('/<div role="img"/', $content, $is_fixed);
 
     $content = preg_replace(
       '/(wp-block-cover[^_].+)(">)/Ui',
-      '$1 px-has-mobile-image">',
+      "$1 px-has-mobile-image\">",
       $content
     );
 
@@ -48,7 +47,7 @@ function _px_render_responsive_cover($content, $block) {
   }
 
   // If has mobile height
-  if (isset($block['attrs']['pxMobileHeight']) && $block['attrs']['pxMobileHeight'] !== '') {
+  if (!empty($block['attrs']['pxMobileHeight'])) {
     $height = $block['attrs']['pxMobileHeight'];
 
     preg_match('/wp-block-cover\s.+(style=).+>/Ui', $content, $has_style);

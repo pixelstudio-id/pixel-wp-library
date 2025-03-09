@@ -4,7 +4,7 @@
  * 
  * @deprecated 6.2.0 - use ACF instead
  */
-class PxPostType {
+class H_PostType {
   private $post_type;
   private $args;
 
@@ -21,7 +21,7 @@ class PxPostType {
     // add custom columns if filter exist
     $custom_columns = apply_filters("h_override_{$post_type}_columns", null);
     if ($custom_columns) {
-      px_override_post_columns($post_type, $custom_columns);
+      h_edit_post_columns($post_type, $custom_columns);
     }
   }
 

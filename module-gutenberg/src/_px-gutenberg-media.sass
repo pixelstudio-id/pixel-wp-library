@@ -41,12 +41,18 @@ div.editor-styles-wrapper .wp-block-image
 
 ///// MEDIA TEXT
 
-.wp-block-media-text
+div.wp-block-media-text
   gap: var(--blockGap)
 
   &.alignwide,
   &.alignfull
     gap: var(--blockWideGap)
+
+  &.alignwide
+    border-radius: var(--gRadius)
+  
+  .wp-block-media-text__content
+    padding: 1.5rem
 
   .components-resizable-box__container.has-show-handle .components-resizable-box__handle
     display: none
@@ -71,7 +77,7 @@ div.editor-styles-wrapper .wp-block-image
     padding-top: 0.5rem
     padding-bottom: 0.5rem
     background-image: none
-    color: var(--text, #222)
+    color: inherit
 
     a
       color: inherit
@@ -85,6 +91,9 @@ div.editor-styles-wrapper .wp-block-image
 
   &.columns-default
     figure:nth-child(n+4)
+      display: none
+  &.columns-1
+    figure:nth-child(n+2)
       display: none
   &.columns-2
     figure:nth-child(n+3)
@@ -104,7 +113,6 @@ div.editor-styles-wrapper .wp-block-image
   figure.wp-block-image.is-selected
     display: flex
   
-
   &::before
     content: ""
     position: absolute

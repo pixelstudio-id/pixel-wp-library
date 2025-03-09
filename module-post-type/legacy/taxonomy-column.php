@@ -94,7 +94,7 @@ class H_TaxonomyColumn {
   function _override_columns($defaults) {
     $list = [];
     foreach ($this->columns as $slug => $args) {
-      $list[$slug] = $args['name'];
+      $list[$slug] = $args['name'] ?? $args['label'] ?? _H::to_title($slug);
     }
 
     // always start with checkbox

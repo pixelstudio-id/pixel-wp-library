@@ -8,45 +8,51 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.5.5
+ * Version: 6.5.11
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('PX_VERSION', '6.5.5');
+define('PX_VERSION', '6.5.11');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
-// define('PX_DIR', __DIR__); // for require
+// // define('PX_DIR', __DIR__); // for require
 define('PX_DIST', plugin_dir_url(__FILE__) . 'dist');
 
 
 if (!class_exists('Pixel_WP_Library')):
 
-require_once 'helper/_index.php';
+require_once __DIR__ . '/helper/_index.php';
 
-require_once 'module-modify/_index.php';
-require_once 'module-vendor/_index.php';
+require_once __DIR__ . '/module-modify/_index.php';
+require_once __DIR__ . '/module-vendor/_index.php';
   
-require_once 'module-post-type/_index.php';
-require_once 'module-post-type-new/_index.php';
-require_once 'module-admin-sidenav/_index.php';
-require_once 'module-comment/_index.php';
-require_once 'module-widgets/_index.php';
-require_once 'module-widgets-dark-mode/_index.php';
-require_once 'module-menu/_index.php';
+require_once __DIR__ . '/module-admin-sidenav/_index.php';
+require_once __DIR__ . '/module-comment/_index.php';
+require_once __DIR__ . '/module-widgets/_index.php';
+require_once __DIR__ . '/module-widgets-dark-mode/_index.php';
+require_once __DIR__ . '/module-head-footer/_index.php';
 
-require_once 'module-gutenberg/_index.php';
-require_once 'module-block-faq/_index.php';
-require_once 'module-block-icon/_index.php';
-require_once 'module-block-icon/_index.php';
-require_once 'module-classic-quote/index.php';
-require_once 'module-classic-list/index.php';
+require_once __DIR__ . '/module-block-faq/_index.php';
+require_once __DIR__ . '/module-block-icon/_index.php';
+require_once __DIR__ . '/module-classic-quote/index.php';
+require_once __DIR__ . '/module-classic-list/index.php';
+
+if (defined('PX_LEGACY_MODE')) {
+  require_once __DIR__ . '/module-post-type/legacy/_index.php';
+  require_once __DIR__ . '/module-gutenberg/legacy/_index.php';
+  require_once __DIR__ . '/module-menu/legacy/_index.php';
+} else {
+  require_once __DIR__ . '/module-post-type/_index.php';
+  require_once __DIR__ . '/module-gutenberg/_index.php';
+  require_once __DIR__ . '/module-menu/_index.php';
+}
 
 
 class Pixel_WP_Library {
   function __construct() {
-    require_once 'activation-hook.php';
+    require_once __DIR__ . '/activation-hook.php';
     register_activation_hook(PX_BASE, [$this, 'register_activation_hook']);
 
     add_filter('plugin_row_meta', [$this, 'add_doc_links'], 10, 2);
@@ -93,7 +99,7 @@ class H {
     if (is_callable($func_name)) {
       return call_user_func_array($func_name, $args);
     } else {
-      trigger_error("The function H::$name does not exist.", E_USER_ERROR);
+      trigger_error("The function H::{$name} does not exist.", E_USER_ERROR);
     }
   }
 }

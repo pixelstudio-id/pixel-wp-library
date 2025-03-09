@@ -22,7 +22,4 @@ function _h_load_modify() {
       require_once __DIR__ . '/jetpack.php';
     }
   }
-
-  // both
-  require_once __DIR__ . '/head-footer.php';
 }

@@ -61,7 +61,7 @@ function _h_register_icon_block_v1() {
  */
 function _h_render_icon_block_v1($atts, $default_atts) {
   // prevent loading in Editor screen
-  if (function_exists('get_current_screen')) { return; }
+  // if (function_exists('get_current_screen')) { return; }
 
   $default_values = array_map(function($a) {
     return $a['default'] ?? '';
@@ -87,7 +87,7 @@ function _h_render_icon_block_v1($atts, $default_atts) {
   $icon = "<figure class='wp-block-h-icon__figure'>{$icon}</figure>";
 
   // format content
-  $heading = empty($atts['heading']) ? '' : "<dt>{$atts['heading']}";
+  $heading = empty($atts['heading']) ? '' : "<dt>{$atts['heading']}</dt>";
   $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $description = $has_description ? "<dd>{$atts['description']}</dd>" : '';
   $content = $heading || $description
