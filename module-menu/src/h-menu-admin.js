@@ -24,7 +24,7 @@ const myMenu = {
 
         // need timeout to wait for ACF listener
         setTimeout(() => {
-          this.megaMenuAddClasses($wrapper);
+          this.megamenuAddClasses($wrapper);
         });
       });
     });
@@ -32,7 +32,7 @@ const myMenu = {
     // activate mega menu classes on load
     const $parentItems = document.querySelectorAll('.menu-item.menu-item-depth-0');
     $parentItems.forEach(($i) => {
-      this.megaMenuAddClasses($i);
+      this.megamenuAddClasses($i);
     });
   },
 
@@ -48,11 +48,11 @@ const myMenu = {
       // wait until the class is changed
       setTimeout(() => {
         const $prevItem = $target.previousElementSibling;
-        const isUnderMegaMenu = $prevItem.classList.contains('h-mega-menu__child') || $prevItem.classList.contains('h-mega-menu');
+        const isUnderMegaMenu = $prevItem.classList.contains('px-megamenu__child') || $prevItem.classList.contains('px-megamenu');
         if (this.isChildItem($target) && isUnderMegaMenu) {
-          $target.classList.add('h-mega-menu__child');
+          $target.classList.add('px-megamenu__child');
         } else {
-          $target.classList.remove('h-mega-menu__child');
+          $target.classList.remove('px-megamenu__child');
         }
       });
     });
@@ -63,7 +63,7 @@ const myMenu = {
    *
    * @param $item - `.menu-item` DOM object in the Appearance > Menu page.
    */
-  megaMenuAddClasses($item) {
+  megamenuAddClasses($item) {
     const $checkedOption = $item.querySelector('[data-name="dropdown_style"] input[type="radio"]:checked');
     const $children = [];
 
@@ -89,16 +89,16 @@ const myMenu = {
 
     // if have checked option, add mega menu classes
     if ($checkedOption.value === 'mega-menu') {
-      $item.classList.add('h-mega-menu');
+      $item.classList.add('px-megamenu');
 
       $children.forEach(($c) => {
-        $c.classList.add('h-mega-menu__child');
+        $c.classList.add('px-megamenu__child');
       });
     } else { // if unchecked, remove mega menu classes
-      $item.classList.remove('h-mega-menu');
+      $item.classList.remove('px-megamenu');
 
       $children.forEach(($c) => {
-        $c.classList.remove('h-mega-menu__child');
+        $c.classList.remove('px-megamenu__child');
       });
     }
   },

@@ -4,7 +4,7 @@ require_once __DIR__ . '/menu-item.php';
 require_once __DIR__ . '/sub-menu.php';
 
 add_action('after_setup_theme', function() {
-  if (!current_theme_supports('h-mega-menu')) { return; }
+  if (!current_theme_supports('px-megamenu')) { return; }
 
   add_action('admin_enqueue_scripts', '_h_enqueue_menu_assets', 100);
   add_filter('acf/settings/load_json', '_h_load_acf_json_menu', 20);

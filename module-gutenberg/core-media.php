@@ -7,7 +7,6 @@ register_block_style('core/gallery', [ 'name' => 'px-thumbnails', 'label' => 'Th
 
 if (!is_admin()) {
   add_filter('render_block_core/cover', '_px_render_responsive_cover', 10, 2);
-
   // add_filter('body_class', '_px_body_class_cover_below_header');
 }
 

@@ -1,6 +1,7 @@
 <?php
+// @deprecated - having nested list item is beneficial
 
-add_action('enqueue_block_editor_assets', 'px_classic_list_editor_assets', 100);
+// add_action('enqueue_block_editor_assets', 'px_classic_list_editor_assets', 100);
 
 function px_classic_list_editor_assets() {
   if (!function_exists('register_block_type')) { return; } // Abort if Gutenberg not exist

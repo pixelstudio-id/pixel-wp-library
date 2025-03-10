@@ -23,12 +23,12 @@ function _h_submenu_classes($classes, $args, $depth) {
  * Change the "submenu" class to fit better for Mega menu usage
  */
 function _h_mega_submenu_classes($menu) {
-  // replace "submenu submenu-depth-1" into "mega-menu"
+  // replace "submenu submenu-depth-1" into "megamenu"
   // print_r('<pre>' . htmlspecialchars($menu) . '</pre>', false);
-  $menu = preg_replace('/(menu-item-has-mega-menu.+)(submenu\ssubmenu-depth-1)/Uims', '$1mega-menu', $menu);
+  $menu = preg_replace('/(menu-item-has-megamenu.+)(submenu\ssubmenu-depth-1)/Uims', '$1megamenu', $menu);
 
   // remove "submenu submenu-depth-2"
-  $menu = preg_replace('/(mega-menu__column.+)(submenu\ssubmenu-depth-2)/Uims', '$1', $menu);
+  $menu = preg_replace('/(megamenu__column.+)(submenu\ssubmenu-depth-2)/Uims', '$1', $menu);
   
   return $menu;
 }

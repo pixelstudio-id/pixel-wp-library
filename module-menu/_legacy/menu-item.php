@@ -27,7 +27,7 @@ function _h_mega_menu_classes($items) {
       $alignment = get_field('mega_menu_alignment', $i);
 
       if ($columns) {
-        $i->classes[] = "menu-item-has-mega-menu";
+        $i->classes[] = "menu-item-has-megamenu";
         $i->classes[] = "has-{$columns}-columns";
         $i->classes[] = "is-align-{$alignment}";
         $mega_menu_ids[] = $i->ID;
@@ -37,7 +37,7 @@ function _h_mega_menu_classes($items) {
     }
     // Add special class if it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
-      $i->classes[] = 'mega-menu__column';
+      $i->classes[] = 'megamenu__column';
 
       // remove unnecessary class
       $key = array_search('menu-item', $i->classes);

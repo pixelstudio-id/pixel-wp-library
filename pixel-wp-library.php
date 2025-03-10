@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.5.11
+ * Version: 6.5.12
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('PX_VERSION', '6.5.11');
+define('PX_VERSION', '6.5.12');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 // // define('PX_DIR', __DIR__); // for require
@@ -40,9 +40,9 @@ require_once __DIR__ . '/module-classic-quote/index.php';
 require_once __DIR__ . '/module-classic-list/index.php';
 
 if (defined('PX_LEGACY_MODE')) {
-  require_once __DIR__ . '/module-post-type/legacy/_index.php';
-  require_once __DIR__ . '/module-gutenberg/legacy/_index.php';
-  require_once __DIR__ . '/module-menu/legacy/_index.php';
+  require_once __DIR__ . '/module-post-type/_legacy/_index.php';
+  require_once __DIR__ . '/module-gutenberg/_legacy/_index.php';
+  require_once __DIR__ . '/module-menu/_legacy/_index.php';
 } else {
   require_once __DIR__ . '/module-post-type/_index.php';
   require_once __DIR__ . '/module-gutenberg/_index.php';

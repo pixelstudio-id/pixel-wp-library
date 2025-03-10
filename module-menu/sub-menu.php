@@ -23,10 +23,10 @@ function _h_submenu_classes($classes, $args, $depth) {
  * Change the "submenu" class to fit better for MegaMenu / Horizontal usage
  */
 function _h_submenu_style_classes($menu) {
-  // replace "submenu submenu-depth-1" into "mega-menu"
+  // replace "submenu submenu-depth-1" into "megamenu"
   // print_r('<pre>' . htmlspecialchars($menu) . '</pre>', false);
-  $menu = preg_replace('/(mega-menu-wrapper.+)(submenu\ssubmenu-depth-1)/Uims', '$1mega-menu', $menu);
-  $menu = preg_replace('/(mega-menu__column.+)(class="submenu.+")/Uims', '$1', $menu);
+  $menu = preg_replace('/(menu-item-has-megamenu.+)(submenu\ssubmenu-depth-1)/Uims', '$1megamenu', $menu);
+  $menu = preg_replace('/(megamenu__column.+)(class="submenu.+")/Uims', '$1', $menu);
 
   // move the columns class from <li> to the submenu
   // $menu = preg_replace('/(has-columns-\d+)(.+)(submenu.+)"/Uis', '$2$3 $1"', $menu);

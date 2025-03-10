@@ -29,7 +29,7 @@ function _h_mega_menu_classes($items) {
       $style = get_field('dropdown_style', $i);
 
       if ($style === 'mega-menu') {
-        $i->classes[] = 'mega-menu-wrapper';
+        $i->classes[] = 'menu-item-has-megamenu';
         $mega_menu_ids[] = $i->ID;
       }
       
@@ -45,7 +45,7 @@ function _h_mega_menu_classes($items) {
     }
     // If it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
-      $i->classes[] = 'mega-menu__column';
+      $i->classes[] = 'megamenu__column';
       $i->url = '';
 
       // remove unnecessary class
