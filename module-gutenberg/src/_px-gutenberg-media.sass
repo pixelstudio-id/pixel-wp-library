@@ -42,23 +42,40 @@ div.editor-styles-wrapper .wp-block-image
 ///// MEDIA TEXT
 
 div.wp-block-media-text
-  gap: var(--blockGap)
+  --_gap: var(--blockGap)
 
-  &.alignwide,
-  &.alignfull
-    gap: var(--blockWideGap)
+  column-gap: var(--_gap)
+  row-gap: var(--_gap)
+  padding: var(--_padding, 0)
+  border-radius: var(--gRadius)
 
   &.alignwide
-    border-radius: var(--gRadius)
-  
-  .wp-block-media-text__content
-    padding: 1.5rem
+    --_gap: var(--blockWideGap)
+
+  &.has-background
+    --_padding: var(--blockGap)
+  &.has-background.is-image-fill
+    --_padding: 0
+    --_contentPadding: var(--blockGap)
+    column-gap: 0
+  &.has-background.is-image-fill.alignwide
+    --_contentPadding: var(--blockWideGap)
+
+div.wp-block-media-text .wp-block-media-text__content
+  padding: var(--_contentPadding, 0)
 
   .components-resizable-box__container.has-show-handle .components-resizable-box__handle
     display: none
 
-  .wp-block-media-text__content
-    padding: 0
+// Full Media Text
+div.wp-block-media-text.alignfull
+  --_contentPadding: var(--blockWideGap)
+  column-gap: 0
+  row-gap: 0
+  border-radius: 0
+
+  &.is-image-fill .wp-block-media-text__media
+    min-height: 18rem
 
 ///// GALLERY
 

@@ -43,6 +43,9 @@ div.acf-block-body .acf-fields
     @container (max-width:420px)
       width: var(--_sWidth, 100%) !important
 
+  div.acf-field:not([style*="width:"])
+    width: 100%
+
 // Background color (also change the Embed block color)
 div.acf-block-body .acf-fields,
 div.components-placeholder
