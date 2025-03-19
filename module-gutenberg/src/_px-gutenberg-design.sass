@@ -108,7 +108,7 @@ div.wp-block-button.is-style-h-transparent .wp-block-button__link
  
 ///// SEPARATOR
 
-.wp-block[data-type="core/separator"]
+hr.wp-block[data-type="core/separator"]
   // Add padding so it's easier to click
   padding-top: 0.5rem
   padding-bottom: 0.5rem
@@ -117,6 +117,31 @@ div.wp-block-button.is-style-h-transparent .wp-block-button__link
   border-top: 2px solid var(--gray)
   width: 120px
   clear: both
+
+  &.has-background
+    height: 0.5rem
+    padding: 0
+    border-top: none
+    border-radius: var(--gRadius)
+
+  .wp-block-column &
+    margin-right: auto
+    margin-left: auto
+
+  &.alignleft,
+  &.alignright
+    --_rim: calc((100% - var(--wideSize)) / 2)
+    float: none
+
+    .wp-block-column &
+      --_rim: 0
+
+  &.alignleft
+    margin-right: auto
+    margin-left: var(--_rim)
+  &.alignright
+    margin-left: auto
+    margin-right: var(--_rim)
 
   &.is-style-wide,
   &.is-style-dots
@@ -128,7 +153,6 @@ div.wp-block-button.is-style-h-transparent .wp-block-button__link
   &.has-text-color
     background-color: transparent !important
     border-color: var(--textColor)
-
 
 ///// SPACER
 

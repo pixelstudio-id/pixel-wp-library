@@ -14,6 +14,7 @@ import {
   TextControl,
   TextareaControl,
   Button,
+  FontSizePicker,
 } from '@wordpress/components';
 import SVGInline from './_react-svg-inline.jsx';
 import URLPicker from './_url-picker.jsx';
@@ -36,8 +37,10 @@ function IconEdit(props) {
 
   // format className for the div
   let extraClasses = ` has-icon-position-${atts.iconPosition} `;
+  extraClasses += atts.heading === '<p></p>' || atts.heading === '' ? 'has-no-heading ' : 'has-heading ';
   extraClasses += atts.description === '<p></p>' || atts.description === '' ? 'has-no-description ' : 'has-description ';
   extraClasses += atts.useImage ? 'use-image ' : '';
+  extraClasses += atts.iconSize && atts.iconSize !== 'medium' ? `size-${atts.iconSize} ` : '';
   blockProps.className += extraClasses;
 
   if (atts.iconColor) {
@@ -107,6 +110,19 @@ function IconEdit(props) {
               render={renderImage}
             />
           )}
+        </PanelBody>
+        <PanelBody title="Size" initialOpen="false">
+          <FontSizePicker
+            fontSizes={[
+              { name: 'Small', slug: 'small', size: 'small' },
+              { name: 'Medium', slug: 'medium', size: 'medium' },
+              { name: 'Large', slug: 'large', size: 'large' },
+            ]}
+            value={atts.iconSize}
+            fallbackFontSize={16}
+            onChange={(newSize) => setAttributes({ iconSize: newSize })}
+            disableCustomFontSizes={true}
+          />
         </PanelBody>
       </InspectorControls>
 

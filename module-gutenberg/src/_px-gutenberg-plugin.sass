@@ -46,6 +46,24 @@ div.acf-block-body .acf-fields
   div.acf-field:not([style*="width:"])
     width: 100%
 
+// Hide description when not selected
+.wp-block[class*="wp-block-acf-"]
+  .acf-field-message:first-child .acf-input
+    display: none
+  
+  .acf-block-fields p
+    display: none
+    font-size: var(--xsFontSize)
+
+  &.is-selected .acf-field-message:first-child .acf-input,
+  &.is-selected .acf-block-fields p
+    display: block
+
+// Set min width on ACF Block within flex group
+.wp-block-group.is-layout-flex
+  [class*="wp-block-acf-"]
+    min-width: 300px
+
 // Background color (also change the Embed block color)
 div.acf-block-body .acf-fields,
 div.components-placeholder

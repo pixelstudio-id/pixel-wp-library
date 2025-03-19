@@ -40,7 +40,7 @@ module.exports = {
       injectPolyfill: true,
     }),
     new BrowserSyncPlugin({
-      proxy: 'http://flexiclasses.test/',
+      proxy: 'http://lab.test/',
       files: [`${outputPath}/*.css`],
       injectCss: true,
     }, { reload: false }),

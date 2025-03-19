@@ -1,12 +1,15 @@
 <?php
   $atts = $attributes;
+  $has_heading = !($atts['heading'] === '<p></p>' || $atts['heading'] === '');
   $has_description = !($atts['description'] === '<p></p>' || $atts['description'] === '');
   $has_link = isset($atts['url']) && $atts['isFullyClickable'];
 
   $base_classes = '';
   $base_classes .= "has-icon-position-{$atts['iconPosition']} ";
-  $base_classes .= $has_description ? 'has-description ' : 'has-no-description ';
-  $base_classes .= $atts['useImage'] ? 'use-image ' : '';
+  $base_classes .= isset($atts['iconSize']) && $atts['iconSize'] !== 'medium' ? "size-{$atts['iconSize']} " : '';
+  $base_classes .= $has_heading ? '' : 'has-no-heading ';
+  $base_classes .= $has_description ? '' : 'has-no-description ';
+  $base_classes .= isset($atts['useImage']) && $atts['useImage'] ? 'use-image ' : '';
 
   $wrapper_args = [
     'class' => $base_classes,
@@ -45,14 +48,16 @@
   </figure>
 
   <dl class='wp-block-px-icon__content'>
-    <dt>
-      <?= $atts['heading'] ?>
-    </dt>
+    <?php if ($has_heading): ?>
+      <dt>
+        <?= $atts['heading'] ?>
+      </dt>
+    <?php endif ?>
     <?php if ($has_description): ?>
       <dd>
         <?= $atts['description'] ?>
       </dd>
-    <?php endif; ?>
+    <?php endif ?>
   </dl>
 
 <?php if ($has_link): ?>

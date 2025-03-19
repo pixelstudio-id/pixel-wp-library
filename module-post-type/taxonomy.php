@@ -22,12 +22,6 @@ class PxTaxonomy {
    */
   public function register() {
     register_taxonomy($this->taxonomy, $this->post_type, $this->args);
-
-    // add taxonomy filter
-    if (is_admin()) {
-      $pf = new PxPostFilter($this->post_type, $this->taxonomy);
-      $pf->add();
-    }
   }
 
   //////////

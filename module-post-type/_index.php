@@ -15,8 +15,26 @@ function px_register_post_type(string $post_type, array $args = []) {
 function px_register_taxonomy(string $taxonomy, string $post_type, array $args) {
   require_once __DIR__ . '/taxonomy.php';
   require_once __DIR__ . '/post-filter.php';
+
   $tx = new PxTaxonomy($taxonomy, $post_type, $args);
   $tx->register();
+
+  if (is_admin()) {
+    $pf = new PxPostFilter($post_type, $taxonomy);
+    $pf->add();
+  }
+}
+
+/**
+ * Register taxonomy filter only - useful when you added the Taxonomy via ACF
+ */
+function px_register_taxonomy_filter(string $taxonomy, string $post_type) {
+  require_once __DIR__ . '/post-filter.php';
+
+  if (is_admin()) {
+    $pf = new PxPostFilter($post_type, $taxonomy);
+    $pf->add();
+  }
 }
 
 /**

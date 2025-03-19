@@ -43,7 +43,7 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
     case 'core/separator':
       settings.supports = {
         ...settings.supports,
-        align: ['wide'],
+        align: ['wide', 'right', 'left'],
       };
       break;
 

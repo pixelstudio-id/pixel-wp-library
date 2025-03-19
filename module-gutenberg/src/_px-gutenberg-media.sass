@@ -43,7 +43,6 @@ div.editor-styles-wrapper .wp-block-image
 
 div.wp-block-media-text
   --_gap: var(--blockGap)
-
   column-gap: var(--_gap)
   row-gap: var(--_gap)
   padding: var(--_padding, 0)
@@ -51,13 +50,13 @@ div.wp-block-media-text
 
   &.alignwide
     --_gap: var(--blockWideGap)
-
   &.has-background
     --_padding: var(--blockGap)
   &.has-background.is-image-fill
     --_padding: 0
+    --_gap: 0
     --_contentPadding: var(--blockGap)
-    column-gap: 0
+    overflow: hidden
   &.has-background.is-image-fill.alignwide
     --_contentPadding: var(--blockWideGap)
 
@@ -69,9 +68,8 @@ div.wp-block-media-text .wp-block-media-text__content
 
 // Full Media Text
 div.wp-block-media-text.alignfull
+  --_gap: 0
   --_contentPadding: var(--blockWideGap)
-  column-gap: 0
-  row-gap: 0
   border-radius: 0
 
   &.is-image-fill .wp-block-media-text__media
@@ -133,9 +131,10 @@ div.wp-block-media-text.alignfull
   &::before
     content: ""
     position: absolute
+    z-index: 2
     top: 50%
-    left: -2rem
-    right: -1rem
+    left: 0
+    right: 0
     transform: translateY(-50%)
 
     display: inline-block
