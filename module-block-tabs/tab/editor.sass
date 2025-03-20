@@ -1,0 +1,45 @@
+.wp-block-px-tab
+  order: -1
+  position: relative
+  transition: var(--gTransition)
+  padding: 0.5rem
+  font-weight: 700
+  white-space: nowrap
+
+  @container (min-width: 1120px)
+    &:nth-of-type(1)
+      .wp-block-px-tabs.alignfull &
+        margin-left: calc((100% - var(--wideSize)) / 2)
+
+  &.active
+    box-shadow: inset 0 -3px 0 0 var(--textColor, var(--text))
+
+.wp-block-px-tab-content
+  --textColor: var(--text)
+  --bgColor: inherit
+
+  display: none
+  grid-column: 1 / -1
+  order: 1
+  margin: 0
+  width: 100%
+  padding: var(--gridGap) 0
+  background-color: var(--white)
+  color: var(--text)
+
+  .wp-block-px-tab.active + &
+    display: block
+
+  > *
+    margin: 0 auto
+    max-width: var(--contentSize)
+  > * + *
+    margin-top: var(--blockGap)
+  > .alignwide
+    max-width: var(--wideSize)
+  > .alignfull
+    max-width: 100%
+  > * + .alignfull
+    margin-top: var(--blockWideGap)
+  > .alignfull.has-background:first-child
+    margin-top: calc(-1 * var(--gridGap))

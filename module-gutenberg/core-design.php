@@ -1,12 +1,5 @@
 <?php
 
-register_block_style('core/button', [ 'name' => 'px-transparent', 'label' => 'Transparent' ]);
-
-register_block_style('core/columns', [ 'name' => 'px-wide-gap', 'label' => 'Wide Gap' ]);
-register_block_style('core/columns', [ 'name' => 'px-no-gap', 'label' => 'No Gap' ]);
-
-register_block_style('core/spacer', [ 'name' => 'px-negative', 'label' => 'Negative' ]);
-
 if (!is_admin()) {
   add_filter('render_block_core/spacer', '_px_render_negative_spacer', 10, 2);
 

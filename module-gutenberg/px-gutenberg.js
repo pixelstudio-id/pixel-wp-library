@@ -2,10 +2,14 @@ import { unregisterBlockType, unregisterBlockVariation } from '@wordpress/blocks
 import { addFilter } from '@wordpress/hooks';
 import domReady from '@wordpress/dom-ready';
 
-import './h-gutenberg.sass';
-import '../px-gutenberg.sass';
-import './h-cover-mobile.jsx';
-import '../group-row-columns/editor.jsx';
+import './px-gutenberg.sass';
+import './_core-styles/editor.js';
+
+import './cover-mobile/editor.jsx';
+import './group-row-columns/editor.jsx';
+
+// import './classic-list/_index.jsx'; // @deprecated - using the original nested item is useful
+import './classic-quote/_index.jsx';
 
 domReady(() => {
   window.localizeH.disallowedBlocks.forEach((name) => {
@@ -17,7 +21,7 @@ domReady(() => {
 });
 
 // Modify settings for Core blocks
-addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name) => {
+addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, name) => {
   switch (name) {
     // Paragraph and List is allowed to use wide alignment
     case 'core/paragraph':
@@ -35,6 +39,7 @@ addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name
       break;
 
     case 'core/gallery':
+    case 'core/latest-posts':
       settings.supports = {
         ...settings.supports,
         align: ['wide', 'full'],
@@ -44,7 +49,7 @@ addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name
     case 'core/separator':
       settings.supports = {
         ...settings.supports,
-        align: ['wide'],
+        align: ['wide', 'right', 'left'],
       };
       break;
 
@@ -69,7 +74,7 @@ addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name
     case 'core/columns':
       settings.supports = {
         ...settings.supports,
-        align: ['wide'],
+        align: ['wide', 'full'],
       };
 
       settings.attributes = {
@@ -151,6 +156,20 @@ addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name
       };
       break;
 
+    // Has visible padding, but hidden margin
+    case 'core/column':
+      settings.supports.spacing = {
+        ...settings.supports.spacing,
+        padding: true,
+        margin: ['top', 'bottom'],
+        __experimentalDefaultControls: {
+          padding: true,
+          margin: false,
+        }
+      };
+      break;
+    
+
     // Has hidden margin and padding
     case 'core/heading':
     case 'core/paragraph':
@@ -184,19 +203,6 @@ addFilter('blocks.registerBlockType', 'h/set_default_alignment', (settings, name
         // __experimentalDefaultControls: {
         //   margin: true,
         // },
-      };
-      break;
-
-    // Has visible padding, but hidden margin
-    case 'core/column':
-      settings.supports.spacing = {
-        ...settings.supports.spacing,
-        padding: true,
-        margin: ['top', 'bottom'],
-        __experimentalDefaultControls: {
-          padding: true,
-          margin: false,
-        }
       };
       break;
 

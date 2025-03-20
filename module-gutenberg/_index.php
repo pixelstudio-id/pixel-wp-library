@@ -96,6 +96,8 @@ function _px_disable_inspector_tabs($settings) {
       'px/icon',
       'h/faq',
       'h/icon',
+      'px/tabs',
+      'px/tab',
   ]);
 
   $tab_settings = array_reduce($tab_settings, function($result, $i) {

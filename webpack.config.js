@@ -6,15 +6,15 @@ const path = require('path');
 const outputPath = 'dist';
 
 const entryPoints = {
-  'px-icon': './module-block-icon/src/index.jsx',
-  'h-icon': './module-block-icon/v1/index.jsx',
-  'px-faq': './module-block-faq/src/index.jsx',
-  'px-block-quote': './module-classic-quote/src/index.jsx',
-  'px-block-list': './module-classic-list/src/index.jsx',
+  'h-icon': './module-block-icon/icon-v1/index.jsx',
+  'px-icon': './module-block-icon/icon-v2/index.jsx',
+  'px-faq': './module-block-faq/faq-v3/index.jsx',
+  'px-tabs': './module-block-tabs/px-tabs.js',
+  'px-tabs-editor': './module-block-tabs/px-tabs-editor.js',
 
-  'px-gutenberg': './module-gutenberg/src/px-gutenberg.js',
+  'px-gutenberg': './module-gutenberg/px-gutenberg.js',
   'h-gutenberg': './module-gutenberg/_legacy/h-gutenberg.js',
-  'px-classic-editor': './module-gutenberg/src/px-classic-editor.scss',
+  'px-classic-editor': './module-gutenberg/px-classic-editor.scss',
 
   'h-comment': './module-comment/src/h-comment.js',
   'h-admin': './module-modify/src/h-admin.sass',
