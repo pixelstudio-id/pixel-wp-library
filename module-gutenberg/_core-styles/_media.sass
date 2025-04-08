@@ -248,7 +248,6 @@ figure.wp-block-gallery.is-style-px-thumbnails
 .editor-styles-wrapper div.wp-block-file
   padding: 0
   border: 0
-  background-color: transparent !important
 
   &.alignright,
   &.alignleft
@@ -260,17 +259,38 @@ figure.wp-block-gallery.is-style-px-thumbnails
   &.alignleft
     --_align: flex-start
 
-  // if custom color
-  &[style*="background-color: rgb("]
-    --bgColor: var(--text)
 
 .wp-block-file__content-wrapper
   display: flex
   flex-direction: column
   align-items: var(--_align, center)
+  position: relative
+  background-color: inherit
 
   > a:first-child
     order: 1
+  > *
+    position: relative
+    z-index: 1
 
+  // to allow the button to have custom color
   .wp-block-file__button-richtext-wrapper
+    background-color: inherit
+    border-radius: var(--gRadius)
     margin-left: 0
+
+  // cover the file's bg with body's bg
+  &::before
+    content: ""
+    display: block
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: var(--siteBgColor)
+
+  // has wrapper with custom background color
+  .has-background[class*="-background-color"] &
+    &::before
+      background-color: var(--bgColor)
