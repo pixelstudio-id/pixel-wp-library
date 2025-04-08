@@ -18,9 +18,9 @@
 
 .edit-post-visual-editor ul.wp-block-latest-posts
   display: grid
-  grid-template-columns: repeat(var(--postsColumns, 1), 1fr)
-  column-gap: var(--postsGap, 1.5rem)
-  row-gap: var(--postsGap, 1.5rem)
+  grid-template-columns: repeat(var(--_columns, 1), 1fr)
+  column-gap: var(--_gap, 1.5rem)
+  row-gap: var(--_gap, 1.5rem)
 
   list-style-type: none
   padding-left: 0
@@ -32,6 +32,10 @@
     left: -36%
     width: var(--wideSize)
     max-width: var(--wideSize)
+
+    @container (max-width:1120px)
+      left: calc((100cqw - var(--contentSize)) / -2)
+      width: 100cqw
 
   // the top spacing should follow Group sizing
   &.alignwide,
@@ -49,26 +53,26 @@
 
   li > a
     font-family: var(--hFontFamily)
-    font-size: var(--postsFontSize, var(--h5Size))
+    font-size: var(--_titleSize, var(--h5Size))
 
   &.columns-1
-    --postsColumns: 1
+    --_columns: 1
   &.columns-2
-    --postsColumns: 2
+    --_columns: 2
   &.columns-3
-    --postsColumns: 3
+    --_columns: 3
   &.columns-4
-    --postsColumns: 4
+    --_columns: 4
   &.columns-5
-    --postsColumns: 5
+    --_columns: 5
   &.columns-6
-    --postsColumns: 6
+    --_columns: 6
 
   &.columns-4,
   &.columns-5,
   &.columns-6
-    --postsGap: 1rem
-    --postsFontSize: var(--h6Size)
+    --_gap: 1rem
+    --_titleSize: var(--h6Size)
 
 .wp-block-latest-posts__post-author,
 .wp-block-latest-posts__post-date

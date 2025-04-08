@@ -41,17 +41,15 @@ function px_split_tabs_button_and_content($content, $block) {
   // remove the buttons
   $content = preg_replace('/<dt role="tab".+>.+<\/dt>/Ui', '', $content);
 
-  // get the color classes
-  preg_match('/wp-block-px-tabs.+(?:align\S+)\s(.+)"/Ui', $content, $colors);
-  $colors = isset($colors[1]) ? $colors[1] : '';
-
-  if ($colors) {
-    // remove color classes and append it to buttons
-    $content = preg_replace('/' . $colors . '/', '', $content);
-  }
+  // remove color classes and append it to buttons
+  // preg_match('/wp-block-px-tabs.+(?:align\S+)\s(.+)"/Ui', $content, $colors);
+  // $colors = isset($colors[1]) ? $colors[1] : '';
+  // if ($colors) {
+  //   $content = preg_replace('/' . $colors . '/', '', $content);
+  // }
 
   // move the buttons to before inner wrapper
-  $buttons = "<dl class=\"wp-block-px-tabs__buttons {$colors}\">" . implode('', $buttons[0]) . '</dl>';
+  $buttons = "<dl class=\"wp-block-px-tabs__buttons\">" . implode('', $buttons[0]) . '</dl>';
   $content = preg_replace('/<dl class="wp-block-px-tabs__inner".*>/Ui', "{$buttons}$0", $content);
 
   return $content;

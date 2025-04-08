@@ -45,7 +45,9 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
         align: ['wide', 'full'],
       };
       break;
-
+      
+    // Allow wide, left, and right
+    case 'core/file':
     case 'core/separator':
       settings.supports = {
         ...settings.supports,
@@ -54,7 +56,6 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
       break;
 
     // Remove align left and right
-    case 'core/file':
     case 'core/audio':
       settings.supports = {
         ...settings.supports,
@@ -223,6 +224,28 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
 
     default:
       settings.supports.typography = false;
+      break;
+  }
+
+  // COLOR Settings
+  switch (name) {
+    // add text color to File block
+    case 'core/file':
+      settings.supports = {
+        ...settings.supports,
+        color: {
+          ...settings.supports.color,
+          text: true,
+        },
+      };
+  
+      settings.attributes = {
+        ...settings.attributes,
+        textColor: {
+          type: 'string',
+          default: '',
+        },
+      };
       break;
   }
 
