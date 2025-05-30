@@ -14,10 +14,12 @@ function _px_register_icon_block() {
 
   $fontawesome_urls = [
     'v5' => 'https://fontawesome.com/v5/search?m=free&s=solid',
-    'v6' => 'https://fontawesome.com/search?o=r&m=free&s=solid',
+    'v6' => 'https://fontawesome.com/search?o=r&s=solid&ip=classic',
+    'v6-regular' => 'https://fontawesome.com/search?ip=classic&s=regular&o=r',
+    'v6-thin' => 'https://fontawesome.com/search?o=r&s=thin&ip=classic',
+    'v6-duotone' => 'https://fontawesome.com/search?o=r&s=solid&ip=duotone',
   ];
-  $fontawesome_url = $fontawesome_urls[$version] ?? 'https://fontawesome.com/v5/search?m=free&s=solid';
-  
+  $fontawesome_url = $fontawesome_urls[$version] ?? $fornawesome_urls['v5'];
 
   wp_localize_script('px-icon', 'pxLocalizeIcon', [
     'iconURL' => $url,

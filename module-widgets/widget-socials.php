@@ -83,9 +83,9 @@ class H_WidgetSocials extends H_Widget {
   }
   
   private function _get_extra_classes($fields) {
-    $style_class = $fields['link_style'] === 'default'
+    $style_class = $fields['style'] === 'default'
       ? ''
-      : "is-style-{$fields['link_style']}";
+      : "is-style-{$fields['style']}";
     $color_class = $fields['color']
       ? "has-{$fields['color']}-color"
       : '';

@@ -41,5 +41,15 @@
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-static-element-interactions": 0,
     "jsx-a11y/alt-text": 0
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@lib", "./_lib"]
+        ],
+        "extensions": [".js",".jsx", ".vue"]
+      }
+    }
   }
 }
