@@ -47,10 +47,10 @@ html[lang]
   display: block
   overflow: hidden
   position: relative
-  background-color: var(--text)
+  background-color: var(--base)
   width: var(--width)
   height: var(--height)
-  border: 1px solid var(--textInvert)
+  border: 1px solid var(--baseInv)
   border-radius: 1rem
 
   &:focus
@@ -61,7 +61,7 @@ html[lang]
     position: absolute
     z-index: 3
     display: inline-block
-    background-color: var(--textInvert)
+    background-color: var(--baseInv)
 
     width: calc(var(--height) - var(--padding) - var(--padding))
     height: calc(var(--height) - var(--padding) - var(--padding))
@@ -83,7 +83,7 @@ html[lang]
     z-index: 2
 
     display: inline-block
-    background-color: var(--text)
+    background-color: var(--base)
     transition: var(--gTransition)
     transform: translateY(-50%)
 

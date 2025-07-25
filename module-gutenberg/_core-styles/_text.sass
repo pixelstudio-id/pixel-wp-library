@@ -110,22 +110,22 @@ pre.wp-block-code
   table
     border-collapse: collapse
     border-spacing: 0
-    color: var(--text)
+    color: var(--base)
 
   thead,
   tfoot
     background-color: var(--bgColor, #eef2f7)
-    color: var(--textColor, var(--text))
+    color: var(--textColor, var(--base))
     font-weight: 700
     text-align: left
 
   thead
-    border-bottom: 2px solid var(--text)
+    border-bottom: 2px solid var(--base)
   tfoot
-    border-top: 2px solid var(--text)
+    border-top: 2px solid var(--base)
   tbody
-    background-color: var(--textInvert)
-    color: var(--text)
+    background-color: var(--baseInv)
+    color: var(--base)
 
   th, td
     padding: 0.5rem 1rem
@@ -142,7 +142,7 @@ pre.wp-block-code
       --tableStripe: rgba(var(--bgColorRGB), .1)
 
     tbody tr:nth-child(odd)
-      background: var(--textInvert)
+      background: var(--baseInv)
     tbody tr:nth-child(even)
       background-color: var(--tableStripe)
 
@@ -204,7 +204,7 @@ pre.wp-block-code
 
   cite
     font-style: normal
-    color: var(--text)
+    color: var(--base)
     opacity: 1
     line-height: 1.5
   
@@ -267,7 +267,7 @@ pre.wp-block-code
     font-size: var(--fontSize)
     font-weight: 700
     font-style: normal
-    color: var(--text)
+    color: var(--base)
 
   // Right
   &.has-text-align-right
