@@ -1,1 +1,0 @@
-"true"===localStorage.pxDarkMode&&(document.querySelector("html").classList.add("px-is-dark"),document.addEventListener("DOMContentLoaded",(()=>{document.querySelectorAll('.px-dark-toggle input[type="checkbox"]').forEach((e=>{e.checked=!0}))})));

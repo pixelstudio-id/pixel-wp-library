@@ -1,9 +1,0 @@
-/**!
- * hEditor v1.1.2 | @license MIT
- * 
- * Add Markdown toolbar to textarea that outputs Markdown syntax
- * 
- *     hEditor( textarea, args );
- * 
- * Get the CSS from https://github.com/hrsetyono/hEditor
- */

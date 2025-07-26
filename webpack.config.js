@@ -3,26 +3,27 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const path = require('path');
 
-const outputPath = 'dist';
+const outputPath = '_dist';
 
 const entryPoints = {
-  'h-icon': './module-block-icon/icon-v1/index.jsx',
-  'px-icon': './module-block-icon/icon-v2/index.jsx',
-  'px-faq': './module-block-faq/faq-v3/index.jsx',
-  'px-tabs': './module-block-tabs/px-tabs.js',
-  'px-tabs-editor': './module-block-tabs/px-tabs-editor.js',
+  'px-admin': './px-admin',
 
-  'px-gutenberg': './module-gutenberg/px-gutenberg.js',
-  'h-gutenberg': './module-gutenberg/_legacy/h-gutenberg.js',
-  'px-classic-editor': './module-gutenberg/px-classic-editor.scss',
+  'h-icon': './block-icon/icon-v1/index.jsx',
+  'px-icon': './block-icon/icon-v2/index.jsx',
+  'px-faq': './block-faq/faq-v3/index.jsx',
+  'px-tabs': './block-tabs/px-tabs.js',
+  'px-tabs-editor': './block-tabs/px-tabs-editor.js',
 
-  'h-comment': './module-comment/src/h-comment.js',
-  'h-admin': './module-modify/src/h-admin.sass',
-  'h-widgets': './module-widgets/src/h-widgets.sass',
-  'h-menu-admin': './module-menu/src/h-menu-admin.js',
+  'px-gutenberg': './gutenberg/px-gutenberg.js',
+  'h-gutenberg': './gutenberg/_legacy/h-gutenberg.js',
+  'px-classic-editor': './gutenberg/px-classic-editor.scss',
 
-  'px-dark-mode': './module-widgets-dark-mode/src/script.js',
-  'px-dark-mode-head': './module-widgets-dark-mode/src/script-head.js',
+  'h-comment': './comment/src/h-comment.js',
+  'h-widgets': './widgets/src/h-widgets.sass',
+  'h-menu-admin': './menu/src/h-menu-admin.js',
+
+  'px-dark-mode': './widgets-dark-mode/src/script.js',
+  'px-dark-mode-head': './widgets-dark-mode/src/script-head.js',
 };
 
 module.exports = {

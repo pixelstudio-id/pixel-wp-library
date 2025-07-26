@@ -18,34 +18,46 @@ define('PX_VERSION', '6.8.0');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 // // define('PX_DIR', __DIR__); // for require
-define('PX_DIST', plugin_dir_url(__FILE__) . 'dist');
+define('PX_DIST', plugin_dir_url(__FILE__) . '_dist');
 
 
 if (!class_exists('Pixel_WP_Library')):
 
-require_once __DIR__ . '/helper/_index.php';
+require_once __DIR__ . '/_helper/_index.php';
 
-require_once __DIR__ . '/module-modify/_index.php';
-require_once __DIR__ . '/module-vendor/_index.php';
+require_once __DIR__ . '/modify-core/_index.php';
+require_once __DIR__ . '/vendor/_index.php';
   
-require_once __DIR__ . '/module-admin-sidenav/_index.php';
-require_once __DIR__ . '/module-comment/_index.php';
-require_once __DIR__ . '/module-widgets/_index.php';
-require_once __DIR__ . '/module-widgets-dark-mode/_index.php';
-require_once __DIR__ . '/module-head-footer/_index.php';
+require_once __DIR__ . '/admin-sidenav/_index.php';
+require_once __DIR__ . '/comment/_index.php';
+require_once __DIR__ . '/widgets/_index.php';
+require_once __DIR__ . '/widgets-dark-mode/_index.php';
+require_once __DIR__ . '/head-footer/_index.php';
 
-require_once __DIR__ . '/module-block-faq/_index.php';
-require_once __DIR__ . '/module-block-icon/_index.php';
-require_once __DIR__ . '/module-block-tabs/_index.php';
+require_once __DIR__ . '/block-faq/_index.php';
+require_once __DIR__ . '/block-icon/_index.php';
+require_once __DIR__ . '/block-tabs/_index.php';
 
 if (defined('PX_LEGACY_MODE')) {
-  require_once __DIR__ . '/module-post-type/_legacy/_index.php';
-  require_once __DIR__ . '/module-gutenberg/_legacy/_index.php';
-  require_once __DIR__ . '/module-menu/_legacy/_index.php';
+  require_once __DIR__ . '/post-type/_legacy/_index.php';
+  require_once __DIR__ . '/gutenberg/_legacy/_index.php';
+  require_once __DIR__ . '/menu/_legacy/_index.php';
 } else {
-  require_once __DIR__ . '/module-post-type/_index.php';
-  require_once __DIR__ . '/module-gutenberg/_index.php';
-  require_once __DIR__ . '/module-menu/_index.php';
+  require_once __DIR__ . '/post-type/_index.php';
+  require_once __DIR__ . '/gutenberg/_index.php';
+  require_once __DIR__ . '/menu/_index.php';
+}
+
+add_action('admin_enqueue_scripts', '_px_enqueue_admin_assets', 100);
+
+/**
+ * Add CSS and JS to admin area
+ * 
+ * @action admin_enqueue_scripts
+ */
+function _px_enqueue_admin_assets() {
+  wp_enqueue_style('px-admin', PX_DIST . '/px-admin.css', [], PX_VERSION);
+  wp_enqueue_script('px-admin', PX_DIST . '/px-admin.js', [], PX_VERSION, true);
 }
 
 
