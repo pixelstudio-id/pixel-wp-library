@@ -99,8 +99,6 @@ pre.wp-block-code
 ///// TABLE
 
 .wp-block-table
-  --tableStripe: #eef2f7
-
   display: flex
   flex-direction: column
   overflow-x: auto
@@ -108,13 +106,16 @@ pre.wp-block-code
   margin-bottom: var(--blockGap)
 
   table
+    --_stripeBg: #{rgbA(var(--bgColorRGB, var(--grayRGB)), .1)}
+    --_border: rgbA(var(--baseRGB), .2)
+
     border-collapse: collapse
     border-spacing: 0
     color: var(--base)
 
   thead,
   tfoot
-    background-color: var(--bgColor, #eef2f7)
+    background-color: var(--bgColor, rgbA(var(--grayRGB), .2))
     color: var(--textColor, var(--base))
     font-weight: 700
     text-align: left
@@ -129,7 +130,10 @@ pre.wp-block-code
 
   th, td
     padding: 0.5rem 1rem
-    border: 1px solid rgba(black, .5) !important
+    border-top: 1px solid var(--_border)
+    border-bottom: 1px solid var(--_border)
+    border-left: 1px dashed var(--_border)
+    border-right: 1px dashed var(--_border)
 
   &.is-style-px-full-color,
   &.is-style-h-full-color
@@ -138,33 +142,31 @@ pre.wp-block-code
       color: var(--textColor)
 
   &.is-style-stripes
-    table
-      --tableStripe: rgba(var(--bgColorRGB), .1)
+    td, th
+      border-color: var(--_border)
 
     tbody tr:nth-child(odd)
-      background: var(--baseInv)
+      background-color: var(--baseInv)
     tbody tr:nth-child(even)
-      background-color: var(--tableStripe)
-
-
+      background-color: var(--_stripeBg)
 
 ///// QUOTE
 
 .wp-block-quote
-  padding: 0.5rem
+  padding: 0
   padding-left: 1.25rem
   border-left: 3px solid
 
   &.has-text-align-right
     border-left: none
     border-right: 3px solid
-    padding-left: 0.5rem
+    padding-left: 0
     padding-right: 1.25rem
 
   &.has-text-align-center
     border: none
     padding-top: 1rem
-    padding-left: 0.5rem
+    padding-left: 0
 
     &::before
       content: ""
@@ -174,6 +176,11 @@ pre.wp-block-code
       height: 3px
       background-color: currentColor
       transform: translateX(-50%)
+
+  &.has-background
+    padding-top: 0.75rem
+    padding-bottom: 0.75rem
+    padding-right: 0.75rem
 
   cite
     margin-top: 1rem

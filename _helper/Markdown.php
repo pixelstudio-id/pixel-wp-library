@@ -3,7 +3,9 @@
 /**
  * Parse markdown
  */
-function h_markdown(string $text, bool $no_wrapper = false) {
+function px_markdown($text, bool $no_wrapper = false) {
+  if (!$text) { return ''; }
+
   $pd = new Parsedown();
   $text_compiled = $pd->text($text);
 
@@ -18,8 +20,22 @@ function h_markdown(string $text, bool $no_wrapper = false) {
 /**
  * Parse markdown without the Paragraph outer wrapper
  */
-function h_markdown_no_p(string $text) {
-  return h_markdown($text, true);
+function px_markdown_no_p($text) {
+  return px_markdown($text, true);
+}
+
+/**
+ * Alias of px_markdown()
+ */
+function h_markdown($text, bool $no_wrapper = false) {
+  return px_markdown($text, $no_wrapper);
+}
+
+/**
+ * Alias of px_markdown_no_p()
+ */
+function h_markdown_no_p($text) {
+  return px_markdown($text, true);
 }
 
 #

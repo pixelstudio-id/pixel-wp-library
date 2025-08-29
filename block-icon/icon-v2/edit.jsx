@@ -69,7 +69,7 @@ function IconEdit(props) {
                 />
                 <small style={{ display: 'block', marginTop: '-1.5rem' }}>
                   Visit here to see list of icons: 
-                  <a href={`${window.pxLocalizeIcon.fontawesomeURL}`} target="_blank" rel="noreferrer">
+                  <a href={`${window.pxLocalizeIcon.searchURL}`} target="_blank" rel="noreferrer">
                     FontAwesome.com
                   </a>
                 </small>

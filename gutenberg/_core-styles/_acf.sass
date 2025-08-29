@@ -24,9 +24,9 @@ div.acf-block-body .acf-fields
   row-gap: var(--_gap)
   container-type: inline-size
 
-  padding: 1.5rem 7.5%
-  min-height: 200px
-  border: none
+  padding: 1.5rem 1rem
+  border-radius: var(--gRadius)
+  border: 1px solid rgba(black, .2)
 
   &::after
     display: none
@@ -47,16 +47,17 @@ div.acf-block-body .acf-fields
   div.acf-field:not([style*="width:"])
     width: 100%
 
+  // Group fields
+  .acf-fields
+    padding: 0
+    min-height: 0
+
 // Hide description when not selected
 .wp-block[class*="wp-block-acf-"]
-  .acf-field-message:first-child .acf-input
-    display: none
-  
   .acf-block-fields p.description
     display: none
     font-size: var(--xsFontSize)
 
-  &.is-selected .acf-field-message:first-child .acf-input,
   &.is-selected .acf-block-fields p.description
     display: block
 
@@ -76,6 +77,12 @@ div.acf-block-body div.acf-field.acf-field-message
   align-self: flex-end
   padding: 0.5rem 1rem
   background-color: rgba(white, .5)
+  border-radius: var(--gRadius)
+
+  div.acf-input p
+    margin: 0
+    text-align: center
+    font-size: 0.75rem
 
   .acf-label
     margin: 0
@@ -84,11 +91,6 @@ div.acf-block-body div.acf-field.acf-field-message
 
   label
     cursor: default
-
-  p
-    margin: 0
-    text-align: center
-
 
 // ACF RADIO field
 div.acf-block-body .acf-field-radio
@@ -144,6 +146,9 @@ div.acf-block-body .acf-relationship
 
 div.acf-block-body .acf-fields > .acf-tab-wrap
   background-color: transparent
+  
+  &.-top
+    width: 100%
 
   .acf-tab-group
     margin-right: -4.5rem

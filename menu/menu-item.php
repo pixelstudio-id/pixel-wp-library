@@ -146,7 +146,7 @@ function _h_render_menu_item($i, $styles) {
       $icon = get_field('icon', $i);
 
       if ($icon) {
-        $src = $icon['sizes']['thumbnail'];
+        $src = $icon['sizes']['thumbnail'] ?? '';
         $image_tag = "<img src='{$src}' loading='lazy'>";
       }
     }

@@ -11,12 +11,12 @@
     "menu_title": "",
     "position": "",
     "redirect": false,
-    "description": "",
+    "description": "Add custom code to your site.",
     "update_button": "Update",
     "updated_message": "Options Updated",
     "capability": "edit_posts",
     "data_storage": "options",
     "post_id": "",
-    "autoload": 0,
+    "autoload": 1,
     "modified": 1706976446
 }

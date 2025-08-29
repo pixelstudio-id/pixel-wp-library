@@ -43,6 +43,13 @@ div.editor-styles-wrapper .wp-block-image
     margin-left: auto
     margin-right: auto
 
+// block element should not flow on floating image 
+.wp-block-columns,
+.wp-block-group,
+.wp-block-separator,
+.wp-block-media-text
+  clear: both
+
 ///// MEDIA TEXT
 
 div.wp-block-media-text
