@@ -3,7 +3,7 @@
 if (!is_admin()) {
   add_filter('render_block_core/spacer', '_px_render_negative_spacer', 10, 2);
 
-  add_filter('render_block_core/group', '_px_render_group', 5, 2);
+  add_filter('render_block_core/group', '_px_render_group_alignment', 5, 2);
   // add_filter('render_block_core/group', '_px_render_group_inner_container_for_flex', 6, 2);
   add_filter('render_block_core/buttons', '_px_render_buttons_alignment', 5, 2);
 }
@@ -32,6 +32,7 @@ function _px_render_group_inner_container_for_flex($content, $block) {
  * Modify the height into margin-bottom
  * 
  * @filter render_block_core/spacer
+ * @deprecated - Use negative margin instead
  */
 function _px_render_negative_spacer($content, $block) {
   $is_negative = isset($block['attrs']['className'])
@@ -49,7 +50,7 @@ function _px_render_negative_spacer($content, $block) {
  * 
  * @filter render_block_core/group
  */
-function _px_render_group($content, $block) {
+function _px_render_group_alignment($content, $block) {
   $extra_classes = '';
 
   // Add Row Variation class

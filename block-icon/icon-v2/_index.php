@@ -12,10 +12,14 @@ function _px_register_icon_block() {
 
   $search_urls = [
     'v5' => 'https://fontawesome.com/v5/search?m=free&s=solid',
-    'v6' => 'https://fontawesome.com/v6/search?f=classic&s=solid&o=r',
-    'v6-regular' => 'https://fontawesome.com/v6/search?f=classic&s=regular&o=r',
-    'v6-light' => 'https://fontawesome.com/v6/search?f=classic&s=light&o=r',
-    'v6-duotone' => 'https://fontawesome.com/v6/search?f=duotone&s=solid&o=r',
+    'v6' => 'https://fontawesome.com/v6/search?o=r&s=solid&ip=classic',
+    'v6-regular' => 'https://fontawesome.com/v6/search?ip=classic&s=regular&o=r',
+    'v6-thin' => 'https://fontawesome.com/v6/search?o=r&s=thin&ip=classic',
+    'v6-duotone' => 'https://fontawesome.com/v6/search?o=r&s=solid&ip=duotone',
+    'v7' => 'https://fontawesome.com/v7/search?o=r&s=solid&ip=classic',
+    'v7-regular' => 'https://fontawesome.com/v7/search?ip=classic&s=regular&o=r',
+    'v7-thin' => 'https://fontawesome.com/v7/search?o=r&s=thin&ip=classic',
+    'v7-duotone' => 'https://fontawesome.com/v7/search?o=r&s=solid&ip=duotone',
   ];
 
   if (is_array($args)) {

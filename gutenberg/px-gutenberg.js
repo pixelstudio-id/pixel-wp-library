@@ -169,7 +169,7 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
         }
       };
       break;
-    
+
 
     // Has hidden margin and padding
     case 'core/heading':
@@ -229,6 +229,29 @@ addFilter('blocks.registerBlockType', 'px/set_default_alignment', (settings, nam
 
   // COLOR Settings
   switch (name) {
+    // add background and text color to Image block
+    case 'core/image':
+      settings.supports = {
+        ...settings.supports,
+        color: {
+          ...settings.supports.color,
+          background: true,
+          text: true,
+        },
+      };
+      settings.attributes = {
+        ...settings.attributes,
+        textColor: {
+          type: 'string',
+          default: '',
+        },
+        backgroundColor: {
+          type: 'string',
+          default: '',
+        },
+      };
+      break;
+
     // add text color to File block
     case 'core/file':
       settings.supports = {

@@ -8,8 +8,17 @@
 .wp-block-image .components-resizable-box__container
   max-width: 100% !important
 
+.wp-block-image[style*="background-color"]
+  padding: 0.75rem
+  border-radius: var(--gRadius)
+
 // fix floating
-div.editor-styles-wrapper .wp-block-image
+.wp-block-image
+  &.alignleft,
+  &.alignright,
+  &.aligncenter
+    width: auto
+
   &.alignleft,
   &.alignright
     display: flex
@@ -25,7 +34,6 @@ div.editor-styles-wrapper .wp-block-image
       width: 100%
 
   &.alignleft
-    margin-left: calc((100% - var(--contentSize)) / 2)
     margin-right: 1.5rem
     figcaption
       text-align: left
@@ -34,7 +42,6 @@ div.editor-styles-wrapper .wp-block-image
   &.alignright
     align-items: flex-end
     margin-left: 1.5rem
-    margin-right: calc((100% - var(--contentSize)) / 2)
     figcaption
       text-align: right
       margin-right: 0
@@ -42,6 +49,12 @@ div.editor-styles-wrapper .wp-block-image
   &.aligncenter
     margin-left: auto
     margin-right: auto
+
+div.editor-styles-wrapper .wp-block-image
+  &.alignleft
+    margin-left: calc((100% - var(--contentSize)) / 2)
+  &.alignright
+    margin-right: calc((100% - var(--contentSize)) / 2)
 
 // block element should not flow on floating image 
 .wp-block-columns,
@@ -238,7 +251,7 @@ figure.wp-block-gallery.is-style-px-thumbnails
 
 
 // Change the custom position to be within --wideSize
-.wp-block-cover .wp-block-cover__inner-container
+.wp-block-cover__inner-container
   display: flex
   flex-direction: column
   align-items: var(--alignX, center)
@@ -252,6 +265,11 @@ figure.wp-block-gallery.is-style-px-thumbnails
     max-width: var(--wideSize)
   .alignfull
     max-width: none
+
+  .alignleft
+    margin-right: auto
+  .alignright
+    margin-left: auto
 
 
 ///// FILE

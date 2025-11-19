@@ -19,6 +19,7 @@ add_action('init', '_h_remove_image_sizes');
 add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
 
 add_action('admin_head', '_px_remove_update_nag');
+add_action('admin_menu', '_px_add_reusable_blocks_menu', 10);
 
 /**
  * Remove the update nag
@@ -75,4 +76,19 @@ function _h_remove_image_sizes() {
  */
 function _h_remove_wp_logo($wp_admin_bar) {
   $wp_admin_bar->remove_node('wp-logo');
+}
+
+/**
+ * Add a shortcut to Reusable Blocks in the admin menu
+ * 
+ * @action admin_menu
+ */
+function _px_add_reusable_blocks_menu() {
+  add_submenu_page(
+    'edit.php?post_type=page',
+    __('Reusable Blocks', 'px'),
+    __('Reusable Blocks', 'px'),
+    'edit_posts',
+    'edit.php?post_type=wp_block'
+  );
 }
