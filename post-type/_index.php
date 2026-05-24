@@ -12,7 +12,7 @@ function px_register_post_type(string $post_type, array $args = []) {
 /**
  * Register Custom Taxonomy
  */
-function px_register_taxonomy(string $taxonomy, string $post_type, array $args) {
+function px_register_taxonomy(string $taxonomy, string $post_type, array $args = []) {
   require_once __DIR__ . '/taxonomy.php';
   require_once __DIR__ . '/post-filter.php';
 

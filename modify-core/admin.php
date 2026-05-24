@@ -86,8 +86,8 @@ function _h_remove_wp_logo($wp_admin_bar) {
 function _px_add_reusable_blocks_menu() {
   add_submenu_page(
     'edit.php?post_type=page',
-    __('Reusable Blocks', 'px'),
-    __('Reusable Blocks', 'px'),
+    'Reusable Blocks',
+    'Reusable Blocks',
     'edit_posts',
     'edit.php?post_type=wp_block'
   );

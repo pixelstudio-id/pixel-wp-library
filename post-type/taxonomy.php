@@ -39,7 +39,7 @@ class PxTaxonomy {
       'rewrite' => [
         'slug' => $args['slug'] ?? $taxonomy,
         'with_front' => false
-      ]
+      ],
     ]);
 
     return $parsed_args;
@@ -51,6 +51,8 @@ class PxTaxonomy {
   private function _create_labels(string $taxonomy, string $label='') : array {
     $title = _H::to_title($taxonomy);
     $title_plural = Inflector::pluralize($title);
+
+    $ref = new ReflectionClass('Inflector');
 
     // check if label is defined
     $label = $label ? $label : $title;

@@ -21,37 +21,6 @@ function px_var_dump($value) {
 }
 
 /**
- * Upgraded wp_remote_get() so it's easier to use
- * 
- * @param string $endpoint
- * @param array $params - URL param in array format
- */
-function px_remote_get($endpoint, $params = []) {
-  $full_endpoint = add_query_arg($params, $endpoint);
-  $response = wp_remote_get($full_endpoint);
-
-  if (is_wp_error($response)) {
-    return $response;
-  }
-
-  $data = json_decode(wp_remote_retrieve_body($response), true);
-  return $data;
-}
-
-/**
- * Upgraded wp_remote_post() so it's easier to use
- */
-function px_remote_post($endpoint, $body = [], $headers = []) {
-  $result = wp_remote_post($endpoint, [
-    'body' => $body,
-    'headers'=> $headers,
-    'timeout' => 30,
-  ]);
-
-  return $result;
-}
-
-/**
  * Get social media SVG icon and color
  * 
  * @param $slug (string / optional) - The icon name. Leave empty to get all data

@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 6.8.4
+ * Version: 6.8.7
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('PX_VERSION', '6.8.4');
+define('PX_VERSION', '6.8.7');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 // // define('PX_DIR', __DIR__); // for require
@@ -25,9 +25,7 @@ if (!class_exists('Pixel_WP_Library')):
 
 require_once __DIR__ . '/_helper/_index.php';
 
-require_once __DIR__ . '/modify-core/_index.php';
-require_once __DIR__ . '/vendor/_index.php';
-  
+require_once __DIR__ . '/modify-core/_index.php';  
 require_once __DIR__ . '/admin-sidenav/_index.php';
 require_once __DIR__ . '/comment/_index.php';
 require_once __DIR__ . '/widgets/_index.php';
@@ -94,6 +92,25 @@ class Pixel_WP_Library {
 new Pixel_WP_Library();
 endif;
 
+if (!class_exists('Px')):
+
+/**
+ * Alternate way to call Px functions from each module's `_load.php`
+ * Example: to call `px_register_post_type()`, we can use `Px::register_post_type()`
+ */
+class Px{
+  static function __callStatic($name, $args) {
+    $func_name = "px_$name";
+
+    if (is_callable($func_name)) {
+      return call_user_func_array($func_name, $args);
+    } else {
+      trigger_error("The function Px::{$name} does not exist.", E_USER_ERROR);
+    }
+  }
+}
+
+endif; // class_exists
 
 /////
 

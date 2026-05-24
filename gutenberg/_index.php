@@ -21,6 +21,9 @@ if (is_admin()) {
   // remove the SVG gradient
   remove_action('wp_body_open', 'wp_global_styles_render_svg_filters', 10);
   add_action('wp_footer', '_px_disable_gutenberg_support_css');
+
+  // remove wp 6.9 separate block assets
+  add_filter('should_load_separate_core_block_assets', '__return_false', 99);
 }
 
 /**
