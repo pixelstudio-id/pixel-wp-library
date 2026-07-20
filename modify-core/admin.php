@@ -13,7 +13,6 @@ add_filter('update_footer', '__return_empty_string', 11);
 
 // other
 add_filter('wp_terms_checklist_args', '_h_fixed_position_on_term_checkboxes', 1, 2);
-add_filter('intermediate_image_sizes_advanced', '_h_remove_mediumlarge_size');
 add_action('init', '_h_remove_image_sizes');
 
 add_action('admin_bar_menu', '_h_remove_wp_logo', 999);
@@ -49,22 +48,13 @@ function _h_fixed_position_on_term_checkboxes($args, $post_id) {
 }
 
 /**
- * Remove "medium_large" image size
- * @filter intermediate_image_sizes_advanced
- */
-function _h_remove_mediumlarge_size($sizes) {
-  unset($sizes['medium_large']);
-  return $sizes;
-}
-
-/**
  * Remove other image sizes
  * 
  * @action init
  */
 function _h_remove_image_sizes() {
   foreach (get_intermediate_image_sizes() as $size) {
-    if (!in_array($size, ['thumbnail', 'medium', 'large'])) {
+    if (!in_array($size, ['thumbnail', 'medium', 'large', 'medium_large'])) {
       remove_image_size($size);
     }
   }

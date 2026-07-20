@@ -11,7 +11,7 @@ if (is_admin()) {
   add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 999);
   add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
   
-  add_action('admin_init', '_px_remove_gutenberg_menu', 100);  
+  add_action('admin_menu', '_px_remove_gutenberg_menu', 999);
   add_action('init', '_px_unregister_template_cpt');
 } else {
   // remove group container class
@@ -27,7 +27,7 @@ if (is_admin()) {
 }
 
 /**
- * @action admin_init
+ * @action admin_menu
  */
 function _px_remove_gutenberg_menu() {
   remove_menu_page('gutenberg');

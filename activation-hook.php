@@ -39,17 +39,8 @@ class Px_ActivationHook {
   private function _create_frontpage() {
     $frontpage_id = get_option('page_on_front');
 
-    // if already exists, just change the title
-    if ($frontpage_id) {
-      $args = [
-        'ID' => $frontpage_id,
-        'post_title' => get_bloginfo()
-      ];
-
-      wp_update_post($args);
-    }
-    // if does not exists, create it
-    else {
+    // if not exist, create it
+    if (!$frontpage_id) {
       $home = [
         'post_title' => get_bloginfo(),
         'post_type' => 'page',
@@ -97,9 +88,9 @@ class Px_ActivationHook {
     update_option('medium_size_h', 480);
 
     update_option('large_size_w', 1120);
-    update_option('large_size_h', 800);
+    update_option('large_size_h', 1000);
 
-    update_option('medium_large_size_w', 0);
-    update_option('medium_large_size_h', 0);
+    update_option('medium_large_size_w', 760);
+    update_option('medium_large_size_h', 760);
   }
 }

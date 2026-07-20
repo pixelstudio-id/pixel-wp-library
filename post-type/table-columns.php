@@ -113,7 +113,7 @@ class PxTableColumns {
     }
 
     // always start with checkbox
-    $list = ['cb' => $defaults['cb']] + $list;
+    $list = ['cb' => $defaults['cb'] ?? ''] + $list;
     return $list;
   }
 
@@ -201,8 +201,7 @@ class PxTableColumns {
     }
 
     if (is_callable($content_callback)) {
-      global $wp_query;
-      $term = get_queried_object();
+      $term = get_term($term_id, $this->taxonomy_name);
       echo $content_callback($term, $fields);
     } else {
       echo '-';
