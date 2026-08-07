@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "<span class=\"dashicons dashicons-warning\"><\/span> First children under Mega Menu become a \"Heading\". It doesn't have URL and Description",
+            "message": "⚠️ First children under Mega Menu become a \"Heading\". It doesn't have URL and Description",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -123,7 +123,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "<span class=\"dashicons dashicons-warning\"><\/span> This icon is only visible in Footer and mobile screen",
+            "message": "⚠️ This icon is only visible in Footer and mobile screen",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -132,7 +132,7 @@
             "label": "Icon",
             "name": "icon",
             "type": "image",
-            "instructions": "<span class=\"dashicons dashicons-editor-expand\"><\/span> Max size: 100x100",
+            "instructions": "📏 Max size: 100x100",
             "required": 0,
             "conditional_logic": [
                 [

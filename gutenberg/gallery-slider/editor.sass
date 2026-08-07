@@ -1,0 +1,45 @@
+
+// GALLERY Slider
+.wp-block-gallery[class*="-slider"]
+  position: relative
+
+  figure.wp-block-image
+    flex-grow: initial
+
+  &.columns-default
+    figure:nth-child(n+4)
+      display: none
+  &.columns-1
+    figure:nth-child(n+2)
+      display: none
+  &.columns-2
+    figure:nth-child(n+3)
+      display: none
+  &.columns-3
+    figure:nth-child(n+4)
+      display: none
+  &.columns-4
+    figure:nth-child(n+5)
+      display: none
+  &.columns-5
+    figure:nth-child(n+6)
+      display: none
+
+  &.has-child-selected figure.wp-block-image,
+  &.is-selected figure.wp-block-image,
+  figure.wp-block-image.is-selected
+    display: flex
+  
+  &::before
+    content: ""
+    position: absolute
+    z-index: 2
+    top: 50%
+    left: 0
+    right: 0
+    transform: translateY(-50%)
+
+    display: inline-block
+    background: url('./img/chevron-left.svg') left center no-repeat, url(./img/chevron-right.svg) right center no-repeat
+    pointer-events: none
+    height: 2rem

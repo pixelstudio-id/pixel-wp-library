@@ -15,7 +15,6 @@ const entryPoints = {
   'px-tabs-editor': './block-tabs/px-tabs-editor.js',
 
   'px-gutenberg': './gutenberg/px-gutenberg.js',
-  'h-gutenberg': './gutenberg/_legacy/h-gutenberg.js',
   'px-classic-editor': './gutenberg/px-classic-editor.scss',
 
   'h-comment': './comment/src/h-comment.js',

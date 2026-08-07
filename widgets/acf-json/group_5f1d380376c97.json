@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "<span class=\"dashicons dashicons-warning\" style=\"color:red\"></span> This has been replaced by BUTTONS widget.",
+            "message": "⚠️ This has been replaced by BUTTONS widget.",
             "new_lines": "wpautop",
             "esc_html": 0
         },

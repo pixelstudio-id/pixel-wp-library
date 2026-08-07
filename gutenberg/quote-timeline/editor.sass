@@ -1,0 +1,62 @@
+// QUOTE Timeline
+// @deprecated - too niche
+
+.wp-block-quote.is-style-px-timeline,
+.wp-block-quote.is-style-h-timeline
+  --gap: 2rem
+  --x: 50%
+  --x2: 100%
+
+  position: relative
+  max-width: calc(var(--wideSize) / 2 - var(--gap))
+  transform: translateX(calc(-20% - var(--gap)))
+  
+  border: none
+  padding: var(--blockGap)
+  box-shadow: var(--shadowThin)
+
+  cite
+    position: absolute
+    top: 50%
+    right: calc(-1 * var(--gap))
+    transform: translateY(-50%) translateX(var(--x2))
+    
+    margin-top: 0
+    padding: 0 0.5rem
+    background-color: var(--grayLight)
+    border-radius: var(--gRadius)
+
+    font-size: var(--fontSize)
+    font-weight: 700
+    font-style: normal
+    color: var(--base)
+
+  // Right
+  &.has-text-align-right
+    --x: -50%
+    --x2: -100%
+
+    text-align: left
+    transform: translateX(calc(20% + var(--gap)))
+
+    cite
+      left: calc(-1 * var(--gap))
+      right: auto
+    &::before,
+    &::after
+      left: calc(-1 * var(--gap))
+      right: auto
+
+  // Center
+  &.has-text-align-center
+    transform: none
+    max-width: var(--contentSize)
+
+    cite
+      top: 0
+      left: 50%
+      right: auto
+      transform: translateX(-50%) translateY(-50%)
+
+    &::before
+      display: none

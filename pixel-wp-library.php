@@ -36,13 +36,13 @@ require_once __DIR__ . '/block-faq/_index.php';
 require_once __DIR__ . '/block-icon/_index.php';
 require_once __DIR__ . '/block-tabs/_index.php';
 
+require_once __DIR__ . '/post-type/_index.php';
+
 if (defined('PX_LEGACY_MODE')) {
-  require_once __DIR__ . '/post-type/_legacy/_index.php';
   require_once __DIR__ . '/gutenberg/_legacy/_index.php';
   require_once __DIR__ . '/menu/_legacy/_index.php';
 } else {
-  require_once __DIR__ . '/post-type/_index.php';
-  require_once __DIR__ . '/gutenberg/_index.php';
+  require_once __DIR__ . '/gutenberg/gutenberg.php';
   require_once __DIR__ . '/menu/_index.php';
 }
 
@@ -95,7 +95,7 @@ endif;
 if (!class_exists('Px')):
 
 /**
- * Alternate way to call Px functions from each module's `_load.php`
+ * Alternate way to call Px or H functions
  * Example: to call `px_register_post_type()`, we can use `Px::register_post_type()`
  */
 class Px{
@@ -104,6 +104,8 @@ class Px{
 
     if (is_callable($func_name)) {
       return call_user_func_array($func_name, $args);
+    } elseif (is_callable("h_{$name}")) {
+      return call_user_func_array("h_{$name}", $args);
     } else {
       trigger_error("The function Px::{$name} does not exist.", E_USER_ERROR);
     }
@@ -117,7 +119,7 @@ endif; // class_exists
 if (!class_exists('H')):
 
 /**
- * Alternate way to call Edje functions from each module's `_load.php`
+ * Alternate way to call H or Px functions
  * Example: to call `h_register_post_type()`, we can use `H::register_post_type()`
  */
 class H {
@@ -126,6 +128,8 @@ class H {
 
     if (is_callable($func_name)) {
       return call_user_func_array($func_name, $args);
+    } elseif (is_callable("px_{$name}")) {
+      return call_user_func_array("px_{$name}", $args);
     } else {
       trigger_error("The function H::{$name} does not exist.", E_USER_ERROR);
     }

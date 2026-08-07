@@ -202,8 +202,8 @@
                 "id": ""
             },
             "choices": {
-                "horizontal": "<span class='dashicons dashicons-arrow-right-alt'></span> Horizontal",
-                "vertical": "<span class='dashicons dashicons-arrow-down-alt'></span> Vertical"
+                "horizontal": "➡️ Horizontal",
+                "vertical": "⬇️ Vertical"
             },
             "allow_null": 0,
             "other_choice": 0,

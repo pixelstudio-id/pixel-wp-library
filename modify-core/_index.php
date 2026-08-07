@@ -1,4 +1,8 @@
-<?php
+<?php if (!defined('ABSPATH')) { exit; }
+
+require_once __DIR__ . '/bloat-removal.php';
+require_once __DIR__ . '/bloat-removal-assets.php';
+
 add_action('plugins_loaded' , '_h_load_modify');
 
 /**
@@ -16,7 +20,6 @@ function _h_load_modify() {
   // frontend
   else {
     require_once __DIR__ . '/login.php';
-    require_once __DIR__ . '/seo.php';
 
     if (class_exists('Jetpack')) {
       require_once __DIR__ . '/jetpack.php';
