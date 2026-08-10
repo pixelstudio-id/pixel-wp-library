@@ -49,8 +49,14 @@ function setDefaultAlignment(settings, name) {
       };
       break;
 
-    // Remove align left and right
     case 'core/file':
+      settings.supports = {
+        ...settings.supports,
+        align: ['left', 'right'],
+      };
+      break;
+
+    // Remove align left and right
     case 'core/audio':
       settings.supports = {
         ...settings.supports,
@@ -261,9 +267,8 @@ function setDefaultColor(settings, name) {
       };
       break;
 
-    // add text color to File and ListItem block
+    // add text color to ListItem block
     case 'core/list-item':
-    case 'core/file':
       settings.supports = {
         ...settings.supports,
         color: {
@@ -281,6 +286,31 @@ function setDefaultColor(settings, name) {
         },
       };
       break;
+
+    // Add text and background to File block
+    case 'core/file':
+      settings.supports = {
+        ...settings.supports,
+        color: {
+          ...settings.supports.color,
+          text: true,
+          background: true,
+        },
+      };
+  
+      settings.attributes = {
+        ...settings.attributes,
+        textColor: {
+          type: 'string',
+          default: '',
+        },
+        backgroundColor: {
+          type: 'string',
+          default: '',
+        },
+      };
+      break;
+      
   }
   return settings;
 }

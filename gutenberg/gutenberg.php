@@ -2,15 +2,16 @@
 
 require_once __DIR__ . '/_core/_index.php';
 
-require_once __DIR__ . '/cover-below-header/cover-below-header.php';
 require_once __DIR__ . '/cover-mobile/cover-mobile.php';
 require_once __DIR__ . '/gallery-slider/gallery-slider.php';
 require_once __DIR__ . '/spacer-negative/spacer-negative.php';
+require_once __DIR__ . '/file-download-button/file-download-button.php';
+require_once __DIR__ . '/icon-prefix/icon-prefix.php';
 
 if (is_admin()) {
   add_filter('safe_style_css', '_px_gutenberg_safe_style');
 
-  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 999);
+  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 100);
   add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
   
   add_action('admin_menu', '_px_remove_gutenberg_menu', 999);
@@ -75,6 +76,12 @@ function _px_enqueue_editor() {
   wp_enqueue_script('px-gutenberg', PX_DIST . '/px-gutenberg.js', [], PX_VERSION, true);
   wp_localize_script('px-gutenberg', 'localizePx', [
     'disallowedBlocks' => $disallowed_blocks
+  ]);
+
+  wp_localize_script('px-gutenberg', 'pxApiSettings', [
+    'nonce' => wp_create_nonce('wp_rest'),
+    'pxUrl' => esc_url_raw(rest_url()) . MY_NAMESPACE,
+    'wpUrl' => esc_url_raw(rest_url()) . 'wp/v2',
   ]);
 }
 

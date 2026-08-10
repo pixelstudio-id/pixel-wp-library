@@ -19,6 +19,7 @@ p.has-drop-cap:first-letter
   line-height: 4.5rem
 p.has-background
   border-radius: var(--gRadius)
+  padding: 0.75rem 1rem
 
 ///// HEADING
 
@@ -70,12 +71,18 @@ div.editor-styles-wrapper [data-type="core/heading"]
 ///// LIST
 
 [data-type="core/list"]
+  padding-left: 1.5rem
   ol
     list-style-type: lower-alpha
 
   &.has-background
     padding: 1rem 1.5rem
     padding-left: 2.5rem
+
+  &.aligncenter
+    display: flex
+    flex-direction: column
+    align-items: center
 
 ///// CODE
 
@@ -137,29 +144,40 @@ pre.wp-block-code
 ///// QUOTE
 
 .wp-block-quote
-  padding: 0
-  padding-left: 1.25rem
-  border-left: 3px solid
+  padding: 0.5rem 1rem
+  border-left: 4px solid
+
+  &.has-color-1-light-background-color,
+  &.has-color-1-lighter-background-color,
+  &.has-color-1-lightest-background-color
+    border-color: var(--color1)
+  &.has-color-2-light-background-color,
+  &.has-color-2-lighter-background-color,
+  &.has-color-2-lightest-background-color
+    border-color: var(--color2)
+
+  &.has-background
+    border-radius: 0 0.25rem 0.25rem 0
 
   &.has-text-align-right
     border-left: none
-    border-right: 3px solid
-    padding-left: 0
-    padding-right: 1.25rem
+    border-right: 4px solid
+    border-radius: 0.25rem 0 0 0.25rem
 
   &.has-text-align-center
     border: none
-    padding-top: 1rem
-    padding-left: 0
+    padding: 1rem
+    border-radius: 0.25rem
 
     &::before
       content: ""
       position: absolute
       top: 0
       width: 100px
-      height: 3px
+      height: 4px
       background-color: currentColor
       transform: translateX(-50%)
+      border-radius: 0.25rem
 
   &.has-background
     padding-top: 0.75rem
@@ -167,6 +185,6 @@ pre.wp-block-code
     padding-right: 0.75rem
 
   cite
-    margin-top: 1rem
+    margin-top: 0.5rem
     font-size: var(--sFontSize)
     opacity: .5

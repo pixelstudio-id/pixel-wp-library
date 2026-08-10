@@ -11,14 +11,16 @@ import './list-inline/editor.js';
 import './table-full-color/editor.js';
 
 import './cover-mobile/editor.jsx';
-import './cover-below-header/editor.js';
 import './gallery-slider/editor.js';
 import './gallery-thumbnails/editor.js';
+import './file-download-button/editor.sass';
 
 import './group-flex-columns/editor.jsx';
 import './columns-gap/editor.js';
 import './spacer-negative/editor.js';
 import './button-transparent/editor.js';
+
+import './icon-prefix/editor.jsx';
 
 
 domReady(() => {

@@ -1,0 +1,128 @@
+@import "@lib/helpers"
+
+.px-icon-inspector
+  small
+    display: block
+    margin-top: -1rem
+    font-size: 12px
+    color: rgb(117, 117, 117)
+
+  .block-editor-panel-color-gradient-settings
+    border-top: none
+    padding: 0
+
+  // the icon position (for button only)
+  .block-editor-panel-color-gradient-settings + .components-base-control
+    margin-top: 0.75rem
+    margin-bottom: 0
+
+// HEADING
+.wp-block.wp-block-heading[style*="--pxIcon"]
+  display: flex
+  column-gap: 0.5em
+  box-sizing: border-box
+
+  &.has-text-align-center
+    justify-content: center
+  &.has-text-align-right
+    justify-content: flex-end
+
+  &::before
+    content: ""
+    display: inline-block
+    width: 1em
+    height: 1em
+    vertical-align: middle
+    background-color: var(--pxIconColor, currentColor)
+    -webkit-mask: var(--pxIcon) center / contain no-repeat
+    mask: var(--pxIcon) center / contain no-repeat
+
+  &.has-text-align-right::before
+    order: 2
+
+  &[style*="--pxIconBg"]::before
+    position: relative
+    z-index: 2
+    width: 1.125em
+    height: 1.125em
+    -webkit-mask-size: 0.75em 0.75em
+    mask-size: 0.75em 0.75em
+
+  &[style*="--pxIconBg"]::after
+    content: ""
+    display: inline-block
+    background-color: var(--pxIconBg)
+    order: -1
+    position: absolute
+    border-radius: 0.25rem
+    width: 1.125em
+    height: 1.125em
+
+  &[style*="--pxIconBg"].has-text-align-center::after
+    position: relative
+    transform: translateX(calc(100% + 1rem))
+
+// LIST ITEM
+.wp-block.wp-block-list-item[style*="--pxIcon"]
+  box-sizing: border-box
+  padding-left: 0.5em
+  list-style-type: none
+
+  + .wp-block.wp-block-list-item[style*="--pxIcon"]
+    margin-top: 0.375em
+    .wp-block-list.is-style-px-inline &
+      margin-top: 0
+
+  &::before
+    content: ""
+    display: inline-block
+    position: absolute
+    top: 0.2em
+    left: -1.5em
+    width: 1.25em
+    height: 1.25em
+    vertical-align: middle
+    background-color: var(--pxIconColor, currentColor)
+    -webkit-mask: var(--pxIcon) center / contain no-repeat
+    mask: var(--pxIcon) center / contain no-repeat
+
+  &[style*="--pxIconBg"]::before
+    z-index: 2
+    width: 1.375em
+    height: 1.375em
+    -webkit-mask-size: 0.875em 0.875em
+    mask-size: 0.875em 0.875em
+
+  &[style*="--pxIconBg"]::after
+    content: ""
+    display: inline-block
+    background-color: var(--pxIconBg)
+    order: -1
+    position: absolute
+    top: 0.2em
+    left: -1.5em
+    border-radius: 0.25rem
+    width: 1.375em
+    height: 1.375em
+
+// BUTTON
+.wp-block-button[style*="--pxIcon"]
+  box-sizing: border-box
+
+  .wp-block-button__link
+    display: inline-flex
+    align-items: center
+    column-gap: 0.5em
+  
+  .wp-block-button__link::before
+    content: ""
+    display: inline-block
+    width: 1.375em
+    height: 1.375em
+    background-color: var(--pxIconColor, currentColor)
+    -webkit-mask: var(--pxIcon) center / contain no-repeat
+    mask: var(--pxIcon) center / contain no-repeat
+
+  &.is-icon-position-right
+    .wp-block-button__link::before
+      order: 2

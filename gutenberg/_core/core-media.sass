@@ -13,7 +13,7 @@
   border-radius: var(--gRadius)
 
 // fix floating
-.wp-block-image
+figure.wp-block-image
   &.alignleft,
   &.alignright,
   &.aligncenter
@@ -28,6 +28,7 @@
     max-width: calc(var(--contentSize) / 2)
     margin-right: auto
     margin-left: auto
+    margin-bottom: var(--blockGap)
 
     .components-resizable-box__container
       height: auto !important
@@ -95,6 +96,12 @@ div.wp-block-media-text.alignfull
   --_gap: 0
   --_contentPadding: var(--blockWideGap)
   border-radius: 0
+
+  .wp-block-media-text__content
+    padding-right: 1.5rem
+  &.has-media-on-the-right .wp-block-media-text__content
+    padding-left: 1.5rem
+    padding-right: 0
 
   &.is-image-fill .wp-block-media-text__media
     min-height: 18rem
@@ -200,11 +207,6 @@ div.wp-block-media-text.alignfull
   &.alignleft
     --_align: flex-start
 
-  &[style*="background-color: rgb("]
-    --bgColor: var(--base)
-  &.has-text-base-color[style*="background-color: rgb("]
-    --bgColor: var(--grayLight)
-
 .editor-styles-wrapper div.wp-block-file__content-wrapper
   display: flex
   flex-direction: column
@@ -218,3 +220,6 @@ div.wp-block-media-text.alignfull
 
   .wp-block-file__button
     background-color: var(--bgColor, var(--color1))
+    color: var(--textColor, var(--baseInv))
+    font-weight: 700
+    text-transform: uppercase

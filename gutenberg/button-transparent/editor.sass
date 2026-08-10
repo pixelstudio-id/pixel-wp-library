@@ -1,10 +1,14 @@
 
-div.wp-block-button.is-style-px-transparent .wp-block-button__link,
-div.wp-block-button.is-style-h-transparent .wp-block-button__link
-  border: none
-  color: var(--textColor, var(--base))
+div.wp-block-button.is-style-px-transparent,
+div.wp-block-button.is-style-h-transparent
+  --bgColor: rgba(0,0,0,.1)
+  --textColor: var(--base)
 
-  &:not(:hover)
-    background-color: transparent !important
-  &:hover
-    background-color: var(--bgColor, rgba(0,0,0,.1))
+  .wp-block-button__link
+    border: none
+    color: var(--textColor, var(--base))
+
+    &:not(:hover)
+      background-color: transparent !important
+    &:hover
+      background-color: var(--bgColor)
