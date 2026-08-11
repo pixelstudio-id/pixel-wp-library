@@ -9,7 +9,7 @@ add_filter('render_block_core/button', 'px_add_icon_to_block', 10, 2);
 /**
  * This function is disabled because we're reusing the vars from h-icon
  * 
- * @action enqueue_block_editor_assets
+ * @action enqueue_block_editor_assets 150
  */
 function px_localize_icon_prefix_vars() {
   $support = get_theme_support('px-icon-block') ?: get_theme_support('h-icon-block');

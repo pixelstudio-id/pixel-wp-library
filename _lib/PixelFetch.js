@@ -55,14 +55,15 @@ export class PixelFetch {
    * Get data from sessionStorage, if not found then do API request and save it to sessionStorage
    */
   async getFromSession(path, args) {
-    const cached = sessionStorage.getItem(path);
-    if (cached && cached !== 'undefined') {
-      return JSON.parse(cached);
+    const cacheKey = path;
+    const cachedData = sessionStorage.getItem(cacheKey);
+    if (cachedData && cachedData !== 'undefined') {
+      return JSON.parse(cachedData);
     }
 
     try {
       const data = await this.get(path, args);
-      sessionStorage.setItem(path, JSON.stringify(data));
+      sessionStorage.setItem(cacheKey, JSON.stringify(data));
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -73,14 +74,15 @@ export class PixelFetch {
    * Get data from localStorage, if not found then do API request and save it to localStorage
    */
   async getFromLocal(path, args) {
-    const cached = localStorage.getItem(path);
-    if (cached && cached !== 'undefined') {
-      return JSON.parse(cached);
+    const cacheKey = path;
+    const cachedData = localStorage.getItem(cacheKey);
+    if (cachedData && cachedData !== 'undefined') {
+      return JSON.parse(cachedData);
     }
 
     try {
       const data = await this.get(path, args);
-      localStorage.setItem(path, JSON.stringify(data));
+      localStorage.setItem(cacheKey, JSON.stringify(data));
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -138,7 +140,7 @@ export class PixelFetch {
 
 // Init setup
 const headers = {};
-const { nonce, myUrl } = window.pxApiSettings;
+const { nonce, myUrl } = window?.pxApiSettings || {};
 if (nonce) {
   headers['X-WP-Nonce'] = nonce;
 }

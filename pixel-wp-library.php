@@ -8,13 +8,13 @@
  * License: MIT
  * Author: Pixel Studio
  * Author URI: https://pixelstudio.id
- * Version: 7.0.0
+ * Version: 7.0.1
  */
 
 if (!defined('WPINC')) { die; } // exit if accessed directly
 
 // Constant
-define('PX_VERSION', '7.0.0');
+define('PX_VERSION', '7.0.1');
 define('PX_BASE', basename(dirname(__FILE__)).'/'.basename(__FILE__));
 
 // // define('PX_DIR', __DIR__); // for require

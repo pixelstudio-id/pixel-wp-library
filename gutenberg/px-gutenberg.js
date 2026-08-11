@@ -20,7 +20,7 @@ import './columns-gap/editor.js';
 import './spacer-negative/editor.js';
 import './button-transparent/editor.js';
 
-import './icon-prefix/editor.jsx';
+import './px-icon-prefix/editor.jsx';
 
 
 domReady(() => {

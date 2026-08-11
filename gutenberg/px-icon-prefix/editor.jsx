@@ -1,5 +1,6 @@
 import './editor.sass';
 import { pxFetch } from '@lib/PixelFetch';
+import { getIconSVG } from '@lib/helpers';
 
 import debounce from 'lodash/debounce';
 
@@ -25,25 +26,7 @@ const {
 const BLOCK_NAMES = ['core/heading', 'core/list-item', 'core/button'];
 const BLOCK_NO_BACKGROUND = ['core/button'];
 const BLOCK_HAS_POSITION = ['core/button'];
-const CDN_BASE_URL = window.pxIconPrefix.cdnURL;
 const FONTAWESOME_SEARCH_URL = window.pxIconPrefix.fontawesomeURL;
-
-const encodeSvgAsDataUri = (svgMarkup) => {
-  const compactSvg = svgMarkup
-    .replace(/\r?\n|\r/g, ' ')
-    .replace(/\s{2,}/g, ' ')
-    .trim();
-
-  const encodedSvg = encodeURIComponent(compactSvg)
-    .replace(/%20/g, ' ')
-    .replace(/%3D/g, '=')
-    .replace(/%3A/g, ':')
-    .replace(/%2F/g, '/')
-    .replace(/%22/g, "'")
-    .replace(/%2C/g, ',');
-
-  return `data:image/svg+xml,${encodedSvg}`;
-};
 
 const addIconAttributes = (settings, name) => {
   if (!BLOCK_NAMES.includes(name)) { return settings; }
@@ -102,11 +85,11 @@ const withIconControl = createHigherOrderComponent((BlockEdit) => (props) => {
         return;
       }
 
-      const iconUrl = `${CDN_BASE_URL}/${encodeURIComponent(nextIconName)}.svg`;
-
       try {
-        const rawSvg = await pxFetch.get(iconUrl, { isJSON: false });
-        const iconUri = encodeSvgAsDataUri(rawSvg || '');
+        const cdnURL = window?.pxIconPrefix?.cdnURL || 'https://cdn.pixelstudio.id/h-block-icon-v7';
+        const iconURL = `${cdnURL}/${encodeURIComponent(nextIconName)}.svg`;
+
+        const iconUri = await getIconSVG(iconURL, true);
         props.setAttributes({ pxIconUri: iconUri });
       } catch (error) {
         props.setAttributes({ pxIconUri: '' });

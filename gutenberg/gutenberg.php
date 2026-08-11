@@ -6,12 +6,12 @@ require_once __DIR__ . '/cover-mobile/cover-mobile.php';
 require_once __DIR__ . '/gallery-slider/gallery-slider.php';
 require_once __DIR__ . '/spacer-negative/spacer-negative.php';
 require_once __DIR__ . '/file-download-button/file-download-button.php';
-require_once __DIR__ . '/icon-prefix/icon-prefix.php';
+require_once __DIR__ . '/px-icon-prefix/px-icon-prefix.php';
 
 if (is_admin()) {
   add_filter('safe_style_css', '_px_gutenberg_safe_style');
 
-  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 100);
+  add_action('enqueue_block_editor_assets', '_px_enqueue_editor', 20);
   add_filter('block_editor_settings_all', '_px_disable_inspector_tabs');
   
   add_action('admin_menu', '_px_remove_gutenberg_menu', 999);
@@ -62,7 +62,7 @@ function _px_gutenberg_safe_style($attr) {
 
 
 /**
- * @action enqueue_block_editor_assets
+ * @action enqueue_block_editor_assets 20
  */
 function _px_enqueue_editor() {
   $disallowed_blocks = apply_filters('px_disallowed_blocks', []);
