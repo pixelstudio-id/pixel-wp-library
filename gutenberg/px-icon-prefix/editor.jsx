@@ -1,5 +1,4 @@
 import './editor.sass';
-import { pxFetch } from '@lib/PixelFetch';
 import { getIconSVG } from '@lib/helpers';
 
 import debounce from 'lodash/debounce';
@@ -105,7 +104,7 @@ const withIconControl = createHigherOrderComponent((BlockEdit) => (props) => {
     debouncedUpdateIconUri(value);
   };
 
-  let colorPanelSettings = [
+  const colorPanelSettings = [
     {
       colorValue: pxIconColor,
       label: 'Icon Color',

@@ -19,7 +19,7 @@ const entryPoints = {
 
   'h-comment': './comment/src/h-comment.js',
   'h-widgets': './widgets/src/h-widgets.sass',
-  'h-menu-admin': './menu/src/h-menu-admin.js',
+  'px-menu-admin': './menu/src/px-menu-admin.js',
 
   'px-dark-mode': './widgets-dark-mode/src/script.js',
   'px-dark-mode-head': './widgets-dark-mode/src/script-head.js',

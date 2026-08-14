@@ -16,6 +16,9 @@ if (is_admin()) {
   
   add_action('admin_menu', '_px_remove_gutenberg_menu', 999);
   add_action('init', '_px_unregister_template_cpt');
+
+  add_filter('image_size_names_choose', '_px_add_medium_large_image_size_to_gutenberg');
+  
 } else {
   // remove group container class
   remove_filter('render_block', 'wp_render_layout_support_flag', 10, 2);
@@ -34,6 +37,20 @@ if (is_admin()) {
  */
 function _px_remove_gutenberg_menu() {
   remove_menu_page('gutenberg');
+}
+
+/**
+ * @filter image_size_names_choose
+ */
+function _px_add_medium_large_image_size_to_gutenberg($sizes) {
+  $sizes = [
+    'thumbnail' => __('Thumbnail'),
+    'medium' => __('Medium'),
+    'medium_large' => __('Medium Large'),
+    'large' => __('Large'),
+    'full' => __('Full Size'),
+  ];
+  return $sizes;
 }
 
 /**

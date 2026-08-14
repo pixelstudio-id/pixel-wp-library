@@ -140,7 +140,7 @@ export class PixelFetch {
 
 // Init setup
 const headers = {};
-const { nonce, myUrl } = window?.pxApiSettings || {};
+const { nonce, myUrl } = window.pxApiSettings || {};
 if (nonce) {
   headers['X-WP-Nonce'] = nonce;
 }

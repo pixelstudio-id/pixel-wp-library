@@ -40,7 +40,7 @@ function setDefaultAlignment(settings, name) {
         align: ['wide', 'full'],
       };
       break;
-      
+
     // Allow wide, left, and right
     case 'core/separator':
       settings.supports = {
@@ -171,10 +171,9 @@ function setDefaultSpacing(settings, name) {
         __experimentalDefaultControls: {
           padding: true,
           margin: false,
-        }
+        },
       };
       break;
-
 
     // Has hidden margin and padding
     case 'core/heading':
@@ -277,7 +276,6 @@ function setDefaultColor(settings, name) {
           background: false,
         },
       };
-  
       settings.attributes = {
         ...settings.attributes,
         textColor: {
@@ -297,7 +295,6 @@ function setDefaultColor(settings, name) {
           background: true,
         },
       };
-  
       settings.attributes = {
         ...settings.attributes,
         textColor: {
@@ -310,7 +307,9 @@ function setDefaultColor(settings, name) {
         },
       };
       break;
-      
+
+    default:
+      break;
   }
   return settings;
 }

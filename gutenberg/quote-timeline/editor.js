@@ -6,5 +6,5 @@ const { registerBlockStyle } = window.wp.blocks;
 
 registerBlockStyle('core/quote', {
   name: 'px-timeline',
-  label: 'Timeline'
+  label: 'Timeline',
 });

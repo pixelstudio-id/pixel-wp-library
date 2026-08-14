@@ -4,9 +4,10 @@ if (!is_admin()) {
   add_filter('render_block_core/group', '_px_render_group_alignment', 5, 2);
   add_filter('render_block_core/buttons', '_px_render_buttons_alignment', 5, 2);
 
-  if (defined('PX_LEGACY_MODE')) {
-    add_filter('render_block_core/group', '_px_render_group_inner_container_for_flex', 6, 2);
-  }
+  // @deprecated - not even legacy mode want this anymore
+  // if (defined('PX_LEGACY_MODE')) {
+  //   add_filter('render_block_core/group', '_px_render_group_inner_container_for_flex', 6, 2);
+  // }
 }
 
 /**

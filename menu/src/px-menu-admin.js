@@ -1,4 +1,4 @@
-import './h-menu-admin.sass';
+import './px-menu-admin.sass';
 
 const myMenu = {
   init() {

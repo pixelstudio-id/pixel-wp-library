@@ -6,10 +6,20 @@
     "es6": true
   },
   "extends": [
-    "airbnb"
+    "airbnb-base"
   ],
   "parserOptions": {
-    "parser": "babel-eslint"
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "globals": {
+    "wp": "readonly",
+    "localizePx": "readonly",
+    "pxIconPrefix": "readonly",
+    "pxApiSettings": "readonly"
   },
   "plugins": [],
   "rules": {
@@ -33,14 +43,7 @@
         "enforceForRenamedProperties": false
       }
     ],
-    "arrow-body-style": 0,
-    "react/react-in-jsx-scope": 0,
-    "react/jsx-props-no-spreading": 0,
-    "react/prop-types": 0,
-    "react/destructuring-assignment": 0,
-    "jsx-a11y/click-events-have-key-events": 0,
-    "jsx-a11y/no-static-element-interactions": 0,
-    "jsx-a11y/alt-text": 0
+    "arrow-body-style": 0
   },
   "settings": {
     "import/resolver": {

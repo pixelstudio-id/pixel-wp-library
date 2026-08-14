@@ -37,14 +37,8 @@ require_once __DIR__ . '/block-icon/_index.php';
 require_once __DIR__ . '/block-tabs/_index.php';
 
 require_once __DIR__ . '/post-type/_index.php';
-
-if (defined('PX_LEGACY_MODE')) {
-  require_once __DIR__ . '/gutenberg/_legacy/_index.php';
-  require_once __DIR__ . '/menu/_legacy/_index.php';
-} else {
-  require_once __DIR__ . '/gutenberg/gutenberg.php';
-  require_once __DIR__ . '/menu/_index.php';
-}
+require_once __DIR__ . '/menu/_index.php';
+require_once __DIR__ . '/gutenberg/gutenberg.php';
 
 add_action('admin_enqueue_scripts', '_px_enqueue_admin_assets', 100);
 

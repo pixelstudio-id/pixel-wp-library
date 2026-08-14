@@ -13,7 +13,7 @@ add_action('init', function() {
   px_remove_custom_image_sizes();
   add_action('admin_head', 'px_disable_wp_update_nag_for_non_admins');
 
-  add_filter('redirect_canonical', '_h_prevent_url_guessing');
+  add_filter('redirect_canonical', 'px_prevent_url_guessing');
 });
 
 /**
@@ -39,8 +39,8 @@ function px_disable_emojis() {
  * @warn - should test whether it disable youtube embed block?
  */
 function px_disable_embeds() {
-  remove_action('rest_api_init', 'wp_oembed_register_route');
-  remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10);
+  // remove_action('rest_api_init', 'wp_oembed_register_route');
+  // remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10);
   remove_action('wp_head', 'wp_oembed_add_discovery_links');
   remove_action('wp_head', 'wp_oembed_add_host_js');
   // The wp-embed footer script was already being printed before the
