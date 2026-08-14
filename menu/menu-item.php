@@ -1,16 +1,13 @@
 <?php
 
-add_filter('nav_menu_item_attributes', '_h_remove_id_in_menu_item', 100, 3);
-add_filter('wp_nav_menu_objects', '_h_mega_menu_classes', 100);
-add_filter('wp_nav_menu_objects', '_h_menu_item_classes', 101);
+add_filter('nav_menu_item_attributes', '_px_remove_id_in_menu_item', 100, 3);
+add_filter('wp_nav_menu_objects', '_px_mega_menu_classes', 100);
+add_filter('wp_nav_menu_objects', '_px_menu_item_classes', 101);
 
 /**
  * @filter nav_menu_item_attributes
  */
-function _h_remove_id_in_menu_item($li_atts, $menu_item, $args) {
-  // var_dump($args);
-
-  // $li_atts['data-columns'] = '3';
+function _px_remove_id_in_menu_item($li_atts, $menu_item, $args) {
   unset($li_atts['id']);
   return $li_atts;
 }
@@ -20,7 +17,7 @@ function _h_remove_id_in_menu_item($li_atts, $menu_item, $args) {
  * 
  * @filter wp_nav_menu_objects 100
  */
-function _h_mega_menu_classes($items) {
+function _px_mega_menu_classes($items) {
   $mega_menu_ids = []; // used to check whether a children is under mega menu or not
 
   foreach ($items as &$i) {
@@ -69,7 +66,7 @@ function _h_mega_menu_classes($items) {
  * 
  * @filter wp_nav_menu_objects 101
  */
-function _h_menu_item_classes($items) {
+function _px_menu_item_classes($items) {
   foreach ($items as &$i) {
     // remove the "menu-item-type-xxx" and "menu-item-object-xxx" class
     $i->classes[2] = '';
@@ -121,7 +118,7 @@ function _h_menu_item_classes($items) {
     }
 
     // Render it
-    $i->title = _h_render_menu_item($i, $styles);
+    $i->title = _px_render_menu_item($i, $styles);
   }
 
   return $items;
@@ -135,9 +132,9 @@ function _h_menu_item_classes($items) {
  * 
  * @return string - the HTML markup of the menu item
  */
-function _h_render_menu_item($i, $styles) {
+function _px_render_menu_item($i, $styles) {
   $title = $i->title;
-  $description = H::markdown($i->post_content, true);
+  $description = Px::markdown($i->post_content, true);
   $image_tag = '';
 
   if (is_array($styles)) {

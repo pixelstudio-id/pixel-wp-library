@@ -1,4 +1,5 @@
-<?php
+<?php if (!defined('ABSPATH')) { exit; }
+
 _px_register_icon_block();
 
 /**

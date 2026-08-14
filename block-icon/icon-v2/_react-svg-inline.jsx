@@ -1,4 +1,4 @@
-import _fetch from './_fetch.js';
+import { getIconSVG } from '@lib/helpers.js';
 
 export default class ReactSvgInline extends React.Component {
   constructor() {
@@ -33,19 +33,9 @@ export default class ReactSvgInline extends React.Component {
   }
 
   async _getMarkup(src) {
-    let markup = localStorage.getItem(src);
-
-    // if no cache, get the data
-    if (!markup) { 
-      markup = await _fetch.get(src);
-
-      if (markup) { 
-        localStorage.setItem(src, markup);
-      }
-    }
-
-    this.props.onFound(markup);
-    this.setState({ markup: markup });
+    const iconHTML = await getIconSVG(src, false);
+    this.props.onFound(iconHTML);
+    this.setState({ markup: iconHTML });
   }
 
   componentWillUnmount() {

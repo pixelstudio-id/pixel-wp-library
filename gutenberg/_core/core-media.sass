@@ -1,0 +1,225 @@
+
+///// IMAGE
+
+.wp-block-image
+  text-align: center // centering the caption
+
+// don't allow image resized beyond 100%
+.wp-block-image .components-resizable-box__container
+  max-width: 100% !important
+
+.wp-block-image[style*="background-color"]
+  padding: 0.75rem
+  border-radius: var(--gRadius)
+
+// fix floating
+figure.wp-block-image
+  &.alignleft,
+  &.alignright,
+  &.aligncenter
+    width: auto
+
+  &.alignleft,
+  &.alignright
+    display: flex
+    flex-direction: column
+    position: relative
+    z-index: 10 !important
+    max-width: calc(var(--contentSize) / 2)
+    margin-right: auto
+    margin-left: auto
+    margin-bottom: var(--blockGap)
+
+    .components-resizable-box__container
+      height: auto !important
+      width: 100%
+
+  &.alignleft
+    margin-right: 1.5rem
+    figcaption
+      text-align: left
+      margin-left: 0
+
+  &.alignright
+    align-items: flex-end
+    margin-left: 1.5rem
+    figcaption
+      text-align: right
+      margin-right: 0
+
+  &.aligncenter
+    margin-left: auto
+    margin-right: auto
+
+div.editor-styles-wrapper .wp-block-image
+  &.alignleft
+    margin-left: calc((100% - var(--contentSize)) / 2)
+  &.alignright
+    margin-right: calc((100% - var(--contentSize)) / 2)
+
+// block element should not flow on floating image 
+.wp-block-columns,
+.wp-block-group,
+.wp-block-separator,
+.wp-block-media-text
+  clear: both
+
+///// MEDIA TEXT
+
+div.wp-block-media-text
+  --_gap: var(--blockGap)
+  column-gap: var(--_gap)
+  row-gap: var(--_gap)
+  padding: var(--_padding, 0)
+  border-radius: var(--gRadius)
+
+  &.alignwide
+    --_gap: var(--blockWideGap)
+  &.has-background
+    --_padding: var(--blockGap)
+  &.has-background.is-image-fill
+    --_padding: 0
+    --_gap: 0
+    --_contentPadding: var(--blockGap)
+    overflow: hidden
+  &.has-background.is-image-fill.alignwide
+    --_contentPadding: var(--blockWideGap)
+
+div.wp-block-media-text .wp-block-media-text__content
+  padding: var(--_contentPadding, 0)
+
+  .components-resizable-box__container.has-show-handle .components-resizable-box__handle
+    display: none
+
+// Full Media Text
+div.wp-block-media-text.alignfull
+  --_gap: 0
+  --_contentPadding: var(--blockWideGap)
+  border-radius: 0
+
+  .wp-block-media-text__content
+    padding-right: 1.5rem
+  &.has-media-on-the-right .wp-block-media-text__content
+    padding-left: 1.5rem
+    padding-right: 0
+
+  &.is-image-fill .wp-block-media-text__media
+    min-height: 18rem
+
+// Larger and Smaller image
+// @deprecated - use the width slider in inspector instead
+.wp-block-media-text
+  &.is-style-h-larger-image
+    grid-template-columns: 3fr 2fr !important
+    &.has-media-on-the-right
+      grid-template-columns: 2fr 3fr !important
+  &.is-style-h-smaller-image
+    grid-template-columns: 2fr 3fr !important
+    &.has-media-on-the-right
+      grid-template-columns: 3fr 2fr !important
+
+///// GALLERY
+
+.wp-block-gallery
+  gap: 1rem !important
+
+// if not cropped, put caption below image
+.wp-block-gallery:not(.is-cropped)
+  figure
+    flex-direction: column
+  
+  .blocks-gallery-item figcaption.rich-text
+    position: relative
+    overflow-y: visible
+    margin-top: auto
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
+    background-image: none
+    color: inherit
+
+    a
+      color: inherit
+
+///// COVER
+
+.has-custom-content-position
+  --alignX: center
+  --alignY: center
+
+  &[class*="is-position-top-"]
+    --alignY: flex-start
+
+  &[class*="is-position-bottom-"]
+    --alignY: flex-end
+
+  &[class*="-right"]
+    --alignX: flex-end
+
+  &[class*="-left"]
+    --alignX: flex-start
+
+.wp-block-cover
+  display: flex
+  align-items: stretch !important
+  justify-content: center !important
+
+  // fix if browser is dark mode, the text inside cover become white by default
+  *:not(.has-text-color)
+    color: inherit
+
+
+// Change the custom position to be within --wideSize
+.wp-block-cover__inner-container
+  display: flex
+  flex-direction: column
+  align-items: var(--alignX, center)
+  justify-content: var(--alignY, center)
+  width: var(--wideSize, 1120px) !important
+
+  > *
+    width: 100%
+    max-width: var(--contentSize)
+  .alignwide
+    max-width: var(--wideSize)
+  .alignfull
+    max-width: none
+
+  .alignleft
+    margin-right: auto
+  .alignright
+    margin-left: auto
+
+
+///// FILE
+
+.editor-styles-wrapper div.wp-block-file
+  padding: 0
+  border: 0
+  background-color: transparent !important
+
+  &.alignright,
+  &.alignleft
+    float: none
+    margin-right: auto
+    margin-left: auto
+  &.alignright
+    --_align: flex-end
+  &.alignleft
+    --_align: flex-start
+
+.editor-styles-wrapper div.wp-block-file__content-wrapper
+  display: flex
+  flex-direction: column
+  align-items: var(--_align, center)
+
+  > a:first-child
+    order: 1
+
+  .wp-block-file__button-richtext-wrapper
+    margin-left: 0
+
+  .wp-block-file__button
+    background-color: var(--bgColor, var(--color1))
+    color: var(--textColor, var(--baseInv))
+    font-weight: 700
+    text-transform: uppercase

@@ -1,0 +1,18 @@
+@import "@lib/helpers"
+
+.editor-styles-wrapper div.wp-block-file__content-wrapper div.wp-block-file__button
+  display: flex
+  column-gap: 0.75rem
+  row-gap: 0.25rem
+  padding-right: 1.5rem
+  padding-left: 1.5rem
+  text-align: left
+
+  &::before
+    content: ""
+    display: block
+    width: 1.125rem
+    height: 1.125rem
+    -webkit-mask: url('./img/arrow-down-to-line.svg') no-repeat center center / contain
+    mask: url('./img/arrow-down-to-line.svg') no-repeat center center / contain
+    background-color: currentColor

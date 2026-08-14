@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('ABSPATH')) { exit; }
 /**
  * Modify Jetpack modules
  */
@@ -18,7 +18,8 @@ add_filter('jetpack_sharing_display_text', '_h_jetpack_share_add_svg', 10, 2);
 add_filter('jetpack_sharing_display_title', '_h_jetpack_share_add_color', 10, 2);
 add_filter('jetpack_sharing_display_link', '_h_jetpack_share_add_print_listener', 10, 2);
 
-
+// disable jetpack SEO
+add_filter('jetpack_enable_open_graph', '__return_false');
 
 
 /**

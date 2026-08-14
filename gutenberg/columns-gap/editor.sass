@@ -1,0 +1,14 @@
+
+div.wp-block-columns.is-style-px-no-gap,
+div.wp-block-columns.is-style-h-no-gap
+  column-gap: 0
+  
+  .block-editor-block-list__block.wp-block-column:not(:first-child)
+    margin-left: 0
+
+  .wp-block-column
+    border-radius: 0
+
+div.wp-block-columns.is-style-px-wide-gap,
+div.wp-block-columns.is-style-h-wide-gap
+  column-gap: var(--blockWideGap)

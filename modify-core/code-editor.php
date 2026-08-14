@@ -1,4 +1,4 @@
-<?php
+<?php if (!defined('ABSPATH')) { exit; }
 /**
  * Modify settings for Admin's code editor.
  */

@@ -1,0 +1,9 @@
+// @deprecated - use negative margin instead
+
+.wp-block-spacer.is-style-px-negative,
+.wp-block-spacer.is-style-h-negative
+  &::before
+    content: ""
+    background: url('./minus.svg') no-repeat center center
+    background-size: 1.5rem auto
+    opacity: .2

@@ -22,22 +22,33 @@ function _h_mega_menu_classes($items) {
 
   foreach ($items as &$i) {
     // If parent item, check for mega menu ACF field
+    $fields = get_fields($i);
     if ($i->menu_item_parent === '0') {
-      $columns = get_field('mega_menu', $i);
-      $alignment = get_field('mega_menu_alignment', $i);
+      $style = $fields['dropdown_style'] ?? 'default';
 
-      if ($columns) {
-        $i->classes[] = "menu-item-has-megamenu";
-        $i->classes[] = "has-{$columns}-columns";
-        $i->classes[] = "is-align-{$alignment}";
+      if ($style === 'mega-menu') {
+        $i->classes[] = 'menu-item-has-mega-menu';
         $mega_menu_ids[] = $i->ID;
+      }
+
+      if ($style === 'grid-menu') {
+        $i->classes[] = 'is-grid-menu';
+      }
+
+      if ($style === 'mega-menu' || $style === 'grid-menu') {  
+        $columns = $fields['mega_menu'] ?? 2;
+        $columns = (int) $columns;
+        $alignment = $columns < 4 ? $fields['mega_menu_alignment'] : '';
+
+        $i->classes[] = "has-columns-{$columns}";
+        $i->classes[] = $alignment ? "is-align-{$alignment}" : '';
       }
 
       continue;
     }
     // Add special class if it's under mega menu
     elseif (in_array($i->menu_item_parent, $mega_menu_ids)) {
-      $i->classes[] = 'megamenu__column';
+      $i->classes[] = 'mega-menu__column';
 
       // remove unnecessary class
       $key = array_search('menu-item', $i->classes);

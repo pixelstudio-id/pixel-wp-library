@@ -28,7 +28,12 @@ export class PixelFetch {
   /**
    * Do a GET request
    */
-  async get(apiPath) {
+  async get(apiPath, _args) {
+    const args = {
+      isJSON: true,
+      ..._args,
+    };
+
     try {
       const response = await fetch(this.url + apiPath, {
         method: 'GET',
@@ -39,7 +44,7 @@ export class PixelFetch {
         return Promise.reject(await response.json());
       }
 
-      return response.json();
+      return args.isJSON ? response.json() : response.text();
     } catch (error) {
       console.log(error);
       return Promise.reject(error);
@@ -49,15 +54,16 @@ export class PixelFetch {
   /**
    * Get data from sessionStorage, if not found then do API request and save it to sessionStorage
    */
-  async getFromSession(path) {
-    const cached = sessionStorage.getItem(path);
-    if (cached && cached !== 'undefined') {
-      return JSON.parse(cached);
+  async getFromSession(path, args) {
+    const cacheKey = path;
+    const cachedData = sessionStorage.getItem(cacheKey);
+    if (cachedData && cachedData !== 'undefined') {
+      return JSON.parse(cachedData);
     }
 
     try {
-      const data = await this.get(path);
-      sessionStorage.setItem(path, JSON.stringify(data));
+      const data = await this.get(path, args);
+      sessionStorage.setItem(cacheKey, JSON.stringify(data));
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -67,15 +73,16 @@ export class PixelFetch {
   /**
    * Get data from localStorage, if not found then do API request and save it to localStorage
    */
-  async getFromLocal(path) {
-    const cached = localStorage.getItem(path);
-    if (cached && cached !== 'undefined') {
-      return JSON.parse(cached);
+  async getFromLocal(path, args) {
+    const cacheKey = path;
+    const cachedData = localStorage.getItem(cacheKey);
+    if (cachedData && cachedData !== 'undefined') {
+      return JSON.parse(cachedData);
     }
 
     try {
-      const data = await this.get(path);
-      localStorage.setItem(path, JSON.stringify(data));
+      const data = await this.get(path, args);
+      localStorage.setItem(cacheKey, JSON.stringify(data));
       return data;
     } catch (error) {
       return Promise.reject(error);
@@ -133,7 +140,7 @@ export class PixelFetch {
 
 // Init setup
 const headers = {};
-const { nonce, myUrl } = window.myApiSettings;
+const { nonce, myUrl } = window.pxApiSettings || {};
 if (nonce) {
   headers['X-WP-Nonce'] = nonce;
 }
